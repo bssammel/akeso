@@ -1,2 +1,2 @@
 # aceso
-Aceso is an Python Backend React.js front end EMR designed specifically for Direct Primary Care practices.
+Aceso is a PERN stack EMR designed specifically for Direct Primary Care practices.
