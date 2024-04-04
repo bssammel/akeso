@@ -1,0 +1,146 @@
+Table users {
+  id INTEGER PK
+  email VARCHAR
+  phone INTEGER
+  firstName VARCHAR
+  lastName VARCHAR
+  providerBool BOOLEAN
+  hashedPassword VARCHAR
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+
+Table providers {
+  id INTEGER PK
+  user_id INTEGER
+  title VARCHAR
+// MD, DO, NP, PA, RN, LPN
+  specialty VARCHAR
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+Ref: users.(id) < providers.(user_id)
+
+Table patients {
+  id INTEGER PK
+  user_id INTEGER
+  dob DATE
+  sex VARCHAR
+  gender VARCHAR
+  insurance VARCHAR
+  religion VARCHAR
+  relationship_status VARCHAR
+  language VARCHAR
+  ethnicity VARCHAR
+  name911 VARCHAR 
+  phone911 VARCHAR 
+  address911 VARCHAR 
+  relationship911 VARCHAR
+  pharmName VARCHAR 
+  pharmStreet VARCHAR 
+  pharmCity VARCHAR
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+Ref: users.(id) < patients.(user_id)
+
+Table assignments {
+  id INTEGER PK
+  provider_id INTEGER
+  patient_id INTEGER
+}
+Ref: patients.(id) <> assignments.(patient_id)
+Ref: providers.(id) <> assignments.(provider_id)
+
+Table conditions {
+  id INTEGER PK
+  patient_id INTEGER
+  provider_id INTEGER 
+  // treatment_id INTEGER
+  name VARCHAR
+  description VARCHAR
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+Ref: patients.(id) < conditions.(patient_id)
+Ref: providers.(id) < conditions.(provider_id)
+
+Table treatments {
+  id INTEGER PK
+  patient_id INTEGER
+  provider_id INTEGER 
+  condition_id INTEGER
+  name VARCHAR
+  description VARCHAR
+  price INTEGER
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+  //avgRating DECIMAL//update to aggregate, not a column on the table, fewer routes
+  //previewImage VARCHAR
+} 
+Ref: patients.(id) < treatments.(patient_id)
+Ref: providers.(id) < treatments.(provider_id)
+
+
+
+Table userImages{
+  id INTEGER PK
+  userId INTEGER
+  url VARCHAR
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+Ref: users.(id) < userImages.(userId)
+
+
+Table histories{
+  id INTEGER PK
+  patientId INTEGER 
+  pastMedical VARCHAR
+  pastSurgical VARCHAR
+  employmentStatus ENUM
+  tobaccoUse VARCHAR 
+  alcoholUser VARCHAR 
+  nonPrescriptionDrugUse VARCHAR 
+  familyMedical VARCHAR 
+  allergies VARCHAR
+  stars DECIMAL
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+Ref: patients.(id) < histories.(patientId)
+
+Table appointments{
+  id INTEGER PK
+  providerId INTEGER
+  patientId INTEGER 
+  chiefComplaint VARCHAR 
+  startTime TIMESTAMP
+  endTime TIMESTAMP
+  prevPatient BOOLEAN 
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+
+Ref: providers.(id) < appointments.(providerId)
+Ref: patients.(id) < appointments.(patientId)
+
+
+Table encounters{
+  id INTEGER PK
+  providerId INTEGER
+  patientId INTEGER 
+  appointmentId INTEGER
+  bp VARCHAR 
+  weight DECIMAL
+  height INTEGER
+  o2 INTEGER 
+  hr INTEGER
+  createdAt TIMESTAMP
+  updatedAt TIMESTAMP
+} 
+
+Ref: providers.(id) < encounters.(providerId)
+Ref: patients.(id) < encounters.(patientId)
+Ref: appointments.(id) < encounters.(appointmentId)
+
