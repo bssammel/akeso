@@ -124,7 +124,7 @@ OR
         }
       }
     }
-    ```
+  ```
 
 
 - Error Response: Couldn't find a User with specified ID
@@ -313,74 +313,44 @@ Returns all the patients.
       "patients": [
         {
           "id": 1,
-          "owner_id": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "name": "App Academy",
-          "zipcode":"00001",
-          "description": "Place where web developers are created",
-          "price": "$",
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "avg_rating": 4.5,
-          "hours":{
-            "monday_open":"0900",
-            "monday_close":"1700",
-            "tuesday_open":"0900",
-            "tuesday_close":"1630",
-            "wednesday_open":"0900",
-            "wednesday_close":"1700",
-            "thursday_open":"0915",
-            "thursday_close":"1700",
-            "friday_open":"0900",
-            "friday_close":"1745",
-            "saturday_open":"1000",
-            "saturday_close":"1600",
-            "sunday_open":null,
-            "sunday_close":null,
-          },
-          "email":"biz@gmail.com",
-          "website":"biz.biz",
+          "age": 25,
+          "firstName":"Simon",
+          "lastName":"Krawa",
+          "sex": "Male",
+          "email":"bssammel@gmail.com",
+          "phone":"3524155409",
+        },
+        {
+          "id": 3,
+          "age": 30,
+          "firstName":"Sarah",
+          "lastName":"Smith",
+          "sex": "Female",
+          "email":"sarahtest@aa.io",
           "phone":"1234567890",
-          "category":{
-            "id":1,
-            "name":"Veterinarian",
-            "Subcategories": [
-                {
-                    "id":1,
-                    "name":"Exotic Vet",
-                },
-                {
-                    "id":2,
-                    "name":"General Vet",
-                },
-            ],
-          },
-          "attributes":[
-            {
-                "id":1,
-                "name":"Free Wi-Fi",
-            },
-            {
-                "id":2,
-                "name":"Dental Cleaning",
-            },
-          ],
-        }
+        },
+        {
+          "id": 5,
+          "age": 52,
+          "firstName":"Sean",
+          "lastName":"Kozlowski",
+          "sex": "Male",
+          "email":"sean@aa.io",
+          "phone":"1234567891",
+        },
       ]
     }
     ```
 
-### Get all businesses owned by the Current User
+### Get all abbv patients of the Current User Provider
 
-Returns all the businesses owned (created) by the current user.
+Returns all the patients assigned to the current user who must be a provider.
 
 - Require Authentication: true
 - Request
 
   - Method: GET
-  - URL: /api/businesses/current
+  - URL: /api/patients/current
   - Body: none
 
 - Successful Response
@@ -392,77 +362,39 @@ Returns all the businesses owned (created) by the current user.
 
     ```json
     {
-      "businesses": [
+      "patients": [
         {
           "id": 1,
-          "owner_id": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "name": "App Academy",
-          "zipcode":"00001",
-          "description": "Place where web developers are created",
-          "price": "$",
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "avg_rating": 4.5,
-          "hours":{
-            "monday_open":"0900",
-            "monday_close":"1700",
-            "tuesday_open":"0900",
-            "tuesday_close":"1630",
-            "wednesday_open":"0900",
-            "wednesday_close":"1700",
-            "thursday_open":"0915",
-            "thursday_close":"1700",
-            "friday_open":"0900",
-            "friday_close":"1745",
-            "saturday_open":"1000",
-            "saturday_close":"1600",
-            "sunday_open":null,
-            "sunday_close":null,
-          },
-          "email":"biz@gmail.com",
-          "website":"biz.biz",
-          "phone":"1234567890",
-          "category":{
-            "id":1,
-            "name":"Veterinarian",
-            "Subcategories": [
-                {
-                    "id":1,
-                    "name":"Exotic Vet",
-                },
-                {
-                    "id":2,
-                    "name":"General Vet",
-                },
-            ],
-          },
-          "attributes":[
-            {
-                "id":1,
-                "name":"Free Wi-Fi",
-            },
-            {
-                "id":2,
-                "name":"Dental Cleaning",
-            },
-          ],
-        }
+          "age": 25,
+          "firstName":"Simon",
+          "lastName":"Krawa",
+          "sex": "Male",
+          "email":"bssammel@gmail.com",
+          "phone":"3524155409",
+        },
+        {
+          "id": 5,
+          "age": 52,
+          "firstName":"Sean",
+          "lastName":"Kozlowski",
+          "sex": "Male",
+          "email":"sean@aa.io",
+          "phone":"1234567891",
+        },
       ]
     }
     ```
 
-### Get details of a business from an id
+### Get details of a patient from an id
 
-Returns the details of a business specified by its id.
+Returns the details of a patient specified by their id.
 
-- Require Authentication: false
+- Require Authentication: True
+- Require Authourization: True, patient must belong to current provider or be the current patient
 - Request
 
   - Method: GET
-  - URL: /api/businesses/:business_id
+  - URL: /api/patients/:patientId
   - Body: none
 
 - Successful Response
@@ -474,75 +406,36 @@ Returns the details of a business specified by its id.
 
     ```json
     {
-      "businesses": [
-        {
-          "id": 1,
-          "owner_id": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "name": "App Academy",
-          "zipcode":"00001",
-          "description": "Place where web developers are created",
-          "price": "$",
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "avg_rating": 4.5,
-          "hours":{
-            "monday_open":"0900",
-            "monday_close":"1700",
-            "tuesday_open":"0900",
-            "tuesday_close":"1630",
-            "wednesday_open":"0900",
-            "wednesday_close":"1700",
-            "thursday_open":"0915",
-            "thursday_close":"1700",
-            "friday_open":"0900",
-            "friday_close":"1745",
-            "saturday_open":"1000",
-            "saturday_close":"1600",
-            "sunday_open":null,
-            "sunday_close":null,
-          },
-          "email":"biz@gmail.com",
-          "website":"biz.biz",
-          "phone":"1234567890",
-          "category":{
-            "id":1,
-            "name":"Veterinarian",
-            "Subcategories": [
-                {
-                    "id":1,
-                    "name":"Exotic Vet",
-                },
-                {
-                    "id":2,
-                    "name":"General Vet",
-                },
-            ],
-          },
-          "attributes":[
-            {
-                "id":1,
-                "name":"Free Wi-Fi",
-            },
-            {
-                "id":2,
-                "name":"Dental Cleaning",
-            },
-          ],
-          "business_images":[
-            {
-                "id":1,
-                "url":"www.google.com",
-            },
-          ],
-        }
-      ]
-    }
+      "id": 1,
+      "age": 25,
+      "firstName":"Simon",
+      "lastName":"Krawa",
+      "sex": "Male",
+      "email":"bssammel@gmail.com",
+      "phone":"3524155409",
+      "gender":"Transgender man",
+      "insurance": "BCBS Federal",
+      "religion": "Jewish",
+      "relationshipStatus": "Married",
+      "language":"English",
+      "ethnicity":"White",
+      "street":"23 Dunkard Ave",
+      "city":"Uniontown",
+      "state":"PA",
+      "name911":"Keiran Krawa",
+      "phone911":"4077937788",
+      "street911":"23 Dunkard Ave",
+      "city911":"Uniontown",
+      "state911":"PA",
+      "relationship911":"Spouse",
+      "pharmName":"Hixenbaugh's Drug Store",
+      "pharmStreet":"304 Morgantown St",
+      "pharmCity":"Uniontown",
+      "pharmState":"PA",
+    },
     ```
 
-- Error response: Couldn't find a business with the specified id
+- Error response: Couldn't find a patient with the specified id
 
   - Status Code: 404
   - Headers:
@@ -551,88 +444,146 @@ Returns the details of a business specified by its id.
 
     ```json
     {
-      "message": "Business couldn't be found"
+      "message": "Patient couldn't be found"
     }
     ```
 
-### Create a business
+### Create a patient
 
-Creates and returns a new business.
+Creates and returns a new patient.
 
-- Require Authentication: true
+- Require Authentication: true, current user will become the patient user
 - Request
 
   - Method: POST
-  - URL: /api/businesses
+  - URL: /api/patients
   - Headers:
     - Content-Type: application/json
   - Body:
 
     ```json
     {
-      "businesses": [
-        {
-          "owner_id": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "name": "App Academy",
-          "zipcode":"00001",
-          "description": "Place where web developers are created",
-          "price": "$",
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "hours":{
-            "monday_open":"0900",
-            "monday_close":"1700",
-            "tuesday_open":"0900",
-            "tuesday_close":"1630",
-            "wednesday_open":"0900",
-            "wednesday_close":"1700",
-            "thursday_open":"0915",
-            "thursday_close":"1700",
-            "friday_open":"0900",
-            "friday_close":"1745",
-            "saturday_open":"1000",
-            "saturday_close":"1600",
-            "sunday_open":null,
-            "sunday_close":null,
-          },
-          "email":"biz@gmail.com",
-          "website":"biz.biz",
-          "phone":"1234567890",
-          "category":{
-            "id":1,
-            "name":"Veterinarian",
-            "Subcategories": [
-                {
-                    "id":1,
-                    "name":"Exotic Vet",
-                },
-                {
-                    "id":2,
-                    "name":"General Vet",
-                },
-            ],
-          },
-          "attributes":[
-            {
-                "id":1,
-                "name":"Free Wi-Fi",
-            },
-            {
-                "id":2,
-                "name":"Dental Cleaning",
-            },
-          ],
-          "business_images":[
-            {
-                "id":1,
-                "url":"www.google.com",
-            },
-          ],
-        }
-      ]
+      "userId": 1,
+      "sex": "Male",
+      "dob":"01/15/1999",
+      "gender":"Transgender man",
+      "insurance": "BCBS Federal",
+      "religion": "Jewish",
+      "relationshipStatus": "Married",
+      "language":"English",
+      "ethnicity":"White",
+      "street":"23 Dunkard Ave",
+      "city":"Uniontown",
+      "state":"PA",
+      "name911":"Keiran Krawa",
+      "phone911":"4077937788",
+      "street911":"23 Dunkard Ave",
+      "city911":"Uniontown",
+      "state911":"PA",
+      "relationship911":"Spouse",
+      "pharmName":"Hixenbaugh's Drug Store",
+      "pharmStreet":"304 Morgantown St",
+      "pharmCity":"Uniontown",
+      "pharmState":"PA",
+    },
+    ```
+
+- Successful Response
+
+  - Status Code: 201
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "id": 1,
+      "age": 25,
+      "firstName":"Simon",
+      "lastName":"Krawa",
+      "sex": "Male",
+      "email":"bssammel@gmail.com",
+      "phone":"3524155409",
+      "gender":"Transgender man",
+      "insurance": "BCBS Federal",
+      "religion": "Jewish",
+      "relationshipStatus": "Married",
+      "language":"English",
+      "ethnicity":"White",
+      "street":"23 Dunkard Ave",
+      "city":"Uniontown",
+      "state":"PA",
+      "name911":"Keiran Krawa",
+      "phone911":"4077937788",
+      "street911":"23 Dunkard Ave",
+      "city911":"Uniontown",
+      "state911":"PA",
+      "relationship911":"Spouse",
+      "pharmName":"Hixenbaugh's Drug Store",
+      "pharmStreet":"304 Morgantown St",
+      "pharmCity":"Uniontown",
+      "pharmState":"PA",
+    }
+    ```
+
+- Error Response: Body validation error
+
+  - Status Code: 400
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
+      "errors": {
+        "address": "Street address is required",
+        "dob":"Date of Birth is required",
+        "city": "City is required",
+        "state": "State is required",
+        "sex": "Sex is required",
+      }
+    }
+    ```
+
+### Edit a patient
+
+Updates and returns an existing patient.
+
+- Require Authentication: true
+- Require proper authorization: business must belong to the current user, whether they are a provider for the patient or the patient themselves
+- Request
+
+  - Method: POST
+   - URL: /api/patients/:patientId
+  - Headers:
+    - Content-Type: application/json
+  - Body:
+
+    ```json
+    {
+      "userId": 1,
+      "sex": "Male",
+      "dob":"01/15/1999",
+      "gender":"Transgender man",
+      "insurance": "BCBS Federal",
+      "religion": "Jewish",
+      "relationshipStatus": "Married",
+      "language":"English",
+      "ethnicity":"White",
+      "street":"23 Dunkard Ave",
+      "city":"Uniontown",
+      "state":"PA",
+      "name911":"Keiran Krawa",
+      "phone911":"4077937788",
+      "street911":"23 Dunkard Ave",
+      "city911":"Uniontown",
+      "state911":"PA",
+      "relationship911":"Spouse",
+      "pharmName":"Hixenbaugh's Drug Store",
+      "pharmStreet":"304 Morgantown St",
+      "pharmCity":"Uniontown",
+      "pharmState":"PA",
     }
     ```
 
@@ -645,302 +596,32 @@ Creates and returns a new business.
 
     ```json
     {
-      "businesses": [
-        {
-          "id": 1,
-          "owner_id": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "name": "App Academy",
-          "zipcode":"00001",
-          "description": "Place where web developers are created",
-          "price": "$",
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "hours":{
-            "monday_open":"0900",
-            "monday_close":"1700",
-            "tuesday_open":"0900",
-            "tuesday_close":"1630",
-            "wednesday_open":"0900",
-            "wednesday_close":"1700",
-            "thursday_open":"0915",
-            "thursday_close":"1700",
-            "friday_open":"0900",
-            "friday_close":"1745",
-            "saturday_open":"1000",
-            "saturday_close":"1600",
-            "sunday_open":null,
-            "sunday_close":null,
-          },
-          "email":"biz@gmail.com",
-          "website":"biz.biz",
-          "phone":"1234567890",
-          "category":{
-            "id":1,
-            "name":"Veterinarian",
-            "Subcategories": [
-                {
-                    "id":1,
-                    "name":"Exotic Vet",
-                },
-                {
-                    "id":2,
-                    "name":"General Vet",
-                },
-            ],
-          },
-          "attributes":[
-            {
-                "id":1,
-                "name":"Free Wi-Fi",
-            },
-            {
-                "id":2,
-                "name":"Dental Cleaning",
-            },
-          ],
-          "business_images":[
-            {
-                "id":1,
-                "url":"www.google.com",
-            },
-          ],
-        }
-      ]
-    }
-    ```
-
-- Error Response: Body validation error
-
-  - Status Code: 400
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
-      "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "zip_code": "Zip Code is required",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required and must be between 30-255 chars",
-        "hours": "hours are required",
-        "email": "Email is required",
-        "website": "Website is required",
-        "phone": "Phone Number is required",
-        "category": "Category is required",
-        "business_image": "Business image is required"
-      }
-    }
-    ```
-
-### Add an Image to a business based on the business's id
-
-Create and return a new image for a business specified by id.
-
-- Require Authentication: true
-- Require proper authorization: business must belong to the current user
-- Request
-
-  - Method: POST
-  - URL: /api/businesses/:business_id/images
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "url": "image url"
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
       "id": 1,
-      "url": "image url"
-    }
-    ```
-
-- Error response: Couldn't find a business with the specified id
-
-  - Status Code: 404
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "message": "business couldn't be found"
-    }
-    ```
-
-### Edit a business
-
-Updates and returns an existing business.
-
-- Require Authentication: true
-- Require proper authorization: business must belong to the current user
-- Request
-
-  - Method: POST
-   - URL: /api/businesses/:business_id
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "businesses": [
-        {
-          "owner_id": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "name": "App Academy",
-          "zipcode":"00001",
-          "description": "Place where web developers are created",
-          "price": "$",
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "hours":{
-            "monday_open":"0900",
-            "monday_close":"1700",
-            "tuesday_open":"0900",
-            "tuesday_close":"1630",
-            "wednesday_open":"0900",
-            "wednesday_close":"1700",
-            "thursday_open":"0915",
-            "thursday_close":"1700",
-            "friday_open":"0900",
-            "friday_close":"1745",
-            "saturday_open":"1000",
-            "saturday_close":"1600",
-            "sunday_open":null,
-            "sunday_close":null,
-          },
-          "email":"biz@gmail.com",
-          "website":"biz.biz",
-          "phone":"1234567890",
-          "category":{
-            "id":1,
-            "name":"Veterinarian",
-            "Subcategories": [
-                {
-                    "id":1,
-                    "name":"Exotic Vet",
-                },
-                {
-                    "id":2,
-                    "name":"General Vet",
-                },
-            ],
-          },
-          "attributes":[
-            {
-                "id":1,
-                "name":"Free Wi-Fi",
-            },
-            {
-                "id":2,
-                "name":"Dental Cleaning",
-            },
-          ],
-          "business_images":[
-            {
-                "id":1,
-                "url":"www.google.com",
-            },
-          ],
-        }
-      ]
-    }
-    ```
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "businesses": [
-        {
-          "id": 1,
-          "owner_id": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "name": "App Academy",
-          "zipcode":"00001",
-          "description": "Place where web developers are created",
-          "price": "$",
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "hours":{
-            "monday_open":"0900",
-            "monday_close":"1700",
-            "tuesday_open":"0900",
-            "tuesday_close":"1630",
-            "wednesday_open":"0900",
-            "wednesday_close":"1700",
-            "thursday_open":"0915",
-            "thursday_close":"1700",
-            "friday_open":"0900",
-            "friday_close":"1745",
-            "saturday_open":"1000",
-            "saturday_close":"1600",
-            "sunday_open":null,
-            "sunday_close":null,
-          },
-          "email":"biz@gmail.com",
-          "website":"biz.biz",
-          "phone":"1234567890",
-          "category":{
-            "id":1,
-            "name":"Veterinarian",
-            "Subcategories": [
-                {
-                    "id":1,
-                    "name":"Exotic Vet",
-                },
-                {
-                    "id":2,
-                    "name":"General Vet",
-                },
-            ],
-          },
-          "attributes":[
-            {
-                "id":1,
-                "name":"Free Wi-Fi",
-            },
-            {
-                "id":2,
-                "name":"Dental Cleaning",
-            },
-          ],
-          "business_images":[
-            {
-                "id":1,
-                "url":"www.google.com",
-            },
-          ],
-        }
-      ]
+      "age": 25,
+      "firstName":"Simon",
+      "lastName":"Krawa",
+      "sex": "Male",
+      "email":"bssammel@gmail.com",
+      "phone":"3524155409",
+      "gender":"Transgender man",
+      "insurance": "BCBS Federal",
+      "religion": "Jewish",
+      "relationshipStatus": "Married",
+      "language":"English",
+      "ethnicity":"White",
+      "street":"23 Dunkard Ave",
+      "city":"Uniontown",
+      "state":"PA",
+      "name911":"Keiran Krawa",
+      "phone911":"4077937788",
+      "street911":"23 Dunkard Ave",
+      "city911":"Uniontown",
+      "state911":"PA",
+      "relationship911":"Spouse",
+      "pharmName":"Hixenbaugh's Drug Store",
+      "pharmStreet":"304 Morgantown St",
+      "pharmCity":"Uniontown",
+      "pharmState":"PA",
     }
     ```
 
@@ -956,22 +637,15 @@ Updates and returns an existing business.
       "message": "Bad Request", // (or "Validation error" if generated by Sequelize),
       "errors": {
         "address": "Street address is required",
+        "dob":"Date of Birth is required",
         "city": "City is required",
         "state": "State is required",
-        "zip_code": "Zip Code is required",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required and must be between 30-255 chars",
-        "hours": "hours are required",
-        "email": "Email is required",
-        "website": "Website is required",
-        "phone": "Phone Number is required",
-        "category": "Category is required",
-        "business_image": "Business image is required"
+        "sex": "Sex is required",
       }
     }
     ```
 
-- Error response: Couldn't find a business with the specified id
+- Error response: Couldn't find a patient with the specified id
 
   - Status Code: 404
   - Headers:
@@ -980,13 +654,13 @@ Updates and returns an existing business.
 
     ```json
     {
-      "message": "Business couldn't be found"
+      "message": "Patient couldn't be found"
     }
     ```
 
-### Delete a business
+### Delete a patient???????
 
-Deletes an existing business.
+Deletes an existing patint.
 
 - Require Authentication: true
 - Require proper authorization: business must belong to the current user
@@ -1022,17 +696,18 @@ Deletes an existing business.
     }
     ```
 
-## REVIEWS
+## CONDITIONS
 
-### Get all Reviews of the Current User
+### Get all Conditions of a Patient by ID
 
-Returns all the reviews written by the current user.
+Returns all the conditions associated with a patient
 
 - Require Authentication: true
+- Requires that the current user be the patient or provider assigned to patient.
 - Request
 
   - Method: GET
-  - URL: /api/reviews/current
+  - URL: /api/patients/:id/conditions
   - Body: none
 
 - Successful Response
@@ -1044,91 +719,36 @@ Returns all the reviews written by the current user.
 
     ```json
     {
-      "Reviews": [
+      "conditions": [
         {
           "id": 1,
-          "user_id": 1,
-          "business_id": 1,
-          "review": "This was an awesome business!",
-          "stars": 5,
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "User": {
-            "id": 1,
-            "first_name": "John",
-            "last_name": "Smith"
-          },
-          "business": {
-            "id": 1,
-            "owner_id": 1,
-            "city": "San Francisco",
-            "state": "California",
-            "name": "App Academy",
-            "category":{
-                "id":1,
-                "name":"Veterinarian"
-            }
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
+          "patientId":1,
+          "providerId":1,
+          "name": "Hypermobility",
+          "description": "Identified post ACFL tear",
+          "status": "Chronic",
+        },
+        {
+          "id": 2,
+          "patientId":1,
+          "providerId":1,
+          "name": "Anxiety",
+          "description": "Original DX with previous physician, managed",
+          "status": "Chronic",
+        },
+        {
+          "id": 3,
+          "patientId":1,
+          "providerId":1,
+          "name": "Depression",
+          "description": "Original DX with previous physician, managed",
+          "status": "Chronic",
         }
       ]
     }
 
     ```
-
-### Get all Reviews by a business's id
-
-Returns all the reviews that belong to a business specified by id.
-
-- Require Authentication: false
-- Request
-
-  - Method: GET
-  - URL: /api/businesses/:business_id/reviews
-  - Body: none
-
-- Successful Response
-
-  - Status Code: 200
-  - Headers:
-    - Content-Type: application/json
-  - Body:
-
-    ```json
-    {
-      "Reviews": [
-        {
-          "id": 1,
-          "userId": 1,
-          "business_id": 1,
-          "review": "This was an awesome business!",
-          "stars": 5,
-          "created_at": "2021-11-19 20:39:36",
-          "updated_at": "2021-11-19 20:39:36",
-          "User": {
-            "id": 1,
-            "first_name": "John",
-            "last_name": "Smith",
-            "num_images": 12,
-            "num_reviews": 5,
-          },
-          "Review_images": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
-        }
-      ]
-    }
-    ```
-
-- Error response: Couldn't find a business with the specified id
+- Error response: Couldn't find a patient with the specified id
 
   - Status Code: 404
   - Headers:
@@ -1137,11 +757,11 @@ Returns all the reviews that belong to a business specified by id.
 
     ```json
     {
-      "message": "business couldn't be found"
+      "message": "Patient couldn't be found"
     }
     ```
 
-### Create a Review for a business based on the business's id
+### Add a Condition to a Patient
 
 Create and return a new review for a business specified by id.
 
