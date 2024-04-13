@@ -1192,14 +1192,16 @@ Delete an existing treatment.
 
 ### Get all Apppointments of a Patient by ID
 
+!!!!-----***html type datetime-local***-----!!!!
+ 
 Returns all the appointments associated with a patient
 
 - Require Authentication: true
-- Requires that the current user be the patient or provider assigned to patient.
+- Requires that the current user be the patient
 - Request
 
   - Method: GET
-  - URL: /api/patients/:id/treatments
+  - URL: /api/patients/:id/appointments
   - Body: none
 
 - Successful Response
@@ -1211,22 +1213,36 @@ Returns all the appointments associated with a patient
 
     ```json
     {
-      "treatments": [
+      "appointments": [
         {
           "id": 1,
           "patientId":1,
           "providerId": 1,
-          "name": "Physical Therapy",
-          "dosage": "Not Applicable",
-          "frequency": "2 times a Week",
+          "apptType": "followup",
+          "chiefComplaint": "Follow-up for ingrown/infected nail",
+          "startTime": "2024-04-03T10:00",
+          "endTime": "2024-04-03T10:30",
+          "newPatient": false,
         },
         {
           "id": 2,
           "patientId":1,
-          "providerId":1,
-          "name": "Claritin",
-          "dosage": "Whatever that dosage is",
-          "frequency": "1 time a Day",
+          "providerId": 1,
+          "apptType": "annual",
+          "chiefComplaint": "Annual Wellness",
+          "startTime": "2025-01-15T14:00",
+          "endTime": "2025-01-15T14:30",
+          "newPatient": false,
+        },
+        {
+          "id": 3,
+          "patientId":1,
+          "providerId": 3,
+          "apptType": "routine",
+          "chiefComplaint": "Quarterly Labs and Monitoring",
+          "startTime": "2024-10-T16:30",
+          "endTime": "2024-10-15T17:00",
+          "newPatient": true,
         }
       ]
     }
@@ -1245,7 +1261,7 @@ Returns all the appointments associated with a patient
     }
     ```
 
-### Add a treatment to a Patient
+### Add an appointment for patient and provider
 
 Create and return a new treatment for a patient specified by id.
 
@@ -1262,9 +1278,11 @@ Create and return a new treatment for a patient specified by id.
     {
       "patientId":1,
       "providerId": 1,
-      "name": "Physical Therapy",
-      "dosage": "Not Applicable",
-      "frequency": "2 times a Week",
+      "apptType": "followup",
+      "chiefComplaint": "Follow-up for ingrown/infected nail",
+      "startTime": "2024-04-03T10:00",
+      "endTime": "2024-04-03T10:30",
+      "newPatient": false,
     }
     ```
 
@@ -1280,9 +1298,11 @@ Create and return a new treatment for a patient specified by id.
       "id": 1,
       "patientId":1,
       "providerId": 1,
-      "name": "Physical Therapy",
-      "dosage": "Not Applicable",
-      "frequency": "2 times a Week",
+      "apptType": "followup",
+      "chiefComplaint": "Follow-up for ingrown/infected nail",
+      "startTime": "2024-04-03T10:00",
+      "endTime": "2024-04-03T10:30",
+      "newPatient": false,
     }
     ```
 
