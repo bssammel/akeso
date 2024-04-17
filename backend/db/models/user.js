@@ -2,6 +2,9 @@
 const {
   Model, Validator
 } = require('sequelize');
+
+console.log("model file is running")
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
