@@ -1,0 +1,9 @@
+User Model
+npx sequelize model:generate --name User --attributes email:string,phone:string,firstName:string,lastName:string,imageURL:string,providerBool:boolean,hashedPassword:string
+npx dotenv sequelize db:migrate
+npx dotenv sequelize db:migrate:undo
+sqlite3 db/dev.db ".schema Users"
+npx sequelize seed:generate --name demo-user
+npx dotenv sequelize db:seed:all
+npx dotenv sequelize db:seed:undo (undo most recent migration for seed file)
+npx dotenv sequelize db:seed:undo:all (undo migrations for all seed files)
