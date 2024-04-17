@@ -16,10 +16,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(256),
+        allowNull: false,
+        unique: true
       },
       phone: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(10),
+        allowNull: false,
       },
       firstName: {
         type: Sequelize.STRING
@@ -34,19 +37,23 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       hashedPassword: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING.BINARY,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       }
-    });
+    }, options);
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "Users";
     await queryInterface.dropTable('Users');
   }
 };
