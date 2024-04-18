@@ -5,6 +5,10 @@ import { useDispatch } from 'react-redux';
 import { BiSolidUserDetail } from "react-icons/bi";
 //should consider imports for doctor and patient icons, bookmarked
 import * as sessionActions from '../../store/session';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import LoginFormModal from '../LoginFormPage/LoginFormPage';
+import SignupFormModal from '../SignupFormPage/SignupFormPage';
+
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
@@ -33,7 +37,8 @@ function ProfileButton({ user }) {
     
         const closeMenu = (e) => {
             // console.log("close menu running");
-            if (ulRef.current && !ulRef.current.contains(e.target)) {
+            // if (ulRef.current && !ulRef.current.contains(e.target)) {
+              if (!ulRef.current.contains(e.target)){ 
                 // console.log("close menu setting false");
                 setShowMenu(false);
               }
@@ -58,14 +63,35 @@ function ProfileButton({ user }) {
           <BiSolidUserDetail />
         </button>
         <ul className={
-            "profile-dropdown remove-bullet" + (showMenu ? "" : " hidden")
-          } ref={ulRef}> 
-        {/* logic for dr, RN etc */}
-          <li>{user.firstName} {user.lastName}</li>
-          <li>{user.email}</li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
+            // "profile-dropdown remove-bullet" + (showMenu ? "" : " hidden")
+            "profile-dropdown" + (showMenu ? "" : " hidden")
+          } 
+          ref={ulRef}> 
+          {user ? (
+          <>
+            {/* logic for dr, RN etc */}
+            <li>{user.firstName} {user.lastName}</li>
+            <li>{user.email}</li>
+            <li>
+              <button onClick={logout}>Log Out</button>
+            </li>
+          </>
+          ) : (
+            <>
+            <li>
+              <OpenModalButton
+                buttonText="Log In"
+                modalComponent={<LoginFormModal />}
+              />
+            </li>
+            <li>
+              <OpenModalButton
+                buttonText="Sign Up"
+                modalComponent={<SignupFormModal />}
+              />
+            </li>
+          </>
+          )}
         </ul>
       </>
     );
