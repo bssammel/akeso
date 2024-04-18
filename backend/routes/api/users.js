@@ -34,7 +34,7 @@ const validateSignup = [
       .withMessage('Please provide a phone number.'),
     check('phone')
       .exists({ checkFalsy: true })
-      .isLength({ min: 10, max:10 })
+      .isLength(10)
       .withMessage('Phone number must be 10 characters exactly.'),
     handleValidationErrors
   ];
