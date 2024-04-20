@@ -18,3 +18,6 @@ npx sequelize seed:generate --name demo-patients
 
 Patient/Providers
 npx sequelize seed:generate --name demo-provider-patients
+
+Conditions
+npx sequelize model:generate --name Condition --attributes patientId:integer,providerId:integer,name:string,description:string,status:string
