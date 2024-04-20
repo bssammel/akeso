@@ -21,6 +21,14 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey:"userId",
           onDelete: "CASCADE"
         }
+      ),
+      Patient.belongsToMany(
+        models.Provider,
+        {
+          through: models.ProviderPatient,
+          foreignKey: 'patientId',
+          otherKey:'providerId'
+        }
       )
     }
   }
@@ -37,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull:false,
       validate: {
-        len:[1,1],
+        // len:[1,1],
         isAlpha: true
       }
     },

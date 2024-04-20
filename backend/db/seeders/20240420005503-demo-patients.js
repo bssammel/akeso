@@ -10,6 +10,9 @@ if (process.env.NODE_ENV === 'production') {
 console.log("patient seeder file is running");
 
 /** @type {import('sequelize-cli').Migration} */
+
+console.log("patient seeder file is still running");
+
 module.exports = {
   async up (queryInterface, Sequelize) {
     await Patient.bulkCreate([
@@ -133,7 +136,8 @@ module.exports = {
         pharmCity:"Metropolis",
         pharmState:"IL",
       },
-    ])
+    ],{ validate: true })
+    console.log("patient seeder file is even still running");
   },
 
   async down (queryInterface, Sequelize) {
@@ -146,7 +150,12 @@ module.exports = {
     options.tableName = 'Patients';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      userId: {[Op.in]: [1, 4, 5, 6, 8]}
+      userId: {[Op.in]: [1, 
+        4, 
+        5, 
+        6, 
+        8
+      ]}
     }, {})
   }
 };
