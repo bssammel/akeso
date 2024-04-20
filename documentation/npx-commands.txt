@@ -15,3 +15,6 @@ npx sequelize model:generate --name Provider --attributes userId:integer,title:s
 Patient Model
 npx sequelize model:generate --name Patient --attributes userId:integer,dob:date,sex:string,gender:string,insurance:string,religion:string,relationshipStatus:string,language:string,ethnicity:string,street:string,city:string,state:string,name911:string,phone911:string,street911:string,city911:string,state911:string,relationship911:string,pharmName:string,pharmStreet:string,pharmCity:string,pharmState:string
 npx sequelize seed:generate --name demo-patients
+
+Patient/Providers
+npx sequelize seed:generate --name demo-provider-patients

@@ -20,18 +20,18 @@ module.exports = (sequelize, DataTypes) => {
       //     foreignKey: 'patientId',
       //   }
       // ),
-      Patient.belongsToMany(
-        models.Provider,
-        {
-          through: models.ProviderPatient,
-        }
-      ),
-      Provider.belongsToMany(
-        models.Patient,
-        {
-          through: models.ProviderPatient,
-        }
-      )
+      // Patient.belongsToMany(
+      //   models.Providers,
+      //   {
+      //     through: models.ProviderPatient,
+      //   }
+      // ),
+      // Provider.belongsToMany(
+      //   models.Patients,
+      //   {
+      //     through: models.ProviderPatient,
+      //   }
+      // )
       // ProviderPatient.hasMany(
       //   models.Provider,
       //   {

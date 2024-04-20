@@ -15,6 +15,7 @@ console.log("patient seeder file is still running");
 
 module.exports = {
   async up (queryInterface, Sequelize) {
+    console.log("patient seeder file is still running");
     await Patient.bulkCreate([
       {
         userId: 1,
@@ -136,7 +137,9 @@ module.exports = {
         pharmCity:"Metropolis",
         pharmState:"IL",
       },
-    ],{ validate: true })
+    ],
+    // { validate: true }
+    )
     console.log("patient seeder file is even still running");
   },
 
