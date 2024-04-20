@@ -7,3 +7,11 @@ npx sequelize seed:generate --name demo-user
 npx dotenv sequelize db:seed:all
 npx dotenv sequelize db:seed:undo (undo most recent migration for seed file)
 npx dotenv sequelize db:seed:undo:all (undo migrations for all seed files)
+
+
+Provider Model
+npx sequelize model:generate --name Provider --attributes userId:integer,title:string,specialty:string
+
+Patient Model
+npx sequelize model:generate --name Patient --attributes userId:integer,dob:date,sex:string,gender:string,insurance:string,religion:string,relationshipStatus:string,language:string,ethnicity:string,street:string,city:string,state:string,name911:string,phone911:string,street911:string,city911:string,state911:string,relationship911:string,pharmName:string,pharmStreet:string,pharmCity:string,pharmState:string
+npx sequelize seed:generate --name demo-patients
