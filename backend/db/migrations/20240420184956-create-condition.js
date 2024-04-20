@@ -7,8 +7,6 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA; 
 }
 
-console.log('condition migration file is running')
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Conditions', {
@@ -21,23 +19,23 @@ module.exports = {
       patientId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'Patients'},
+        references: {model: 'Patients', key: "id"},
+        onDelete: "CASCADE"
       },
       providerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'Providers'},
+        references: {model: 'Providers', key: "id"},
+        onDelete: "CASCADE"
       },
       name: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
+        type: Sequelize.STRING(75)
       },
       description: {
-        type: Sequelize.DataTypes.STRING
+        type: Sequelize.STRING(2000)
       },
       status: {
-        type: Sequelize.DataTypes.STRING,
-        allowNull: false
+        type: Sequelize.STRING(30)
       },
       createdAt: {
         allowNull: false,
@@ -48,11 +46,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
-      }, 
-      options});
+      }
+    }, options);
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Conditions';
+    options.tableName = "Conditions";
     await queryInterface.dropTable(options);
   }
 };

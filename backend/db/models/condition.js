@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, Validator
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Condition extends Model {
@@ -10,15 +10,51 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Condition.belongsTo(
+        models.Patient,
+        {
+          foreignKey:"patientId",
+          onDelete: "CASCADE"
+        }
+      ),
+      Condition.belongsTo(
+        models.Provider,
+        {
+          foreignKey:"providerId",
+          onDelete: "CASCADE"
+        }
+      )
     }
   }
   Condition.init({
-    patientId: DataTypes.INTEGER,
-    providerId: DataTypes.INTEGER,
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    status: DataTypes.STRING
+    patientId: {
+      type: DataTypes.INTEGER,
+      allowNull:false
+    },
+    providerId: {
+      type: DataTypes.INTEGER,
+      allowNull:false
+    },
+    name:  {
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate: {
+        len:[1,75],
+      }
+    },
+    description:  {
+      type: DataTypes.STRING,
+      validate: {
+        len:[0, 2000]
+      }
+    },
+    status:  {
+      type: DataTypes.STRING,
+      allowNull:false,
+      validate: {
+        len:[1,30],
+      }
+    },
   }, {
     sequelize,
     modelName: 'Condition',
