@@ -52,7 +52,7 @@ module.exports = {
         email:'archie@simon.site',
         phone:'3456789012',
         firstName: 'Monarch',
-        lastName: 'Lamerson',
+        lastName: 'Lewis',
         providerBool:false,
         hashedPassword: bcrypt.hashSync('archiePass')
       },
@@ -60,7 +60,7 @@ module.exports = {
         email:'lucas@simon.site',
         phone:'4567890123',
         firstName: 'Lucas',
-        lastName: 'Barrs',
+        lastName: 'Byrne',
         providerBool:false,
         hashedPassword: bcrypt.hashSync('lucasPass')
       },
