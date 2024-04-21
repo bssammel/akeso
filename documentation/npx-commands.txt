@@ -21,3 +21,7 @@ npx sequelize seed:generate --name demo-provider-patients
 
 Conditions
 npx sequelize model:generate --name Condition --attributes patientId:integer,providerId:integer,name:string,description:string,status:string
+
+
+Treatments
+npx sequelize model:generate --name Treatment --attributes patientId:integer,providerId:integer,conditionId:integer,name:string,dosage:string,frequencyQuantity:decimal,frequencyPeriod:string
