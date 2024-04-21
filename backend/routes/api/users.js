@@ -2,7 +2,8 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { ageCalc } = require('../../utils/dateFuncs')
+const { User, Patient, Provider } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -59,10 +60,58 @@ router.post(
       };
   
       await setTokenCookie(res, safeUser);
+
+      // if (safeUser.errors.email && safeUser.errors.email === "email must be unique"){
+      //   safeUser.errors.email = "User with that email already exists"
+      // }
   
       return res.json({
         user: safeUser
       });
+    }
+  );
+
+  router.get(
+    '/:userId',
+    async (req, res, next) => {
+      const desiredUserBeta = await User.findByPk(req.params.userId);
+
+      //user not found with id
+      if(!desiredUserBeta){
+        const err = new Error("User couldn't be found");
+        err.status = 404;
+        return next(err);
+      }
+
+      let desiredUser = {}
+
+      if (!desiredUserBeta.providerBool){//if the user fetched is a patient
+          desiredUser = await User.findOne({
+          where:{id:req.params.userId},
+          include: [
+            {model: Patient}
+          ],
+          group: ["User.id", "Patient.id"]
+        })
+
+        const ageInYrs = ageCalc(desiredUser.dataValues.Patient.dob)
+        desiredUser.dataValues.Patient.dataValues.age = ageInYrs;
+
+
+      }
+      if (desiredUserBeta.providerBool){//if the user fetched is a provider
+        desiredUser = await User.findOne({
+          where:{id:req.params.userId},
+          include: [
+            {model: Provider}
+          ],
+          group: ["User.id", "Provider.id"]
+        })
+      }
+
+      console.log('desiredUser')
+      console.log(desiredUser)
+      return res.json(desiredUser); 
     }
   );
 
