@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { User, Patient, Provider, ProviderPatient } = require('../../db/models');
+const { User, Patient, Provider, ProviderPatient, Treatment, Condition } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors, validatePatientCreation } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -82,6 +82,10 @@ router.get(
             where: {
                 id: req.params.patientId
             },
+            include: [
+                {model: Condition, attributes: ["id", "name", "description", "status"]},
+                {model: User, attributes: ["firstName", "lastName", "phone", "email"]}
+            ],
             attributes: [
                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
             ]
@@ -100,6 +104,8 @@ router.get(
         return res.json(ptObj)
     }
   );
+
+
 
 // !  Update pt by id
 // ! Add a new patient 
