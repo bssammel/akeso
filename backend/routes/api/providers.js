@@ -9,97 +9,37 @@ const { ageCalc } = require('../../utils/dateFuncs')
 const router = express.Router();
 
 
-// ! Get all providers for current patient
+// ! Get full provider by id
 router.get(
-    '/current',
-    requireAuth,
-    async (req, res) => {
-        const {user} = req;
-        const userId = user.id;
-        console.log("userId", userId)
-        const where = {};
-        where.userId = userId;
-        const patientRes = await Patient.findOne({
-            where,
-            attributes: ["id"]
-        })
-
-        console.log("############################################")
-        console.log(patientRes)
-
-        patientId = patientRes.dataValues.id;
-
-        const pvdPtArr = await ProviderPatient.findAll({
+    '/:providerId',
+    async (req, res, next) => {
+        const pvdObj = await Provider.findOne({
             where: {
-                patientId: patientId,
+                id: req.params.providerId
             },
-            attributes: ['patientId', 'providerId'],
+            include: [
+                {
+                    model: User,
+                    attributes: [ 
+                        "firstName", "lastName", "email", "phone"
+                    ],
+                }
+            ],
+            attributes: [
+                'id', "userId", "title", "specialty"
+            ]
         })
 
-        let pvdArr = [];
-
-        for (let i = 0; i < pvdPtArr.length; i++) {
-            const pvdPtRltn = pvdPtArr[i];
-            const pvdObj = await Provider.findOne({
-                where: {
-                    id: pvdPtRltn.providerId
-                },
-                include: [
-                    {
-                        model: User,
-                        attributes: [ 
-                            "firstName", "lastName", "email", "phone"
-                        ],
-                    }
-                ],
-                attributes: [
-                    'id', "userId", "title", "specialty"
-                ]
-            })
-
-            //reformatting
-            pvdObj.dataValues.firstName = pvdObj.dataValues.User.firstName;
-            pvdObj.dataValues.lastName = pvdObj.dataValues.User.lastName;
-            pvdObj.dataValues.email = pvdObj.dataValues.User.email;
-            pvdObj.dataValues.phone = pvdObj.dataValues.User.phone;
-            delete pvdObj.dataValues.User
-
-            pvdArr.push(pvdObj)
-            
-        }
-
-        console.log(pvdArr)
-
-        return res.json(pvdArr);
+        //reformatting
+        pvdObj.dataValues.firstName = pvdObj.dataValues.User.firstName;
+        pvdObj.dataValues.lastName = pvdObj.dataValues.User.lastName;
+        pvdObj.dataValues.email = pvdObj.dataValues.User.email;
+        pvdObj.dataValues.phone = pvdObj.dataValues.User.phone;
+        delete pvdObj.dataValues.User
+        
+        return res.json(pvdObj)
     }
   );
-
-// // ! Get full pt by id
-// router.get(
-//     '/:patientId',
-//     async (req, res, next) => {
-//         const ptObj = await Patient.findOne({
-//             where: {
-//                 id: req.params.patientId
-//             },
-//             attributes: [
-//                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
-//             ]
-//         })
-
-//         if (!ptObj) {
-//             const err = new Error("Patient couldn't be found");
-//             err.status = 404;
-//             return next(err);
-//         }
-        
-//         //adding age
-//         const ageInYrs = ageCalc(ptObj.dataValues.dob)
-//         ptObj.dataValues.age = ageInYrs;
-        
-//         return res.json(ptObj)
-//     }
-//   );
 
 // // !  Update pt by id
 // // ! Add a new patient 
