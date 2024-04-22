@@ -195,8 +195,10 @@ router.get(
 
       returnArr.forEach(ptObj => {
         console.log(ptObj.dataValues)
-        const ageInYrs = ageCalc(ptObj.dataValues.Patient.dob)
-        ptObj.dataValues.Patient.dataValues.age = ageInYrs;
+        if(ptObj.dataValues.Patient){
+            const ageInYrs = ageCalc(ptObj.dataValues.Patient.dob)
+            ptObj.dataValues.Patient.dataValues.age = ageInYrs;
+        }
       });
       
       return res.json(returnArr); 
