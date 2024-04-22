@@ -8,6 +8,32 @@ const { ageCalc } = require('../../utils/dateFuncs')
 
 const router = express.Router();
 
+// ! Get all providers
+router.get(
+    '/all',
+    requireAuth,
+    async (req, res, next) => {
+      const returnArr = await User.findAll({
+        where: {
+            providerBool: true 
+        },
+        include: [
+            {
+                model: Provider,
+                attributes: [ 
+                    "specialty", "title", "id", "userId"
+                ]
+            }
+        ],
+        attributes: [
+            "firstName", "lastName", "email", "phone"
+        ],
+      });
+      
+      return res.json(returnArr); 
+    }
+  );
+
 // ! Get all abbv pts for a single provider
 router.get(
     '/current/patients',
@@ -176,39 +202,7 @@ router.get(
 
 
 
-// // ! Get all abbv pts
-// router.get(
-//     '/',
-//     requireAuth,
-//     async (req, res, next) => {
-//       const returnArr = await User.findAll({
-//         where: {
-//             providerBool: false 
-//         },
-//         include: [
-//             {
-//                 model: Patient,
-//                 attributes: [ 
-//                     "userId", "sex", "dob", "id"
-//                 ]
-//             }
-//         ],
-//         attributes: [
-//             "firstName", "lastName", "email", "phone", "id"
-//         ],
-//       });
 
-//       returnArr.forEach(ptObj => {
-//         console.log(ptObj.dataValues)
-//         if(ptObj.dataValues.Patient){
-//             const ageInYrs = ageCalc(ptObj.dataValues.Patient.dob)
-//             ptObj.dataValues.Patient.dataValues.age = ageInYrs;
-//         }
-//       });
-      
-//       return res.json(returnArr); 
-//     }
-//   );
 
 // // ! Add a new patient 
 // router.post(
