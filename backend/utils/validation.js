@@ -63,6 +63,17 @@ const validatePatientCreation = [
     .withMessage('Please provide your relationship to your emergency contact.'),
   handleValidationErrors]
 
+
+  const validateProviderCreation = [
+    check('specialty')
+      .exists({ checkFalsy: true })
+      .withMessage('Please select a specialty.'),
+    check('title')
+      .exists({ checkFalsy: true })
+      .withMessage('Please provide the most accurate title.'),
+    handleValidationErrors]
+  
+
 module.exports = {
-  handleValidationErrors, validatePatientCreation
+  handleValidationErrors, validatePatientCreation, validateProviderCreation
 };

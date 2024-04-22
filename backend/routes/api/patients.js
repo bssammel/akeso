@@ -8,37 +8,40 @@ const { ageCalc } = require('../../utils/dateFuncs')
 
 const router = express.Router();
 
-
-// ! Get all abbv pts for a single provider
+// ! Get all providers for current patient
 router.get(
-    '/current',
+    '/:patientId/providers',
     requireAuth,
     async (req, res) => {
         const {user} = req;
         const userId = user.id;
+        console.log("userId", userId)
         const where = {};
         where.userId = userId;
-        const providerRes = await Provider.findOne({
+        const patientRes = await Patient.findOne({
             where,
-            attributes: ['id']
+            attributes: ["id"]
         })
 
-        providerId = providerRes.dataValues.id;
+        console.log("############################################")
+        console.log(patientRes)
+
+        patientId = patientRes.dataValues.id;
 
         const pvdPtArr = await ProviderPatient.findAll({
             where: {
-                providerId: providerId,
+                patientId: patientId,
             },
             attributes: ['patientId', 'providerId'],
         })
 
-        let ptArr = [];
+        let pvdArr = [];
 
         for (let i = 0; i < pvdPtArr.length; i++) {
             const pvdPtRltn = pvdPtArr[i];
-            const ptObj = await Patient.findOne({
+            const pvdObj = await Provider.findOne({
                 where: {
-                    id: pvdPtRltn.patientId
+                    id: pvdPtRltn.providerId
                 },
                 include: [
                     {
@@ -49,28 +52,24 @@ router.get(
                     }
                 ],
                 attributes: [
-                    'id', "userId", "sex", "dob"
+                    'id', "userId", "title", "specialty"
                 ]
             })
 
             //reformatting
-            ptObj.dataValues.firstName = ptObj.dataValues.User.firstName;
-            ptObj.dataValues.lastName = ptObj.dataValues.User.lastName;
-            ptObj.dataValues.email = ptObj.dataValues.User.email;
-            ptObj.dataValues.phone = ptObj.dataValues.User.phone;
-            delete ptObj.dataValues.User
+            pvdObj.dataValues.firstName = pvdObj.dataValues.User.firstName;
+            pvdObj.dataValues.lastName = pvdObj.dataValues.User.lastName;
+            pvdObj.dataValues.email = pvdObj.dataValues.User.email;
+            pvdObj.dataValues.phone = pvdObj.dataValues.User.phone;
+            delete pvdObj.dataValues.User
 
-            //adding age
-            const ageInYrs = ageCalc(ptObj.dataValues.dob)
-            ptObj.dataValues.age = ageInYrs;
-
-            ptArr.push(ptObj)
+            pvdArr.push(pvdObj)
             
         }
 
-        console.log(ptArr)
+        console.log(pvdArr)
 
-        return res.json(ptArr);
+        return res.json(pvdArr);
     }
   );
 
