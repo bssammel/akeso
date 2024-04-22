@@ -187,11 +187,12 @@ router.get(
             }
         ],
         attributes: [
-            "firstName", "lastName", "email", "phone"
+            "firstName", "lastName", "email", "phone", "id"
         ],
       });
 
       returnArr.forEach(ptObj => {
+        console.log(ptObj.dataValues)
         const ageInYrs = ageCalc(ptObj.dataValues.Patient.dob)
         ptObj.dataValues.Patient.dataValues.age = ageInYrs;
       });
