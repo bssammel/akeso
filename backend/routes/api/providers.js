@@ -21,55 +21,56 @@ router.get(
         where.userId = userId;
         const patientRes = await Patient.findOne({
             where,
+            attributes: ["id"]
         })
 
         console.log("############################################")
         console.log(patientRes)
 
-        // patientId = patientRes.dataValues.id;
+        patientId = patientRes.dataValues.id;
 
-        // const pvdPtArr = await ProviderPatient.findAll({
-        //     where: {
-        //         patientId: patientId,
-        //     },
-        //     attributes: ['patientId', 'providerId'],
-        // })
+        const pvdPtArr = await ProviderPatient.findAll({
+            where: {
+                patientId: patientId,
+            },
+            attributes: ['patientId', 'providerId'],
+        })
 
-        // let pvdArr = [];
+        let pvdArr = [];
 
-        // for (let i = 0; i < pvdPtArr.length; i++) {
-        //     const pvdPtRltn = pvdPtArr[i];
-        //     const pvdObj = await Provider.findOne({
-        //         where: {
-        //             id: pvdPtRltn.providerId
-        //         },
-        //         include: [
-        //             {
-        //                 model: User,
-        //                 attributes: [ 
-        //                     "firstName", "lastName", "email", "phone"
-        //                 ],
-        //             }
-        //         ],
-        //         attributes: [
-        //             'id', "userId", "title", "specialty"
-        //         ]
-        //     })
+        for (let i = 0; i < pvdPtArr.length; i++) {
+            const pvdPtRltn = pvdPtArr[i];
+            const pvdObj = await Provider.findOne({
+                where: {
+                    id: pvdPtRltn.providerId
+                },
+                include: [
+                    {
+                        model: User,
+                        attributes: [ 
+                            "firstName", "lastName", "email", "phone"
+                        ],
+                    }
+                ],
+                attributes: [
+                    'id', "userId", "title", "specialty"
+                ]
+            })
 
-        //     //reformatting
-        //     pvdObj.dataValues.firstName = pvdObj.dataValues.User.firstName;
-        //     pvdObj.dataValues.lastName = pvdObj.dataValues.User.lastName;
-        //     pvdObj.dataValues.email = pvdObj.dataValues.User.email;
-        //     pvdObj.dataValues.phone = pvdObj.dataValues.User.phone;
-        //     delete pvdObj.dataValues.User
+            //reformatting
+            pvdObj.dataValues.firstName = pvdObj.dataValues.User.firstName;
+            pvdObj.dataValues.lastName = pvdObj.dataValues.User.lastName;
+            pvdObj.dataValues.email = pvdObj.dataValues.User.email;
+            pvdObj.dataValues.phone = pvdObj.dataValues.User.phone;
+            delete pvdObj.dataValues.User
 
-            // pvdArr.push(pvdObj)
+            pvdArr.push(pvdObj)
             
-        // }
+        }
 
-        // console.log(pvdArr)
+        console.log(pvdArr)
 
-        return res.json(patientRes);
+        return res.json(pvdArr);
     }
   );
 
