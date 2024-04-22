@@ -23,6 +23,13 @@ module.exports = (sequelize, DataTypes) => {
           onDelete: "CASCADE"
         }
       ),
+      Patient.belongsTo(
+        models.User,
+        {
+          foreignKey:"userId",
+          onDelete: "CASCADE"
+        }
+      ),
       Patient.belongsToMany(
         models.Provider,
         {
