@@ -298,7 +298,7 @@ Returns all the patients.
 - Request
 
   - Method: GET
-  - URL: /api/search
+  - URL: /api/patients/all
   - Body: none
 
 - Successful Response
@@ -1448,3 +1448,16 @@ Delete an existing treatment.
       "message": "Treatment couldn't be found"
     }
     ```
+
+
+
+
+
+```router.get(
+    '/',
+    async (req, res, next) => {
+      const returnObj = await Model.findByPk(req.params.userId);
+
+      return res.json(returnObj); 
+    }
+  );```

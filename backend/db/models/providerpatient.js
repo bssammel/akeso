@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // ProviderPatient.hasMany(
-      //   models.Patient,
-      //   {
-      //     foreignKey: 'patientId',
-      //   }
-      // ),
+      ProviderPatient.hasMany(
+        models.Patient,
+        {
+          foreignKey: 'patientId',
+        }
+      ),
       // Patient.belongsToMany(
       //   models.Providers,
       //   {
@@ -32,12 +32,12 @@ module.exports = (sequelize, DataTypes) => {
       //     through: models.ProviderPatient,
       //   }
       // )
-      // ProviderPatient.hasMany(
-      //   models.Provider,
-      //   {
-      //     foreignKey: 'providerId',
-      //   }
-      // )
+      ProviderPatient.hasMany(
+        models.Provider,
+        {
+          foreignKey: 'providerId',
+        }
+      )
     }
   }
   ProviderPatient.init({
