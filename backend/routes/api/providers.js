@@ -2,7 +2,7 @@ const express = require('express');
 
 const { User, Patient, Provider, ProviderPatient } = require('../../db/models');
 const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
+const { handleValidationErrors, validateProviderCreation } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { ageCalc } = require('../../utils/dateFuncs')
 
@@ -132,124 +132,95 @@ router.get(
     }
   );
 
-// // !  Update pt by id
-// // ! Add a new patient 
-// router.put(
-//     "/:patientId", 
-//     requireAuth, 
-//     validatePatientCreation,
-//     async (req, res, next) => {
-//         const {sex, dob, gender, insurance, religion, relationshipStatus, language, ethnicity, street, city, state, name911, phone911, street911, city911, state911, relationship911, pharmName, pharmStreet, pharmCity, pharmState } = req.body;
-//         const patientId = req.params.patientId;
+// !  Update provider by id
+router.put(
+    "/:providerId", 
+    requireAuth, 
+    validateProviderCreation,
+    async (req, res, next) => {
+        const {specialty, title } = req.body;
 
-//         // const ptToUpdate = await Patient.findByPk(req.params.patientId);
+        const pvdToUpdate = await Provider.findOne({
+            where: {
+                id: req.params.providerId
+            },
+            attributes: [
+                'id', 'userId', 'specialty', 'title'
+            ]
+        })
 
-//         const ptToUpdate = await Patient.findOne({
-//             where: {
-//                 id: req.params.patientId
-//             },
-//             attributes: [
-//                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
-//             ]
-//         })
+        if (!pvdToUpdate) {
+            const err = new Error("Provider couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
 
-//         if (!ptToUpdate) {
-//             const err = new Error("Patient couldn't be found");
-//             err.status = 404;
-//             return next(err);
-//         }
+        const { user } = req;
+        const userId = user.id;
+        const pvdUserId = pvdToUpdate.userId;
+        if (userId !== pvdUserId) {
+            const err = new Error("Forbidden");
+            err.title = 'Forbidden';
+            err.errors = { message: 'Forbidden' };
+            err.status = 403;
+            return next(err);
+        }   
 
-//         const { user } = req;
-//         const userId = user.id;
-//         const ptUserId = ptToUpdate.userId;
-//         if (userId !== ptUserId) {
-//             const err = new Error("Forbidden");
-//             err.title = 'Forbidden';
-//             err.errors = { message: 'Forbidden' };
-//             err.status = 403;
-//             return next(err);
-//         }   
+          const updatedData = {
+            userId, 
+            specialty,
+            title
+        };
 
-//           const updatedData = {
-//             userId: userId,
-//             sex: sex, dob: dob, gender: gender, insurance: insurance, religion: religion, relationshipStatus: relationshipStatus, language: language, ethnicity: ethnicity, street: street, city: city, state: state, name911: name911, phone911: phone911, street911: street911, city911:city911, state911:state911, relationship911: relationship911, pharmName: pharmName, pharmStreet: pharmStreet, pharmCity: pharmCity, pharmState: pharmState
-//         };
+        const filter = {where: {}}
 
-//         const filter = {where: {}}
+        const updatedPvd = await Provider.update(updatedData, filter );
 
-//         const updatedPt = await Patient.update(updatedData, filter );
-//         // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@")
-//         // console.log(updatedPt)
+        const newPvdData = await Provider.findOne({
+            where: {
+                id: req.params.providerId
+            },
+            attributes: [
+                "id","userId", "specialty", "title"
+            ]
+        })
 
-//         // const ageInYrs = ageCalc(updatedPt.dataValues.dob)
-//         // updatedPt.dataValues.age = ageInYrs;
-
-//         const newPtData = await Patient.findOne({
-//             where: {
-//                 id: req.params.patientId
-//             },
-//             attributes: [
-//                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
-//             ]
-//         })
-
-//         return res.json(newPtData)
-
-//         // return res.status(201).json(createdPatient)
+        return res.json(newPvdData)
 
 
-//     })
+    })
 
 
 
 
 
-// // ! Add a new patient 
-// router.post(
-//     "/", 
-//     requireAuth, 
-//     validatePatientCreation,
-//     async (req, res, next) => {
-//         const {sex, dob, gender, insurance, religion, relationshipStatus, language, ethnicity, street, city, state, name911, phone911, street911, city911, state911, relationship911, pharmName, pharmStreet, pharmCity, pharmState } = req.body;
-//         const { user } = req;
-//         const userId = user.id;
-//         const newPatient = await Patient.create({
-//             userId, 
-//             sex,
-//             dob, 
-//             gender, 
-//             insurance, 
-//             religion, 
-//             relationshipStatus, 
-//             language, 
-//             ethnicity, 
-//             street, 
-//             city, 
-//             state, 
-//             name911, 
-//             phone911, 
-//             street911, 
-//             city911, 
-//             state911,
-//             relationship911, 
-//             pharmName, 
-//             pharmStreet, 
-//             pharmCity, 
-//             pharmState 
-//         });
-//         const createdPatient = {
-//             id: newPatient.id,
-//             userId: newPatient.userId,
-//             sex: newPatient.sex, dob: newPatient.dob, gender: newPatient.gender, insurance: newPatient.insurance, religion: newPatient.religion, relationshipStatus: newPatient.relationshipStatus, language: newPatient.language, ethnicity: newPatient.ethnicity, street: newPatient.street, city: newPatient.city, state: newPatient.state, name911: newPatient.name911, phone911: newPatient.phone911, street911: newPatient.street911, relationship911: newPatient.relationship911, pharmName: newPatient.pharmName, pharmStreet: newPatient.pharmStreet, pharmCity:newPatient.pharmCity, pharmState: newPatient.pharmState,
-//             age: ageCalc(newPatient.dob),
-//             createdAt: newPatient.createdAt,
-//             updatedAt: newPatient.updatedAt
-//         };
+// ! Add a new provider 
+router.post(
+    "/", 
+    requireAuth, 
+    validateProviderCreation,
+    async (req, res, next) => {
+        const {specialty, title } = req.body;
+        const { user } = req;
+        const userId = user.id;
+        const newProvider = await Provider.create({
+            userId, 
+            specialty,
+            title
+        });
+        const createdProvider = {
+            id: newProvider.id,
+            userId: newProvider.userId,
+            specialty: newProvider.specialty, 
+            title: newProvider.title,
+            createdAt: newProvider.createdAt,
+            updatedAt: newProvider.updatedAt
+        };
 
-//         return res.status(201).json(createdPatient)
+        return res.status(201).json(createdProvider)
 
 
-//     })
+    })
 
 
   module.exports = router;
