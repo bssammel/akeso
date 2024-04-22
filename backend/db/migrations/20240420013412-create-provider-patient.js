@@ -21,14 +21,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model:'Providers'
+          model:'Providers',
+          key: "id"
         }
       },
       patientId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model:'Patients'
+          model:'Patients',
+          key: "id"
         }
       },
       createdAt: {

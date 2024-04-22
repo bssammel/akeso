@@ -52,9 +52,9 @@ module.exports = (sequelize, DataTypes) => {
     gender: {
       type: DataTypes.STRING,
       allowNull:false,
-      validate: {
-        isAlpha: true
-      }
+      // validate: {
+      //   isAlpha: true
+      // }
     },
     insurance: {
       type: DataTypes.STRING,
