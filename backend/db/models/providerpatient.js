@@ -3,6 +3,9 @@ const {
   Model
 } = require('sequelize');
 
+// import Patient from './patient'
+// import Provider from './provider'
+
 console.log("patientProvider model file is running")
 
 module.exports = (sequelize, DataTypes) => {
@@ -13,41 +16,37 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
-      ProviderPatient.hasMany(
-        models.Patient,
-        {
-          foreignKey: 'patientId',
-        }
-      ),
-      // Patient.belongsToMany(
-      //   models.Providers,
+      // // define association here
+      // ProviderPatient.hasMany(
+      //   models.Patient,
       //   {
-      //     through: models.ProviderPatient,
+      //     foreignKey: 'patientId',
       //   }
       // ),
-      // Provider.belongsToMany(
-      //   models.Patients,
+      // ProviderPatient.hasMany(
+      //   models.Provider,
       //   {
-      //     through: models.ProviderPatient,
+      //     foreignKey: 'providerId',
       //   }
       // )
-      ProviderPatient.hasMany(
-        models.Provider,
-        {
-          foreignKey: 'providerId',
-        }
-      )
     }
   }
   ProviderPatient.init({
     providerId: {
       type: DataTypes.INTEGER,
-      allowNull:false
+      // references:{
+      //   model: Providers,
+      //   key: 'id',
+      // },
+      // allowNull:false
     },
     patientId: {
       type: DataTypes.INTEGER,
-      allowNull:false
+      // references:{
+      //   model: Patients,
+      //   key: 'id',
+      // },
+      // allowNull:false
     }
   }, {
     sequelize,
