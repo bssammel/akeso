@@ -91,21 +91,18 @@ router.post(
           include: [
             {model: Patient}
           ],
-          group: ["User.id", "Patient.id"]
+          // group: ["User.id", "Patient.id"]
         })
-
         const ageInYrs = ageCalc(desiredUser.dataValues.Patient.dob)
         desiredUser.dataValues.Patient.dataValues.age = ageInYrs;
-
-
       }
       if (desiredUserBeta.providerBool){//if the user fetched is a provider
         desiredUser = await User.findOne({
           where:{id:req.params.userId},
           include: [
-            {model: Provider}
+            {
+            model: Provider,}
           ],
-          group: ["User.id", "Provider.id"]
         })
       }
 
