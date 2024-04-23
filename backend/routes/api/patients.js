@@ -237,16 +237,9 @@ router.post(
             pharmCity, 
             pharmState 
         });
-        const createdPatient = {
-            id: newPatient.id,
-            userId: newPatient.userId,
-            sex: newPatient.sex, dob: newPatient.dob, gender: newPatient.gender, insurance: newPatient.insurance, religion: newPatient.religion, relationshipStatus: newPatient.relationshipStatus, language: newPatient.language, ethnicity: newPatient.ethnicity, street: newPatient.street, city: newPatient.city, state: newPatient.state, name911: newPatient.name911, phone911: newPatient.phone911, street911: newPatient.street911, relationship911: newPatient.relationship911, pharmName: newPatient.pharmName, pharmStreet: newPatient.pharmStreet, pharmCity:newPatient.pharmCity, pharmState: newPatient.pharmState,
-            age: ageCalc(newPatient.dob),
-            createdAt: newPatient.createdAt,
-            updatedAt: newPatient.updatedAt
-        };
+        
 
-        return res.status(201).json(createdPatient)
+        return res.status(201).json(newPatient)
 
 
     })
