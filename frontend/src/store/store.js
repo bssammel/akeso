@@ -3,9 +3,11 @@ import {thunk} from 'redux-thunk';
 
 
 import sessionReducer from './session';
+import patientReducer from './patients';
 
 const rootReducer = combineReducers({
-  session: sessionReducer
+  session: sessionReducer,
+  patient: patientReducer
 });
 
 let enhancer;
