@@ -25,8 +25,8 @@ module.exports = (sequelize, DataTypes) => {
         models.Patient,
         {
           through: models.ProviderPatient,
-          // foreignKey: 'providerId',
-          // otherKey:'patientId'
+          foreignKey: 'providerId',
+          otherKey:'patientId'
         }
       )
     }
