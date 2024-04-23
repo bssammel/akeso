@@ -16,37 +16,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // // define association here
-      // ProviderPatient.hasMany(
-      //   models.Patient,
-      //   {
-      //     foreignKey: 'patientId',
-      //   }
-      // ),
-      // ProviderPatient.hasMany(
-      //   models.Provider,
-      //   {
-      //     foreignKey: 'providerId',
-      //   }
-      // )
     }
   }
   ProviderPatient.init({
     providerId: {
       type: DataTypes.INTEGER,
-      // references:{
-      //   model: Providers,
-      //   key: 'id',
-      // },
-      // allowNull:false
     },
     patientId: {
       type: DataTypes.INTEGER,
-      // references:{
-      //   model: Patients,
-      //   key: 'id',
-      // },
-      // allowNull:false
     }
   }, {
     sequelize,
