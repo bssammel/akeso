@@ -1,4 +1,5 @@
 import { useSelector} from 'react-redux'
+// import { useEffect } from 'react';
 
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormPage/LoginFormPage';
@@ -6,9 +7,13 @@ import SignupFormModal from '../SignupFormPage/SignupFormPage';
 import PatientTable from './PatientTable';
 import PatientView from './PatientView'
 
-
 function UserView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
+    
+    // useEffect(() => {
+    //     await dispat
+    // })
+    
     return (
         <>
         { !sessionUser && (

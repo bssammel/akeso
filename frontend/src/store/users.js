@@ -1,12 +1,12 @@
 // import { csrfFetch } from "./csrf";
 
-// const LOAD_USER_INFO = "patients/loadPatientDetails";
+// const LOAD_USER_PT_INFO = "users/loadUserPtDetails";
 
 
-// export const loadPatientDetails = (patientDetails) => {
+// export const loadUserDetails = (userDetails) => {
 //     return {
-//       type: LOAD_PATIENT_DETAILS,
-//       patientDetails,
+//       type: userDetails,
+//       userDetails,
 //     };
 //   };
 
@@ -16,13 +16,13 @@
 //     const res = await csrfFetch(`api/patients/${patientId}`);
 //     if (res.ok){
 //         const patientDetails = await res.json();
-//         dispatch(loadPatientDetails(patientDetails));
+//         dispatch(loadPtUserDetails(patientDetails));
 //     }
 //   }
 
 //   const patientReducer = (state = {}, action) => {
 //     switch (action.type){
-//         case LOAD_PATIENT_DETAILS: {
+//         case LOAD_USER_PT_INFO: {
 //             return {...state, [action.patientDetails.id] : action.patientDetails}
 //         }
 //         default:
