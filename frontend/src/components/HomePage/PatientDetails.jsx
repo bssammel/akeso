@@ -1,11 +1,25 @@
 import { useDispatch, useSelector} from 'react-redux'
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-// import { getPatientUserDetails } from '../../store/patients';
+import { getPatientUserDetails } from '../../store/patients';
 
 
-function PatientView() {
+function PatientDetails() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
+
+    const { patientId } = useParams();
+
+    let sessionUserId;
+
+    if(sessionUser){
+        sessionUserId = sessionUser.id
+    }
+
+    if(sessionUser && sessionUser.providerBool){
+        console.log("user is a provider that must be viewing a patient and the get patient by id route using params will be necessary");
+        console.log("make sure that patient id is the right param to be used inthe the patient details jsx file")
+        console.log("patientId: ", patientId)
+    }
 
     const dispatch = useDispatch()
 
@@ -13,11 +27,11 @@ function PatientView() {
 
     useEffect(() => {
         const runDispatches = async () => {
-            // await dispatch()
+            await dispatch(getPatientUserDetails(sessionUserId))
         };
 
         runDispatches()
-    }, [sessionUser, dispatch])
+    }, [sessionUserId, dispatch])
 
 
 
@@ -40,7 +54,7 @@ function PatientView() {
                     </div>
                     <div className="content-cntnr"></div>
                     {currentView == 'details' && (<div className="content-item" id="pt-details">
-                        
+                        showing details
                     </div>)}
                     {currentView == 'conditions' && (<div className="content-item" id="pt-conditions">
                         showing conditions
@@ -55,4 +69,4 @@ function PatientView() {
     )
 }
 
-export default PatientView;
+export default PatientDetails;
