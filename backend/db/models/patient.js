@@ -37,6 +37,20 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'patientId',
           otherKey:'providerId'
         }
+      ),
+      Patient.hasMany(
+        models.Condition,
+        {
+          foreignKey: 'patientId',
+          onDelete: 'CASCADE'
+        }
+      ),
+      Patient.hasMany(
+        models.Treatment,
+        {
+          foreignKey: 'patientId',
+          onDelete: 'CASCADE'
+        }
       )
     }
   }
