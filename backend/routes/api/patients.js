@@ -240,7 +240,7 @@ router.post(
         });
 
         
-        const ageInYrs = ageCalc(updatedPt.dataValues.dob)
+        const ageInYrs = ageCalc(newPatient.dataValues.dob)
         newPatient.dataValues.age = ageInYrs;
     
         return res.status(201).json(newPatient)
