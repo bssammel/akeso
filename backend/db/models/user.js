@@ -14,13 +14,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.belongsTo(
+      User.hasOne(
         models.Patient,
         {
           foreignKey: 'userId'
         }
       ),
-      User.belongsTo(
+      User.hasOne(
         models.Provider,
         {
           foreignKey: 'userId'

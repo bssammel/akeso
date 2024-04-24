@@ -15,14 +15,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Patient.belongsTo(
-        models.User,
-        {
-          as: "User",
-          foreignKey:"userId",
-          onDelete: "CASCADE"
-        }
-      ),
+      // Patient.belongsTo(
+      //   models.User,
+      //   {
+      //     as: "User",
+      //     foreignKey:"userId",
+      //     onDelete: "CASCADE"
+      //   }
+      // ),
       Patient.belongsTo(
         models.User,
         {
