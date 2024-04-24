@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { Navigate } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
+import { addNewPatient } from '../../store/patients';
 
 
 // import * as sessionActions from '../../store/session';
@@ -40,6 +41,29 @@ function PatientSignupFormModal() {
     e.preventDefault();
       setErrors({});
       return dispatch(
+        addNewPatient({
+            dob,
+            sex,
+            gender,
+            insurance,
+            religion,
+            relationshipStatus,
+            language,
+            ethnicity,
+            street,
+            city,
+            state,
+            name911,
+            phone911,
+            street911,
+            city911,
+            state911,
+            relationship911,
+            pharmName,  
+            pharmStreet,
+            pharmCity,
+            pharmState,
+        })
       )
         .then(closeModal)
         .catch(async (res) => {
@@ -56,7 +80,6 @@ function PatientSignupFormModal() {
   const genderArr = ["Cisgender Man","Cisgender Woman","Transgender Man","Transgender Woman","Nonbinary"]
   const religionArr = ["Agnostic", "Atheist", "Hindu", "Buddhist", "Muslim", "Christian (any denomination)", "Jehovah's Witness", "Jewish"]
   const relationshipStatusArr = ["Divorced", "Legally Separated", "Married", "Other", "Significant Other", "Single", "Widowed"]
-
   const languageArr = ["English", "Mandarin Chinese", "Spanish", "Hindi", "French", "Standard Arabic", "Bengali", "Russian", "Portuguese", "Urdu","German", "Japanese", "Other"];
   const ethnicityArr = ["White", "Black", "Asian", "Native American or Alaska Native", "Native Hawaiian or Other Pacific Islander", "Some other race", "Two or more races"];
   const relationship911Arr = ["Spouse", "Parent", "Child", "Sibling", "Grandparent", "Close Friend", "Partner", "Other Relative"];
@@ -322,10 +345,6 @@ function PatientSignupFormModal() {
           />
         </label>
         {errors.pharmState && <p>{errors.pharmState}</p>}
-
-
-
-
 
         <button type="submit">Add Patient</button>
       </form>
