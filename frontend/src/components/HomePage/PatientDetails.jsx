@@ -41,6 +41,7 @@ function PatientDetails() {
     useEffect(() => {
         const runDispatches = async () => {
             if(!patientId){
+                console.log("hitting patient view dispatch")
                 await dispatch(getPatientUserDetails(sessionUserId))
             } else{
                 console.log("hitting provider specifi dispatch")
@@ -52,7 +53,7 @@ function PatientDetails() {
     }, [sessionUserId, patientId, dispatch])
 
 
-    console.log()
+    console.log("hello")
 
     return (
         <>  
