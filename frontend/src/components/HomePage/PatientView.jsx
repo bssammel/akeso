@@ -8,7 +8,9 @@ import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 function PatientView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
 
-    const sessionUserId = sessionUser.id;
+    let sessionUserId;
+
+    if(sessionUser) sessionUserId = sessionUser.id;
 
     let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
 // 
