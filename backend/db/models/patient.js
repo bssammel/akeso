@@ -15,18 +15,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Patient.belongsTo(
+      //   models.User,
+      //   {
+      //     as: "User",
+      //     foreignKey:"userId",
+      //     onDelete: "CASCADE"
+      //   }
+      // ),
       Patient.belongsTo(
         models.User,
         {
-          as: "User",
-          foreignKey:"userId",
-          onDelete: "CASCADE"
-        }
-      ),
-      Patient.belongsTo(
-        models.User,
-        {
-          foreignKey:"userId",
+          foreignKey:"id",
           onDelete: "CASCADE"
         }
       ),
@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
         models.Provider,
         {
           through: models.ProviderPatient,
-          // foreignKey: 'patientId',
-          // otherKey:'providerId'
+          foreignKey: 'patientId',
+          otherKey:'providerId'
         }
       ),
       Patient.hasMany(
