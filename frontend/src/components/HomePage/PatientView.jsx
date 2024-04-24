@@ -33,7 +33,7 @@ function PatientView() {
         {
             sessionUser && (
                 <div className='authed'>
-                    <h1> {sessionUser.firstName}  {sessionUser.lastName}</h1>
+                    <h1>{!sessionUser.providerBool && <>Welcome </>}{sessionUser.firstName}  {sessionUser.lastName}</h1>
                     <div className="pt-nav-cntnr">
                         <p className="pt-nav-item" onClick={() => { setCurrentView('details') }}><h4 className="nav-description">&nbsp;&nbsp;Details</h4></p>
                         <p className="pt-nav-item" onClick={() => { setCurrentView('conditions') }}><h4 className="nav-description">&nbsp;&nbsp;Conditions</h4></p>
