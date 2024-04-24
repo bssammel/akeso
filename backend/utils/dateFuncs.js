@@ -15,4 +15,14 @@ const msToYrs = function (msVal){
     return msVal / (msDivisor)
 }
 
-module.exports = { ageCalc };
+const reformatFEISO = function (ISOString){
+
+    const dateFormatString = ISOString.toDateString()
+    let reformattedDateString = '';
+
+    reformattedDateString = dateFormatString.slice(4,9) + "," + dateFormatString.slice(10, 14);
+
+    return reformattedDateString;
+}
+
+module.exports = { ageCalc, reformatFEISO };
