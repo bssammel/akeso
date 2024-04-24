@@ -1,10 +1,5 @@
 const express = require('express');
-const db = require('../../db/models')
-const { QueryTypes, sequelize } = require('sequelize');
 
-const patientTableName = process.env.PATIENT_TABLE_NAME
-// const sequelize = require('../../config/database')
-// import { sql } from '@sequelize/core'
 
 const { User, Patient, Provider, ProviderPatient } = require('../../db/models');
 const { check } = require('express-validator');
@@ -244,9 +239,11 @@ router.post(
             pharmState 
         });
 
-       
+        
+        const ageInYrs = ageCalc(updatedPt.dataValues.dob)
+        newPatient.dataValues.age = ageInYrs;
+    
         return res.status(201).json(newPatient)
-
 
     })
 

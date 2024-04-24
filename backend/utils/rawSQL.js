@@ -1,4 +1,11 @@
-//!Raw SQL query used to try to debug on prod. 
+//!Raw SQL query used to try to debug on prod.
+
+const db = require('../../db/models')
+const { QueryTypes, sequelize } = require('sequelize');
+
+const patientTableName = process.env.PATIENT_TABLE_NAME
+// const sequelize = require('../../config/database')
+// import { sql } from '@sequelize/core'
  
  // const newPatient = await sequelize.query(sql`INSERT INTO patients (userId, dob, sex, gender, insurance, religion, relationshipStatus, language, ethnicity, street, city, state, name911, phone911, street911, city911, state911, relationship911, pharmName, pharmStreet, pharmCity, pharmState) VALUES (${userId},${dob},${sex},${gender},${insurance},${religion},${relationshipStatus},${language},${ethnicity},${street},${city},${state},${name911},${phone911},${street911},${city911},${state911},${relationship911},${pharmName},${pharmStreet},${pharmCity},${pharmState})`)
 
