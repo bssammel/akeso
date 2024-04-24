@@ -1,13 +1,18 @@
 import { csrfFetch } from "./csrf";
 
-// const CREATE_PATIENT = "patients/createPatient";
+const CREATE_PATIENT = "patients/createPatient";
 const LOAD_PATIENT_DETAILS = "patients/loadPatientDetails";
 const LOAD_PATIENT_DETAILS_USERID = "patients/loadPatientUserDetails"
 // const EDIT_PATIENT = "patients/editPatient";
 // const LOAD_PT_CONDITIONS = 'patients/loadConditions'
 // const LOAD_PT_TREATMENTS = "patients/loadTreatments"
 
-
+export const createPatient = (newPatient) => {
+  return {
+    type: CREATE_PATIENT,
+    newPatient
+  }
+}
 
 export const loadPatientDetails = (patientDetails) => {
     return {
@@ -25,7 +30,22 @@ export const loadPatientDetails = (patientDetails) => {
   };
 
 
-
+export const addNewPatient = (newPtData) => async (dispatch) =>{
+  const res = await csrfFetch(`api/patients`, {
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newPtData),
+  });
+  if (!res.ok) {
+    return res;
+  } else if (res.ok) {
+    const createdPt = await res.json();
+    dispatch(createPatient(newPtData));
+    return createdPt;
+  }
+};
 
   export const getPatientDetails = (patientId) => async (dispatch) => {
     console.log("hitting line 31 for patient details by provider")
@@ -50,11 +70,12 @@ export const loadPatientDetails = (patientDetails) => {
 
   const patientReducer = (state = {}, action) => {
     switch (action.type){
+        case CREATE_PATIENT: {
+          console.log("future debugging: do we need to rename the state here and include the user fetch? thanks bye")
+          return {...state, "newPatient" : action.newPatient}
+        }
         case LOAD_PATIENT_DETAILS: {
-          // console.log("hitting reducer for patient details by provider")
-            
           const ptDetailObj = action.patientDetails;
-          // delete ptDetailObj.id;
           for (const dataKey in ptDetailObj.User) {
             if (Object.hasOwnProperty.call(ptDetailObj.User, dataKey)) {
               const dataValue = ptDetailObj.User[dataKey];
@@ -68,7 +89,6 @@ export const loadPatientDetails = (patientDetails) => {
           return {...state, "patientDetails" : ptDetailObj}
         }
         case LOAD_PATIENT_DETAILS_USERID: {
-          // const userPatientDetailsState = { "patientDetails" : action.patientUserDetails}
           const ptUserDetailObj = action.patientUserDetails;
           delete ptUserDetailObj.id;
           // reformatting object so that the same component can be use regardless of how the patient details are fetched
@@ -80,7 +100,6 @@ export const loadPatientDetails = (patientDetails) => {
             }
           }
           delete ptUserDetailObj.Patient;
-          // reformattedPtUserDtls = {...reformattedPtUserDtls, ptUserDetailObj}
           return {
             ...state,
             "patientDetails" : ptUserDetailObj
