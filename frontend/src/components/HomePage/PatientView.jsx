@@ -1,6 +1,7 @@
 import { useDispatch, useSelector} from 'react-redux'
 // import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import PatientDetails from './PatientDetails';
 // import { getPatientUserDetails } from '../../store/patients';
 
 
@@ -40,7 +41,7 @@ function PatientView() {
                     </div>
                     <div className="content-cntnr"></div>
                     {currentView == 'details' && (<div className="content-item" id="pt-details">
-                        
+                        <PatientDetails/>
                     </div>)}
                     {currentView == 'conditions' && (<div className="content-item" id="pt-conditions">
                         showing conditions

@@ -54,7 +54,7 @@ function PatientDetails() {
                     </div>
                     <div className="content-cntnr"></div>
                     {currentView == 'details' && (<div className="content-item" id="pt-details">
-                        showing details
+                        showing details for patient
                     </div>)}
                     {currentView == 'conditions' && (<div className="content-item" id="pt-conditions">
                         showing conditions
