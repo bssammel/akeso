@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import UserView from './components/HomePage/UserView';
+import PatientView from './components/HomePage/PatientView';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <UserView/>
+      },
+      {
+        path: '/patients/:patientId',
+        element: <PatientView/>
       }
     ]
   }

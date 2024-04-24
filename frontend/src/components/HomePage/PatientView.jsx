@@ -1,12 +1,20 @@
 import { useDispatch, useSelector} from 'react-redux'
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PatientDetails from './PatientDetails';
-// import { getPatientUserDetails } from '../../store/patients';
+import { getPatientDetails } from '../../store/patients';
 
 
 function PatientView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
+
+    let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
+
+    // console.log("################################")
+
+    const { patientId } = useParams();
+
+    // console.log(ptDetailsObj)
 
     const dispatch = useDispatch()
 
@@ -14,11 +22,16 @@ function PatientView() {
 
     useEffect(() => {
         const runDispatches = async () => {
-            // await dispatch()
+            if(!patientId){
+                // console.log("patient or provider is accessing from patients/:patientId")
+            } else{
+                // console.log("hitting provider specific dispatch")
+                await dispatch(getPatientDetails(patientId))
+            }
         };
 
         runDispatches()
-    }, [sessionUser, dispatch])
+    }, [sessionUser, patientId, dispatch])
 
 
 
@@ -30,10 +43,16 @@ function PatientView() {
                 <h2>Unless you are a provider for this patient or the patient themselves, you cannot view this page.</h2>
             </div>
         )}  
+        { !ptDetailsObj && sessionUser && (
+            <div className='unloaded'>
+                <p>Getting that patient data for you!</p>
+            </div>
+        )}
         {
-            sessionUser && (
+            sessionUser && ptDetailsObj &&(
                 <div className='authed'>
-                    <h1>{!sessionUser.providerBool && <>Welcome </>}{sessionUser.firstName}  {sessionUser.lastName}</h1>
+                    {/* <h1>{!sessionUser.providerBool && <>Welcome </>}{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1> */}
+                    <h1>{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1>
                     <div className="pt-nav-cntnr">
                         <p className="pt-nav-item" onClick={() => { setCurrentView('details') }}><h4 className="nav-description">&nbsp;&nbsp;Details</h4></p>
                         <p className="pt-nav-item" onClick={() => { setCurrentView('conditions') }}><h4 className="nav-description">&nbsp;&nbsp;Conditions</h4></p>

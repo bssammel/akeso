@@ -43,6 +43,7 @@ function PatientDetails() {
             if(!patientId){
                 await dispatch(getPatientUserDetails(sessionUserId))
             } else{
+                console.log("hitting provider specifi dispatch")
                 await dispatch(getPatientDetails(patientId))
             }
         };
@@ -55,13 +56,13 @@ function PatientDetails() {
 
     return (
         <>  
-        { !ptDetailsObj && (
+        { !ptDetailsObj && sessionUser && (
             <div className='unloaded'>
                 <p>Getting that patient data for you!</p>
             </div>
         )}
         {
-            ptDetailsObj && (
+            ptDetailsObj && sessionUser && (
                 <div className='authed'>
                     <h3> Patient Details</h3>
                     <div className="pt-details-cntnr">
@@ -97,7 +98,7 @@ function PatientDetails() {
                             </div>
                             <div className='data-item-cntnr' id='relationshipStatus'>
                                 <h6>Relationship Status</h6>
-                                <p>{ptDetailsObj.language}</p>
+                                <p>{ptDetailsObj.relationshipStatus}</p>
                             </div>
                         </div>
                         <div className='pt-details-item' id='contact-info'>

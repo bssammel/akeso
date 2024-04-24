@@ -28,7 +28,11 @@ export const loadPatientDetails = (patientDetails) => {
 
 
   export const getPatientDetails = (patientId) => async (dispatch) => {
-    const res = await csrfFetch(`api/patients/${patientId}`);
+    console.log("hitting line 31 for patient details by provider")
+
+    const res = await csrfFetch(`/api/patients/${patientId}`);
+
+    console.log(res)
     if (res.ok){
         const patientDetails = await res.json();
         dispatch(loadPatientDetails(patientDetails));
@@ -36,7 +40,8 @@ export const loadPatientDetails = (patientDetails) => {
   }
 
   export const getPatientUserDetails = (userId) => async (dispatch) => {
-    const res = await csrfFetch(`api/users/${userId}`);
+    const res = await csrfFetch(`/api/users/${userId}`);
+    console.log(res)
     if (res.ok){
         const patientUserDetails = await res.json();
         dispatch(loadPatientUserDetails(patientUserDetails));
@@ -46,7 +51,21 @@ export const loadPatientDetails = (patientDetails) => {
   const patientReducer = (state = {}, action) => {
     switch (action.type){
         case LOAD_PATIENT_DETAILS: {
-            return {...state, "patientDetails" : action.patientDetails}
+          // console.log("hitting reducer for patient details by provider")
+            
+          const ptDetailObj = action.patientDetails;
+          // delete ptDetailObj.id;
+          for (const dataKey in ptDetailObj.User) {
+            if (Object.hasOwnProperty.call(ptDetailObj.User, dataKey)) {
+              const dataValue = ptDetailObj.User[dataKey];
+              if(dataKey !== "id"){
+                ptDetailObj[dataKey] = dataValue;
+                delete ptDetailObj.User[dataKey];
+              }
+            }
+          }
+          delete ptDetailObj.User;
+          return {...state, "patientDetails" : ptDetailObj}
         }
         case LOAD_PATIENT_DETAILS_USERID: {
           // const userPatientDetailsState = { "patientDetails" : action.patientUserDetails}
