@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Provider.belongsTo(
         models.User,
         {
-          foreignKey:'userId',
+          foreignKey:'id',
           onDelete: 'CASCADE'
         }
       )
