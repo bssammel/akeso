@@ -2,19 +2,23 @@ import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PatientDetails from './PatientDetails';
-import { getPatientDetails } from '../../store/patients';
+import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 
 
 function PatientView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
 
-    let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
+    let sessionUserId;
 
+    if(sessionUser) sessionUserId = sessionUser.id;
+
+    let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
+// 
     // console.log("################################")
 
     const { patientId } = useParams();
 
-    // console.log(ptDetailsObj)
+    console.log(ptDetailsObj)
 
     const dispatch = useDispatch()
 
@@ -23,7 +27,7 @@ function PatientView() {
     useEffect(() => {
         const runDispatches = async () => {
             if(!patientId){
-                // console.log("patient or provider is accessing from patients/:patientId")
+                await dispatch(getPatientUserDetails(sessionUserId))
             } else{
                 // console.log("hitting provider specific dispatch")
                 await dispatch(getPatientDetails(patientId))
