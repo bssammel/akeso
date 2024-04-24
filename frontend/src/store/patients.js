@@ -46,13 +46,25 @@ export const loadPatientDetails = (patientDetails) => {
   const patientReducer = (state = {}, action) => {
     switch (action.type){
         case LOAD_PATIENT_DETAILS: {
-            return {...state, [action.patientDetails.id] : action.patientDetails}
+            return {...state, "patientDetails" : action.patientDetails}
         }
         case LOAD_PATIENT_DETAILS_USERID: {
-          const userPatientDetailsState = { "patientDetails" : [action.patientDetails]}
+          // const userPatientDetailsState = { "patientDetails" : action.patientUserDetails}
+          const ptUserDetailObj = action.patientUserDetails;
+          delete ptUserDetailObj.id;
+          // reformatting object so that the same component can be use regardless of how the patient details are fetched
+          for (const dataKey in ptUserDetailObj.Patient) {
+            if (Object.hasOwnProperty.call(ptUserDetailObj.Patient, dataKey)) {
+                const dataValue = ptUserDetailObj.Patient[dataKey];
+                ptUserDetailObj[dataKey] = dataValue;
+                delete ptUserDetailObj.Patient[dataKey];
+            }
+          }
+          delete ptUserDetailObj.Patient;
+          // reformattedPtUserDtls = {...reformattedPtUserDtls, ptUserDetailObj}
           return {
             ...state,
-            userPatientDetailsState
+            "patientDetails" : ptUserDetailObj
           }
         }
         default:
