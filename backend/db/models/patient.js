@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       Patient.belongsTo(
         models.User,
         {
-          foreignKey:"id",
+          foreignKey:"userId",
           onDelete: "CASCADE"
         }
       ),

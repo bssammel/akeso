@@ -82,6 +82,7 @@ router.get(
             where: {
                 id: req.params.patientId
             },
+            include: [{model: User}],
             attributes: [
                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
             ]
