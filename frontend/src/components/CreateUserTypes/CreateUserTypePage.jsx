@@ -1,15 +1,13 @@
 import { useSelector} from 'react-redux'
-
+import LoginFormModal from '../LoginFormPage/LoginFormPage';
+import SignupFormModal from '../SignupFormPage/SignupFormPage';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import ProviderSignupFormModal from "./ProviderSignupModal";
 import PatientSignupFormModal from "./PatientSignupModal";
 
 
 function CreateUserTypePage() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
-    
-    // useEffect(() => {
-    //     await dispat
-    // })
     
     return (
         // I need to figure out how to prevent a user who has an already existing associated patient or provider from seeing this page. maybe this page can be the edit page too? really need to figure this out.
