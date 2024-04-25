@@ -2,70 +2,61 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
+import './SignupForm.css'
 
-
+import { addNewProvider } from '../../store/providers';
 import * as sessionActions from '../../store/session';
-// import './SignupForm.css'
 
-function SignupFormModal() {
+function ProviderSignupFormModal() {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
-  // const sessionUser = useSelector((state) => state.session.user);
+  const [title, setTitle] = useState("");
+  const [specialty, setSpecialty] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [providerBool, setProviderBool] = useState(false)
   const [phone, setPhone] = useState("")
   const [errors, setErrors] = useState({});
   
   const { closeModal } = useModal();
 
-  // if (sessionUser) return <Navigate to="/" replace={true} />;
 
-  const handleOnChange = () => {
-    setProviderBool(!providerBool)
-  };
+const runDispatches = async() => {
+  await dispatch(sessionActions.signup({
+    email,
+    firstName,
+    lastName,
+    password,
+    providerBool: true,
+    phone
+  }))
+  .then(await dispatch(sessionActions.login({credential: email, password })))
+  .then(await dispatch(addNewProvider({title, specialty})))
+  .then(closeModal)
+  .catch(async (res) => {
+    const data = await res.json();
+    if (data?.errors) {
+      setErrors(data.errors);
+    }});
+}
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    if (password === confirmPassword) {
       setErrors({});
-      return dispatch(
-        sessionActions.signup({
-          email,
-          firstName,
-          lastName,
-          password,
-          providerBool,
-          phone
-        })
-      )
-      // .then(navigate(`/`))
-
-        .then(closeModal)
-        
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        }
-      );
-    }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
+      return  runDispatches()
   };
+
+  const titles = ["MD", "DO", "NP", "PA", "RN", "LPN"];
+  const specialties = ["Family Medicine", "Internal Medicine", "Pediatrics", "Endocrinology"]
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h1>Sign Up as Provider</h1>
       <form onSubmit={handleSubmit}>
-        <label>
-          Email&nbsp;&nbsp;
+      <label>
+          Email
           <input
             type="text"
             value={email}
@@ -125,18 +116,36 @@ function SignupFormModal() {
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <label>
-          I am signing up as Provider
-          <input
-            type="checkbox"
-            value={providerBool}
-            onChange={handleOnChange}
-          />
+          Title:
+          <select
+          name='title' id='title-select'
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required>
+            {titles.map((title) => (
+                  <option key={title} value={title}>{title}
+                  </option>))}
+          </select>
         </label>
-        {errors.providerBool && <p>{errors.providerBool}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.title && <p>{errors.title}</p>}
+        <label>
+          Specialty:
+          <select
+          name='specialty' id='specialty-select'
+          value={specialty}
+          onChange={(e) => setSpecialty(e.target.value)}
+          required>
+            {specialties.map((specialty) => (
+                  <option key={specialty} value={specialty}>{specialty}
+                  </option>))}
+          </select>
+        </label>
+        {errors.specialty && <p>{errors.specialty}</p>}
+        <div id='signup-submit'><button id='signup-submit' type="submit">Sign Up</button></div>
+        
       </form>
     </>
   );
 }
 
-export default SignupFormModal;
+export default ProviderSignupFormModal;

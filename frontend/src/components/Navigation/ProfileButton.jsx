@@ -8,6 +8,7 @@ import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormPage/LoginFormPage';
 import SignupFormModal from '../SignupFormPage/SignupFormPage';
+import ProviderSignupFormModal from '../RegisterUserPages/ProviderSignupModal';
 
 
 function ProfileButton({ user }) {
@@ -82,6 +83,12 @@ function ProfileButton({ user }) {
               <OpenModalButton
                 buttonText="Log In"
                 modalComponent={<LoginFormModal />}
+              />
+            </li>
+            <li>
+              <OpenModalButton
+                buttonText="Sign Up as Provider"
+                modalComponent={<ProviderSignupFormModal />}
               />
             </li>
             <li>

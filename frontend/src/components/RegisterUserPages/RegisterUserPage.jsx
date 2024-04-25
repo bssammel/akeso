@@ -6,7 +6,7 @@ import ProviderSignupFormModal from "./ProviderSignupModal";
 import PatientSignupFormModal from "./PatientSignupModal";
 
 
-function CreateUserTypePage() {
+function RegisterUserPage() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
     
     return (
@@ -45,4 +45,4 @@ function CreateUserTypePage() {
 }
 
 
-export default CreateUserTypePage;
+export default RegisterUserPage;
