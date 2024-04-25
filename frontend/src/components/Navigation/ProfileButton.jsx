@@ -7,8 +7,8 @@ import { BiSolidUserDetail } from "react-icons/bi";
 import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormPage/LoginFormPage';
-import SignupFormModal from '../SignupFormPage/SignupFormPage';
 import ProviderSignupFormModal from '../RegisterUserPages/ProviderSignupModal';
+import PatientSignupFormModal from '../RegisterUserPages/PatientSignupModal';
 
 
 function ProfileButton({ user }) {
@@ -17,30 +17,15 @@ function ProfileButton({ user }) {
     const ulRef = useRef();
 
     const toggleMenu = (e) => {
-        //   console.log("toggle menu running");
         e.stopPropagation();
-        // console.log(showMenu)
-        // console.log(!showMenu)
         setShowMenu(!showMenu);
-        // console.log(showMenu)
     };
   
 
     useEffect(() => {
-        // console.log(
-        //     "useEffect running where show menu state is either false or true"
-        //   );
         if (!showMenu) return;
-    //      console.log(
-    //   "useEffect running where show menu is supposed to be true"
-    // );
-    // console.log(showMenu)
-    
         const closeMenu = (e) => {
-            // console.log("close menu running");
-            // if (ulRef.current && !ulRef.current.contains(e.target)) {
               if (!ulRef.current.contains(e.target)){ 
-                // console.log("close menu setting false");
                 setShowMenu(false);
               }
         };
@@ -79,25 +64,25 @@ function ProfileButton({ user }) {
           </>
           ) : (
             <>
-            <li>
-              <OpenModalButton
-                buttonText="Log In"
-                modalComponent={<LoginFormModal />}
-              />
-            </li>
-            <li>
-              <OpenModalButton
-                buttonText="Sign Up as Provider"
-                modalComponent={<ProviderSignupFormModal />}
-              />
-            </li>
-            <li>
-              <OpenModalButton
-                buttonText="Sign Up"
-                modalComponent={<SignupFormModal />}
-              />
-            </li>
-          </>
+              <li>
+                <OpenModalButton
+                  buttonText="Log In"
+                  modalComponent={<LoginFormModal />}
+                />
+              </li>
+              <li>
+                <OpenModalButton
+                  buttonText="Sign Up as Provider"
+                  modalComponent={<ProviderSignupFormModal />}
+                />
+              </li>
+              <li>
+                <OpenModalButton
+                  buttonText="Sign Up as a Patient"
+                  modalComponent={<PatientSignupFormModal />}
+                />
+              </li>
+            </>
           )}
         </ul>
       </>

@@ -2,7 +2,6 @@ import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getPatientUserDetails, getPatientDetails } from '../../store/patients';
-// import { reformatISO } from '../../utils/dateFunc';
 
 const reformatISO = function (givenString){
 

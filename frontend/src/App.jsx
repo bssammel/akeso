@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import UserView from './components/HomePage/UserView';
 import PatientView from './components/HomePage/PatientView';
-// import CreateUserTypePage from './components/RegisterUserPages/RegisterUserPage';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -36,11 +35,7 @@ const router = createBrowserRouter([
       {
         path: '/patients/:patientId',
         element: <PatientView/>
-      },
-      // {
-      //   path: '/register',
-      //   element: <CreateUserTypePage/>
-      // }
+      }
     ]
   }
 ]);
