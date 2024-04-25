@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navigation from './components/Navigation/Navigation';
 import UserView from './components/HomePage/UserView';
 import PatientView from './components/HomePage/PatientView';
-import PatientSignupFormModal from './components/CreateUserTypes/PatientSignUpModal/PatientSignupModal';
+import CreateUserTypePage from './components/CreateUserTypes/CreateUserTypePage';
 import * as sessionActions from './store/session';
 
 function Layout() {
@@ -36,10 +36,10 @@ const router = createBrowserRouter([
       {
         path: '/patients/:patientId',
         element: <PatientView/>
-      }
+      },
       {
-        path: '/patients/new',
-        element: <PatientSignupFormModal/>
+        path: '/continue',
+        element: <CreateUserTypePage/>
       }
     ]
   }

@@ -1,15 +1,15 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { Navigate } from 'react-router-dom';
-import { useModal } from '../../../context/Modal';
-import { addNewPatient } from '../../../store/patients';
+import { useNavigate } from 'react-router-dom';
+import { addNewPatient } from '../../store/patients';
 
 
 // import * as sessionActions from '../../store/session';
 
 function PatientSignupFormModal() {
   const dispatch = useDispatch();
-  // const sessionUser = useSelector((state) => state.session.user);
+  const navigate = useNavigate();
+
   const [dob, setDob] = useState("")
   const [sex, setSex] = useState("");
   const [gender, setGender] = useState("");
@@ -32,9 +32,7 @@ function PatientSignupFormModal() {
   const [pharmCity, setPharmCity] = useState("");
   const [pharmState, setPharmState] = useState("");
 
-
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
 
 
   const handleSubmit = (e) => {
@@ -65,7 +63,7 @@ function PatientSignupFormModal() {
             pharmState,
         })
       )
-        .then(closeModal)
+        .then(navigate(`/`))
         .catch(async (res) => {
           const data = await res.json();
           if (data?.errors) {

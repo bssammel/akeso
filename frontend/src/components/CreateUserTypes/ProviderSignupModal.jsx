@@ -1,32 +1,22 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { Navigate } from 'react-router-dom';
-import { useModal } from '../../../context/Modal';
-import { addNewProvider } from '../../../store/providers';
-
-
-// import * as sessionActions from '../../store/session';
+import { useNavigate } from 'react-router-dom';
+import { addNewProvider } from '../../store/providers';
 
 function ProviderSignupFormModal() {
   const dispatch = useDispatch();
-  // const sessionUser = useSelector((state) => state.session.user);
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [specialty, setSpecialty] = useState("");
 
   const [errors, setErrors] = useState({});
-  const { closeModal } = useModal();
-
-
-  // const handleOnChange = () => {
-  //   setProviderBool(!providerBool)
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
       setErrors({});
       return dispatch(addNewProvider({title, specialty})
       )
-        .then(closeModal)
+        .then(navigate(`/`))
         .catch(async (res) => {
           const data = await res.json();
           if (data?.errors) {
