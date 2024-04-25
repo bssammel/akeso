@@ -1,15 +1,23 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
+import { useModal } from '../../context/Modal';
 import { addNewPatient } from '../../store/patients';
+import * as sessionActions from '../../store/session';
+import './SignupForm.css'
 
-
-// import * as sessionActions from '../../store/session';
 
 function PatientSignupFormModal() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { closeModal } = useModal();
 
+  // const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [phone, setPhone] = useState("")
   const [dob, setDob] = useState("")
   const [sex, setSex] = useState("");
   const [gender, setGender] = useState("");
@@ -34,44 +42,56 @@ function PatientSignupFormModal() {
 
   const [errors, setErrors] = useState({});
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-      setErrors({});
-      return dispatch(
-        addNewPatient({
-            dob,
-            sex,
-            gender,
-            insurance,
-            religion,
-            relationshipStatus,
-            language,
-            ethnicity,
-            street,
-            city,
-            state,
-            name911,
-            phone911,
-            street911,
-            city911,
-            state911,
-            relationship911,
-            pharmName,  
-            pharmStreet,
-            pharmCity,
-            pharmState,
-        })
-      )
-        .then(navigate(`/`))
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
-        }
-      );
-  };
+  const runDispatches = async () => {
+    
+    await dispatch(sessionActions.signup({
+      email,
+      firstName,
+      lastName,
+      password,
+      providerBool: false,
+      phone
+    }))
+    .then(await dispatch(sessionActions.login({credential: email, password })))
+    .then(      console.log("hellos??????????????????"))
+    .then(
+      await dispatch(addNewPatient({
+          dob,
+          sex,
+          gender,
+          insurance,
+          religion,
+          relationshipStatus,
+          language,
+          ethnicity,
+          street,
+          city,
+          state,
+          name911,
+          phone911,
+          street911,
+          city911,
+          state911,
+          relationship911,
+          pharmName,  
+          pharmStreet,
+          pharmCity,
+          pharmState,
+      })
+    ))
+    .then(closeModal)
+    .catch(async (res) => {
+      const data = await res.json();
+      if (data?.errors) {
+        setErrors(data.errors);
+      }});
+  }
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+        setErrors({});
+        return  runDispatches()
+    };
 
 
   const sexMarkerArr = ["M", "F", "X"] 
@@ -89,10 +109,77 @@ function PatientSignupFormModal() {
 
   return (
     <>
-      <h1>Tell us a bit about yourself!</h1>
+      <h1>Sign Up as a Patient</h1>
       <form onSubmit={handleSubmit}>
+        <section id='account-details'>
+        <h3>Account Details </h3>
+          <div className='fields'>
+            <label>
+                Email
+                <input
+                  type="text"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </label>
+              {errors.email && <p>{errors.email}</p>}
+              <label>
+                First Name
+                <input
+                  type="text"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </label>
+              {errors.firstName && <p>{errors.firstName}</p>}
+              <label>
+                Last Name
+                <input
+                  type="text"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </label>
+              {errors.lastName && <p>{errors.lastName}</p>}
+              <label>
+                Phone
+                <input
+                  type="text"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
+              </label>
+              {errors.phone && <p>{errors.phone}</p>}
+              <label>
+                Password
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </label>
+              {errors.password && <p>{errors.password}</p>}
+              <label>
+                Confirm Password
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  required
+                />
+              </label>
+              {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+            </div>
+          </section>
+          <section id='basic-details'>
+        <h3>Basic Details </h3>
+        <div className='fields'>
 
-        <h3>Basic Details</h3>
       <label>
           Date of Birth
           <input
@@ -107,9 +194,9 @@ function PatientSignupFormModal() {
         </label>
         {errors.dob && <p>{errors.dob}</p>}
         <label>
-          Please select your legal sex marker:
+          Legal Sex Marker:
           <select
-          name='sex' id='sex-marker-select'
+          name='sex' id='sex-marker' className='select'
           value={sex}
           onChange={(e) => setSex(e.target.value)}
           required>
@@ -120,9 +207,9 @@ function PatientSignupFormModal() {
         </label>
         {errors.sex && <p>{errors.sex}</p>}
         <label>
-          Please select the gender you identify most with:
+          Gender Identity:
           <select
-          name='gender' id='gender-select'
+          name='gender' id='gender' className='select'
           value={gender}
           onChange={(e) => setGender(e.target.value)}
           required>
@@ -145,7 +232,7 @@ function PatientSignupFormModal() {
         <label>
           Religion:
           <select
-          name='religion' id='religion-select'
+          name='religion' id='religion' className='select'
           value={religion}
           onChange={(e) => setReligion(e.target.value)}
           required>
@@ -158,12 +245,12 @@ function PatientSignupFormModal() {
         <label>
           Relationship Status:
           <select
-          name='relationshipStatus' id='relationshipStatus-select'
+          name='relationshipStatus' id='relationshipStatus' className='select'
           value={relationshipStatus}
           onChange={(e) => setRelationshipStatus(e.target.value)}
           required>
             {relationshipStatusArr.map((relationshipStatusOpt) => (
-                  <option key={relationshipStatusOpt} value={relationshipStatusOpt}>{relationshipStatusOpt}
+              <option key={relationshipStatusOpt} value={relationshipStatusOpt}>{relationshipStatusOpt}
                   </option>))}
           </select>
         </label>
@@ -171,12 +258,12 @@ function PatientSignupFormModal() {
         <label>
           Language:
           <select
-          name='language' id='language-select'
+          name='language' id='language' className='select'
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
           required>
             {languageArr.map((languageOpt) => (
-                  <option key={languageOpt} value={languageOpt}>{languageOpt}
+              <option key={languageOpt} value={languageOpt}>{languageOpt}
                   </option>))}
           </select>
         </label>
@@ -184,18 +271,21 @@ function PatientSignupFormModal() {
         <label>
           Race:
           <select
-          name='ethnicity' id='ethnicity-select'
+          name='ethnicity' id='ethnicity' className='select'
           value={ethnicity}
           onChange={(e) => setEthnicity(e.target.value)}
           required>
             {ethnicityArr.map((ethnicityOpt) => (
-                  <option key={ethnicityOpt} value={ethnicityOpt}>{ethnicityOpt}
+              <option key={ethnicityOpt} value={ethnicityOpt}>{ethnicityOpt}
                   </option>))}
           </select>
         </label>
         {errors.ethnicity && <p>{errors.ethnicity}</p>}
-        
-        <h3>Contact Information</h3>
+        </div>
+        </section>
+        <section id='contact-info'>
+        <h3>Contact Information </h3>
+          <div className='fields'>
         <label>
           Street
           <input
@@ -226,8 +316,11 @@ function PatientSignupFormModal() {
           />
         </label>
         {errors.state && <p>{errors.state}</p>}
-
-        <h3>Emergency Contact</h3>
+          </div>
+        </section>
+        <section id='911-details'>
+        <h3>Emergency Contact </h3>
+        <div className='fields'>
         <label>
           Name:
           <input
@@ -279,19 +372,9 @@ function PatientSignupFormModal() {
         </label>
         {errors.state911 && <p>{errors.state911}</p>}
         <label>
-          State:
-          <input
-            type="text"
-            value={state911}
-            onChange={(e) => setState911(e.target.value)}
-            required
-          />
-        </label>
-        {errors.state911 && <p>{errors.state911}</p>}
-        <label>
           Relationship of Emergency Contact:
           <select
-          name='relationship911' id='relationship911-select'
+          name='relationship911' id='relationship911' className='select'
           value={relationship911}
           onChange={(e) => setRelationship911(e.target.value)}
           required>
@@ -301,8 +384,11 @@ function PatientSignupFormModal() {
           </select>
         </label>
         {errors.relationship911 && <p>{errors.relationship911}</p>}
-
-        <h3>Pharmacy Information</h3>
+          </div>
+        </section>
+        <section id='pharm-section'>
+        <h3>Pharmacy Information </h3>
+        <div className='fields'>
         <label>
           Name:
           <input
@@ -310,7 +396,7 @@ function PatientSignupFormModal() {
             value={pharmName}
             onChange={(e) => setPharmName(e.target.value)}
             required
-          />
+            />
         </label>
         {errors.pharmName && <p>{errors.pharmName}</p>}
         <label>
@@ -320,7 +406,7 @@ function PatientSignupFormModal() {
             value={pharmStreet}
             onChange={(e) => setPharmStreet(e.target.value)}
             required
-          />
+            />
         </label>
         {errors.pharmStreet && <p>{errors.pharmStreet}</p>}
         <label>
@@ -330,7 +416,7 @@ function PatientSignupFormModal() {
             value={pharmCity}
             onChange={(e) => setPharmCity(e.target.value)}
             required
-          />
+            />
         </label>
         {errors.pharmCity && <p>{errors.pharmCity}</p>}
         <label>
@@ -340,11 +426,12 @@ function PatientSignupFormModal() {
             value={pharmState}
             onChange={(e) => setPharmState(e.target.value)}
             required
-          />
+            />
         </label>
         {errors.pharmState && <p>{errors.pharmState}</p>}
-
-        <button type="submit">Add Patient</button>
+            </div>
+        </section>
+        <div id='signup-submit'><button id='signup-submit' type="submit">Sign Up as a Patient</button></div>
       </form>
     </>
   );

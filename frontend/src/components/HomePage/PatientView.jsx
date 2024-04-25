@@ -2,6 +2,7 @@ import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PatientDetails from './PatientDetails';
+import UnauthView from './UnauthView';
 import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 
 
@@ -13,8 +14,6 @@ function PatientView() {
     if(sessionUser) sessionUserId = sessionUser.id;
 
     let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
-// 
-    // console.log("################################")
 
     const { patientId } = useParams();
 
@@ -29,7 +28,6 @@ function PatientView() {
             if(!patientId){
                 await dispatch(getPatientUserDetails(sessionUserId))
             } else{
-                // console.log("hitting provider specific dispatch")
                 await dispatch(getPatientDetails(patientId))
             }
         };
@@ -42,10 +40,7 @@ function PatientView() {
     return (
         <>
         { !sessionUser && (
-            <div className='unauthed'>
-                <h1>It looks like you are not signed in!</h1>
-                <h2>Unless you are a provider for this patient or the patient themselves, you cannot view this page.</h2>
-            </div>
+            <UnauthView/>
         )}  
         { !ptDetailsObj && sessionUser && (
             <div className='unloaded'>

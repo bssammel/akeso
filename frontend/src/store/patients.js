@@ -1,3 +1,4 @@
+console.log("###################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 import { csrfFetch } from "./csrf";
 
 const CREATE_PATIENT = "patients/createPatient";
@@ -31,7 +32,9 @@ export const loadPatientDetails = (patientDetails) => {
 
 
 export const addNewPatient = (newPtData) => async (dispatch) =>{
-  const res = await csrfFetch(`api/patients`, {
+  console.log("hitting new addnepwt")
+
+  const res = await csrfFetch(`/api/patients`, {
     method: "POST",
     headers:{
       "Content-Type": "application/json",
@@ -48,7 +51,6 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
 };
 
   export const getPatientDetails = (patientId) => async (dispatch) => {
-    console.log("hitting line 31 for patient details by provider")
 
     const res = await csrfFetch(`/api/patients/${patientId}`);
 

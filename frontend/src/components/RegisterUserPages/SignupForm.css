@@ -10,6 +10,7 @@ form {
     display: flex;
     flex-direction: column;
     /* align-content: flex-end; */
+    margin: 2px;
   }
 
  div#signup-submit {
@@ -19,3 +20,27 @@ form {
     width: 100%;
     padding: 3px;
   }
+
+  section{
+    display:flex;
+    flex-direction: column;
+  }
+
+  section > h3{
+    color: blue;
+  }
+
+  div.fields{
+    background-color: aqua;
+    display: flex;
+    flex-direction: row;
+  }
+
+  input{
+    margin: 2px;
+  }
+
+  .select{
+    padding: 1.5px
+  }
+  
