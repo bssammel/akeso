@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 
 
@@ -9,6 +9,7 @@ import './SignupForm.css'
 
 function SignupFormModal() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -18,6 +19,7 @@ function SignupFormModal() {
   const [providerBool, setProviderBool] = useState(false)
   const [phone, setPhone] = useState("")
   const [errors, setErrors] = useState({});
+  
   const { closeModal } = useModal();
 
   // if (sessionUser) return <Navigate to="/" replace={true} />;
@@ -43,6 +45,7 @@ function SignupFormModal() {
         })
       )
         .then(closeModal)
+        .then(navigate)
         .catch(async (res) => {
           const data = await res.json();
           if (data?.errors) {
@@ -126,7 +129,6 @@ function SignupFormModal() {
             type="checkbox"
             value={providerBool}
             onChange={handleOnChange}
-            
           />
         </label>
         {errors.providerBool && <p>{errors.providerBool}</p>}

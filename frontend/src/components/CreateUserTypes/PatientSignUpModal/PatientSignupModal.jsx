@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { Navigate } from 'react-router-dom';
-import { useModal } from '../../context/Modal';
-import { addNewPatient } from '../../store/patients';
+import { useModal } from '../../../context/Modal';
+import { addNewPatient } from '../../../store/patients';
 
 
 // import * as sessionActions from '../../store/session';
