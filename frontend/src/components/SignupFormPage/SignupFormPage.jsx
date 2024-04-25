@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 
 
@@ -9,7 +9,7 @@ import './SignupForm.css'
 
 function SignupFormModal() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -30,6 +30,7 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (password === confirmPassword) {
       setErrors({});
       console.log(`phone: ${phone}`);
@@ -44,8 +45,9 @@ function SignupFormModal() {
           phone
         })
       )
+      // .then(navigate(`/`))
         .then(closeModal)
-        .then(navigate)
+        
         .catch(async (res) => {
           const data = await res.json();
           if (data?.errors) {
