@@ -19,13 +19,13 @@ function PatientSignupFormModal() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("")
   const [dob, setDob] = useState("")
-  const [sex, setSex] = useState("");
-  const [gender, setGender] = useState("");
+  const [sex, setSex] = useState("M");
+  const [gender, setGender] = useState("Cisgender Man");
   const [insurance, setInsurance] = useState("");
-  const [religion, setReligion] = useState("");
-  const [relationshipStatus, setRelationshipStatus] = useState("");
-  const [language, setLanguage] = useState("");
-  const [ethnicity, setEthnicity] = useState("");
+  const [religion, setReligion] = useState("Religion");
+  const [relationshipStatus, setRelationshipStatus] = useState("Divorced");
+  const [language, setLanguage] = useState("English");
+  const [ethnicity, setEthnicity] = useState("White");
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -34,7 +34,7 @@ function PatientSignupFormModal() {
   const [street911, setStreet911] = useState("");
   const [city911, setCity911] = useState("");
   const [state911, setState911] = useState("");
-  const [relationship911, setRelationship911] = useState("");
+  const [relationship911, setRelationship911] = useState("Spouse");
   const [pharmName, setPharmName] = useState("");  
   const [pharmStreet, setPharmStreet] = useState("");
   const [pharmCity, setPharmCity] = useState("");
@@ -53,7 +53,6 @@ function PatientSignupFormModal() {
       phone
     }))
     .then(await dispatch(sessionActions.login({credential: email, password })))
-    .then(      console.log("hellos??????????????????"))
     .then(
       await dispatch(addNewPatient({
           dob,

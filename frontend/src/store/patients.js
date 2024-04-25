@@ -1,4 +1,4 @@
-console.log("###################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+// console.log("###################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 import { csrfFetch } from "./csrf";
 
 const CREATE_PATIENT = "patients/createPatient";
@@ -32,7 +32,7 @@ export const loadPatientDetails = (patientDetails) => {
 
 
 export const addNewPatient = (newPtData) => async (dispatch) =>{
-  console.log("hitting new addnepwt")
+  // console.log("hitting new addnepwt")
 
   const res = await csrfFetch(`/api/patients`, {
     method: "POST",
@@ -54,7 +54,7 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
 
     const res = await csrfFetch(`/api/patients/${patientId}`);
 
-    console.log(res)
+    // console.log(res)
     if (res.ok){
         const patientDetails = await res.json();
         dispatch(loadPatientDetails(patientDetails));
@@ -63,7 +63,7 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
 
   export const getPatientUserDetails = (userId) => async (dispatch) => {
     const res = await csrfFetch(`/api/users/${userId}`);
-    console.log(res)
+    // console.log(res)
     if (res.ok){
         const patientUserDetails = await res.json();
         dispatch(loadPatientUserDetails(patientUserDetails));
@@ -73,7 +73,7 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
   const patientReducer = (state = {}, action) => {
     switch (action.type){
         case CREATE_PATIENT: {
-          console.log("future debugging: do we need to rename the state here and include the user fetch? thanks bye")
+          // console.log("future debugging: do we need to rename the state here and include the user fetch? thanks bye")
           return {...state, "newPatient" : action.newPatient}
         }
         case LOAD_PATIENT_DETAILS: {
