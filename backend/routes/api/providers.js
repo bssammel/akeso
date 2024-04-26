@@ -203,21 +203,26 @@ router.post(
         const {specialty, title } = req.body;
         const { user } = req;
         const userId = user.id;
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@ userId: ", userId)
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@")
         const newProvider = await Provider.create({
             userId, 
             specialty,
             title
         });
-        const createdProvider = {
-            id: newProvider.id,
-            userId: newProvider.userId,
-            specialty: newProvider.specialty, 
-            title: newProvider.title,
-            createdAt: newProvider.createdAt,
-            updatedAt: newProvider.updatedAt
-        };
 
-        return res.status(201).json(createdProvider)
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ newProvider: ", newProvider)
+        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+        // const createdProvider = {
+        //     id: newProvider.id,
+        //     userId: newProvider.userId,
+        //     specialty: newProvider.specialty, 
+        //     title: newProvider.title,
+        //     createdAt: newProvider.createdAt,
+        //     updatedAt: newProvider.updatedAt
+        // };
+
+        return res.status(201).json(newProvider)
 
 
     })
