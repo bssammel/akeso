@@ -1,0 +1,42 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    /* margin: 10px 10px; */
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    /* align-content: flex-end; */
+    margin: 2px;
+  }
+
+ div#login-submit {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    padding: 3px;
+  }
+
+  section{
+    display:flex;
+    flex-direction: column;
+  }
+
+  div.fields{
+    /* background-color: aqua; */
+    display: flex;
+    flex-direction: row;
+  }
+
+  input{
+    margin: 2px;
+  }
+
+  .select{
+    padding: 1.5px
+  }
+  

@@ -64,8 +64,8 @@ function ProfileButton({ user }) {
           {user ? (
           <>
             {/* logic for dr, RN etc */}
-            <li>{user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
+            <li className='user-data'>{user.firstName} {user.lastName}</li>
+            <li className='user-data'>{user.email}</li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>

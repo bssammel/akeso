@@ -1,1 +1,44 @@
 /* TODO: Add sitewide styles */
+body {
+    background-color: #e2eff7;
+    /* box-sizing: border-box;
+    max-width: 1400px;
+    margin: 0 auto; */
+  }
+
+p,
+h3,
+h4,
+h5, h6, th, tr, td {
+  font-family: "IBM Plex Sans";
+  color: #101012;
+}
+h1,
+h2,
+li {
+  font-family: "Crimson Text";
+  color: #101012;
+}
+
+button {
+    display: flex;
+  
+    align-items: center;
+    background-color: #8fb2c6;
+    border: 2px solid #04314d;
+    border-radius: 8px;
+    color: #101012;
+    cursor: pointer;
+    font-family: "Philosopher";
+    font-size: 15px;
+    margin: 3px 5px;
+    padding: 2px 4px;
+    text-decoration: none;
+  }
+
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }

@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { useNavigate } from 'react-router-dom';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../../context/Modal';
 
 
-import * as sessionActions from '../../store/session';
+import * as sessionActions from '../../../store/session';
 // import './SignupForm.css'
 
 function SignupFormModal() {
