@@ -9,14 +9,14 @@ body {
 p,
 h3,
 h4,
-h5, h6, th, tr, td {
+h5, h6, th, tr, td, label {
   font-family: "IBM Plex Sans";
   color: #101012;
 }
 h1,
 h2,
 li {
-  font-family: "Crimson Text";
+  font-family: "Philosopher";
   color: #101012;
 }
 
