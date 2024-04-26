@@ -1,7 +1,7 @@
 const express = require('express');
 
 
-const { User, Patient, Provider, ProviderPatient } = require('../../db/models');
+const { User, Patient, Provider, ProviderPatient, Treatment, Condition } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors, validatePatientCreation } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -74,6 +74,30 @@ router.get(
     }
   );
 
+// ! Get only condition for pt by id
+router.get(
+    '/:patientId/conditions',
+    async (req, res, next) => {
+        const ptObj = await Patient.findOne({
+            where: {
+                id: req.params.patientId
+            },
+            include: [
+                {model: Condition, attributes: ["id", "name", "description", "status"]},
+            ],
+            attributes: ["id"]
+        })
+
+        if (!ptObj) {
+            const err = new Error("Patient couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+        
+        return res.json(ptObj)
+    }
+  );
+
 // ! Get full pt by id
 router.get(
     '/:patientId',
@@ -82,7 +106,10 @@ router.get(
             where: {
                 id: req.params.patientId
             },
-            include: [{model: User}],
+            include: [
+                {model: Condition, attributes: ["id", "name", "description", "status"]},
+                {model: User}
+            ],
             attributes: [
                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
             ]
@@ -103,6 +130,7 @@ router.get(
         return res.json(ptObj)
     }
   );
+
 
 // !  Update pt by id
 // ! Add a new patient 
