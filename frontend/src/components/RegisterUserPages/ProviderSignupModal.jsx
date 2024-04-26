@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './SignupForm.css'
 
-import { addNewProvider } from '../../store/providers';
+import { addNewProvider, getAbbvPtsByPvdr } from '../../store/providers';
 import * as sessionActions from '../../store/session';
 
 function ProviderSignupFormModal() {
@@ -34,6 +34,7 @@ const runDispatches = async() => {
   }))
   .then(await dispatch(sessionActions.login({credential: email, password })))
   .then(await dispatch(addNewProvider({title, specialty})))
+  .then(await dispatch(getAbbvPtsByPvdr))
   .then(closeModal)
   .catch(async (res) => {
     const data = await res.json();

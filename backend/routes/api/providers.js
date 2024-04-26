@@ -48,6 +48,9 @@ router.get(
             attributes: ['id']
         })
 
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@ providerRes: ", providerRes)
+        console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
         providerId = providerRes.dataValues.id;
 
         const pvdPtArr = await ProviderPatient.findAll({
