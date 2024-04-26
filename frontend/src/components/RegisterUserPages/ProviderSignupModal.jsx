@@ -48,10 +48,10 @@ function ProviderSignupFormModal() {
 
 const runDispatches = async() => {
   await asyncSignUp()
-  .then(asyncLogin())
-  .then(asyncNewProvider())
-  .then(asyncGetPts())
-  .then(asyncClose())
+  .then(await asyncLogin())
+  .then(await asyncNewProvider())
+  .then(await asyncGetPts())
+  .then(await asyncClose())
   .catch(async (res) => {
     const data = await res.json();
     if (data?.errors) {
