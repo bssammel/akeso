@@ -22,20 +22,36 @@ function ProviderSignupFormModal() {
   
   const { closeModal } = useModal();
 
+  const asyncSignUp = async () => {
+    await dispatch(sessionActions.signup({
+      email,
+      firstName,
+      lastName,
+      password,
+      providerBool: true,
+      phone
+    }))
+  }
+
+  const asyncLogin = async () => {
+    await dispatch(sessionActions.login({credential: email, password }))
+  }
+  const asyncNewProvider = async () => {
+    await dispatch(addNewProvider({title, specialty}))
+  }
+  const asyncGetPts = async () => {
+    await dispatch(getAbbvPtsByPvdr)
+  }
+  const asyncClose = async () => {
+    closeModal
+  }
 
 const runDispatches = async() => {
-  await dispatch(sessionActions.signup({
-    email,
-    firstName,
-    lastName,
-    password,
-    providerBool: true,
-    phone
-  }))
-  .then(await dispatch(sessionActions.login({credential: email, password })))
-  .then(await dispatch(addNewProvider({title, specialty})))
-  .then(await dispatch(getAbbvPtsByPvdr))
-  .then(closeModal)
+  await asyncSignUp()
+  .then(asyncLogin())
+  .then(asyncNewProvider())
+  .then(asyncGetPts())
+  .then(asyncClose())
   .catch(async (res) => {
     const data = await res.json();
     if (data?.errors) {
