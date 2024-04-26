@@ -54,10 +54,10 @@ const providerReducer = (state = {}, action) => {
         return {...state, "newProvider" : action.newProvider}
       }
     case LOAD_ABBV_PTS_PVDR:{
-      const newState = {...state}
-      newState["provider"]["providerPtArr"] = action.abbvPtsByPvdr;
+      // const newState = {...state}
+      // newState["provider"]["providerPtArr"] = action.abbvPtsByPvdr;
       // return {...state, "providers": action.abbvPtsByPvdr }
-      return  {...newState}
+      return  {...state, "providerPtArr": action.abbvPtsByPvdr}
     }
     default:
         return state;
