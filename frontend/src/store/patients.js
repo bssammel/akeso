@@ -1,12 +1,9 @@
-// console.log("###################%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
 import { csrfFetch } from "./csrf";
 
 const CREATE_PATIENT = "patients/createPatient";
 const LOAD_PATIENT_DETAILS = "patients/loadPatientDetails";
 const LOAD_PATIENT_DETAILS_USERID = "patients/loadPatientUserDetails"
-// const EDIT_PATIENT = "patients/editPatient";
-// const LOAD_PT_CONDITIONS = 'patients/loadConditions'
-// const LOAD_PT_TREATMENTS = "patients/loadTreatments"
+
 
 export const createPatient = (newPatient) => {
   return {
