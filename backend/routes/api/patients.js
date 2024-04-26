@@ -90,8 +90,10 @@ router.get(
 
         if (!ptObj) {
             const err = new Error("Patient couldn't be found");
+            err.message = "Patient couldn't be found!"
             err.status = 404;
-            return next(err);
+            return res.json(err)
+            // return next(err);
         }
         
         //adding age

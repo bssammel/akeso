@@ -52,10 +52,16 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
 
   export const getPatientDetails = (patientId) => async (dispatch) => {
 
+    console.log("####################################")
+
+
     const res = await csrfFetch(`/api/patients/${patientId}`);
 
+    // console.log("####################################")
     // console.log(res)
-    if (res.ok){
+    if (!res.ok) {
+      return res;
+    } else if (res.ok){
         const patientDetails = await res.json();
         dispatch(loadPatientDetails(patientDetails));
     }
@@ -64,7 +70,9 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
   export const getPatientUserDetails = (userId) => async (dispatch) => {
     const res = await csrfFetch(`/api/users/${userId}`);
     // console.log(res)
-    if (res.ok){
+    if (!res.ok) {
+      return res;
+    } else if (res.ok){
         const patientUserDetails = await res.json();
         dispatch(loadPatientUserDetails(patientUserDetails));
     }

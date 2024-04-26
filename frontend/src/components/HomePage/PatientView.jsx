@@ -2,6 +2,8 @@ import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PatientDetails from './PatientDetails';
+import ForbiddenPtView from '../ErrorPages/ForbiddenPtView';
+import PtDne from '../ErrorPages/PtDNE';
 import UnauthView from './UnauthView';
 import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 
@@ -35,20 +37,35 @@ function PatientView() {
         runDispatches()
     }, [sessionUser, patientId, dispatch])
 
+    let isPtViewSelf = false;
 
+    if(patientId && ptDetailsObj){
+        if(sessionUserId === ptDetailsObj.userId){
+            isPtViewSelf = true;
+        }
+
+    }
 
     return (
         <>
         { !sessionUser && (
             <UnauthView/>
-        )}  
-        { !ptDetailsObj && sessionUser && (
+        )} 
+        { ptDetailsObj && ptDetailsObj.status === 404 && sessionUser.providerBool === true && (
+            <PtDne/>
+        ) }        
+        { !ptDetailsObj && sessionUser && sessionUser.providerBool === true && (
             <div className='unloaded'>
                 <p>Getting that patient data for you!</p>
             </div>
         )}
         {
-            sessionUser && ptDetailsObj &&(
+            sessionUser && sessionUser.providerBool === false && isPtViewSelf === false && (
+                <ForbiddenPtView/>
+            )
+        }
+        {
+            ptDetailsObj && ptDetailsObj.status !== 404 && sessionUser && ptDetailsObj && sessionUser.providerBool === true && (
                 <div className='authed'>
                     {/* <h1>{!sessionUser.providerBool && <>Welcome </>}{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1> */}
                     <h1>{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1>

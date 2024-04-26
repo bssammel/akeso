@@ -55,7 +55,8 @@ function PatientDetails() {
     console.log("hello")
 
     return (
-        <>  
+        <>
+          
         { !ptDetailsObj && sessionUser && (
             <div className='unloaded'>
                 <p>Getting that patient data for you!</p>
