@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { BiSolidUserDetail } from "react-icons/bi";
+import { useNavigate } from 'react-router-dom';
 //should consider imports for doctor and patient icons, bookmarked
 import * as sessionActions from '../../store/session';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
@@ -11,8 +12,10 @@ import ProviderSignupFormModal from '../RegisterUserPages/ProviderSignupModal';
 import PatientSignupFormModal from '../RegisterUserPages/PatientSignupModal';
 
 
+
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [showMenu, setShowMenu] = useState(false);
     const ulRef = useRef();
 
@@ -35,9 +38,14 @@ function ProfileButton({ user }) {
         return () => document.removeEventListener("click", closeMenu);
       }, [showMenu]);
 
+      const runLogoutDispatches = async () => {
+        await dispatch(sessionActions.logout())
+        .then(await navigate('/'))
+      }
+
       const logout = (e) => {
         e.preventDefault();
-        dispatch(sessionActions.logout());
+        runLogoutDispatches();
       };
     
 
