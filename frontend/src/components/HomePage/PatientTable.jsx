@@ -8,20 +8,6 @@ function PatientTable() {
         { sessionUser && sessionUser.providerBool && (
             <div className='authed provider'>
                 {/* give list of all patients of provider */}
-                {/* <h2>It looks like you are not signed in! </h2>
-                <p>In order to view your patients, providers, or health information, you must be signed in.</p>
-                <li>
-                    <OpenModalButton
-                        buttonText="Log In"
-                        modalComponent={<LoginFormModal />}
-                    />
-                    </li>
-                    <li>
-                    <OpenModalButton
-                        buttonText="Sign Up"
-                        modalComponent={<SignupFormModal />}
-                    />
-                </li> */}
                 <h3>My Patients</h3>
                 {/* do logic check to  */}
                 <div className='patient-table'>
