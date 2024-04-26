@@ -42,16 +42,17 @@ function ProviderSignupFormModal() {
   // const asyncGetPts = async () => {
   //   await dispatch(getAbbvPtsByPvdr)
   // }
-  const asyncClose = async () => {
-    closeModal
-  }
+  // const asyncClose = async () => {
+  //   closeModal
+  // }
 
 const runDispatches = async() => {
   await asyncSignUp()
   // .then(await asyncLogin())
   .then(await asyncNewProvider())
   // .then(await asyncGetPts())
-  .then(await asyncClose())
+  // .then(await asyncClose())
+  .then(closeModal)
   .catch(async (res) => {
     const data = await res.json();
     if (data?.errors) {
