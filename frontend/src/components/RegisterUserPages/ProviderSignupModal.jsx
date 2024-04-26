@@ -42,9 +42,10 @@ function ProviderSignupFormModal() {
   // const asyncGetPts = async () => {
   //   await dispatch(getAbbvPtsByPvdr)
   // }
-  // const asyncClose = async () => {
-  //   closeModal
-  // }
+  const staggeredClose = async () => {
+    console.log("staggered close is running")
+    closeModal
+  }
 
 const runDispatches = async() => {
   await asyncSignUp()
@@ -52,7 +53,7 @@ const runDispatches = async() => {
   .then(await asyncNewProvider())
   // .then(await asyncGetPts())
   // .then(await asyncClose())
-  .then(closeModal)
+  .then(await staggeredClose)
   .catch(async (res) => {
     const data = await res.json();
     if (data?.errors) {
