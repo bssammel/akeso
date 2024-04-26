@@ -33,9 +33,9 @@ function ProviderSignupFormModal() {
     }))
   }
 
-  const asyncLogin = async () => {
-    await dispatch(sessionActions.login({credential: email, password }))
-  }
+  // const asyncLogin = async () => {
+  //   await dispatch(sessionActions.login({credential: email, password }))
+  // }
   const asyncNewProvider = async () => {
     await dispatch(addNewProvider({title, specialty}))
   }
@@ -48,7 +48,7 @@ function ProviderSignupFormModal() {
 
 const runDispatches = async() => {
   await asyncSignUp()
-  .then(await asyncLogin())
+  // .then(await asyncLogin())
   .then(await asyncNewProvider())
   // .then(await asyncGetPts())
   .then(await asyncClose())
