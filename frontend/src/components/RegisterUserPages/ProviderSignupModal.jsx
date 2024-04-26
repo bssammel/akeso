@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import './SignupForm.css'
 
-import { addNewProvider, getAbbvPtsByPvdr } from '../../store/providers';
+import { addNewProvider } from '../../store/providers';
 import * as sessionActions from '../../store/session';
 
 function ProviderSignupFormModal() {
@@ -39,9 +39,9 @@ function ProviderSignupFormModal() {
   const asyncNewProvider = async () => {
     await dispatch(addNewProvider({title, specialty}))
   }
-  const asyncGetPts = async () => {
-    await dispatch(getAbbvPtsByPvdr)
-  }
+  // const asyncGetPts = async () => {
+  //   await dispatch(getAbbvPtsByPvdr)
+  // }
   const asyncClose = async () => {
     closeModal
   }
@@ -50,7 +50,7 @@ const runDispatches = async() => {
   await asyncSignUp()
   .then(await asyncLogin())
   .then(await asyncNewProvider())
-  .then(await asyncGetPts())
+  // .then(await asyncGetPts())
   .then(await asyncClose())
   .catch(async (res) => {
     const data = await res.json();
