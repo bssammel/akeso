@@ -56,7 +56,7 @@ const runDispatches = async() => {
         providerBool: true,
         phone
       }))
-  .then(await dispatch(sessionActions.login({credential: email, password })))
+  // .then(await dispatch(sessionActions.login({credential: email, password })))
   .then(await dispatch(addNewProvider({title, specialty})))
   // .then(await asyncGetPts())
   // .then(await asyncClose())
