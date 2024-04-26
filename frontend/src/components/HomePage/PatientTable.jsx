@@ -18,22 +18,27 @@ function PatientTable() {
         runDispatches();
     }, [dispatch])
 
+    const noPts = !ptArr || !ptArr.length || ptArr.length < 1;
+    const hasPts = ptArr && ptArr.length !== 0;
+    console.log(noPts)
+    console.log(hasPts)
+
     return (
         <>
         { sessionUser && sessionUser.providerBool && (
             <div className='authed provider'>
                 {/* give list of all patients of provider */}
                 <h2>My Patients</h2>
-                <p>To view to a specific patient&apos;s details, click that row.</p>
-                {/* do logic check to see if there are actually any patients assigned to provider */}
-                { !ptArr || !ptArr.length || ptArr.length < 1 && (
+                { noPts && (
                         <div>
                         <p>It seems that you do not have any patients currently assigned to you. If you would like to add a patient to your caseload, please use the button below to navigate to a list of all patients available to you. 
                         </p>
                         <button type="button" onClick={() => alert('Future feature planned for either v2.0/Greenlight alongside appointments! It will also have major updates when Practices are added to Akeso.')}>Add Patient to my Service</button>
                     </div>
                 )}
-                {ptArr && ptArr.length && ptArr.length !== 0 && (
+                {hasPts && (
+                    <div className='patient-table'>
+                    <p>To view to a specific patient&apos;s details, click that row.</p>
                     <div className='patient-table'>
                         <table>
                             <thead>
@@ -59,6 +64,7 @@ function PatientTable() {
                             })}
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 )}
             </div>
