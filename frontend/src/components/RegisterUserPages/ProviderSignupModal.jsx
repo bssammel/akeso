@@ -22,23 +22,23 @@ function ProviderSignupFormModal() {
   
   const { closeModal } = useModal();
 
-  const asyncSignUp = async () => {
-    await dispatch(sessionActions.signup({
-      email,
-      firstName,
-      lastName,
-      password,
-      providerBool: true,
-      phone
-    }))
-  }
+  // const asyncSignUp = async () => {
+  //   dispatch(sessionActions.signup({
+  //     email,
+  //     firstName,
+  //     lastName,
+  //     password,
+  //     providerBool: true,
+  //     phone
+  //   }))
+  // }
 
-  const asyncLogin = async () => {
-    await dispatch(sessionActions.login({credential: email, password }))
-  }
-  const asyncNewProvider = async () => {
-    await dispatch(addNewProvider({title, specialty}))
-  }
+  // const asyncLogin = async () => {
+  //   dispatch(sessionActions.login({credential: email, password }))
+  // }
+  // const asyncNewProvider = async () => {
+  //   dispatch(addNewProvider({title, specialty}))
+  // }
   // const asyncGetPts = async () => {
   //   await dispatch(getAbbvPtsByPvdr)
   // }
@@ -48,9 +48,16 @@ function ProviderSignupFormModal() {
   // }
 
 const runDispatches = async() => {
-  await asyncSignUp()
-  .then(await asyncLogin())
-  .then(await asyncNewProvider())
+  await dispatch(sessionActions.signup({
+        email,
+        firstName,
+        lastName,
+        password,
+        providerBool: true,
+        phone
+      }))
+  .then(await dispatch(sessionActions.login({credential: email, password })))
+  .then(await dispatch(addNewProvider({title, specialty})))
   // .then(await asyncGetPts())
   // .then(await asyncClose())
   // .then(await staggeredClose())
