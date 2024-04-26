@@ -64,114 +64,116 @@ function PatientDetails() {
         )}
         {
             ptDetailsObj && sessionUser && (
-                <div className='authed'>
+                <div className='authed details'>
                     <h3> Patient Details</h3>
                     <div className="pt-details-cntnr">
                         <div className='pt-details-item' id='basic-details'>
-                            <h5>At a Glance</h5>
+                            <h4>At a Glance</h4>
+                            <div className='data-items-all'>
                             <div className='data-item-cntnr' id='age'>
-                                <h6>Age</h6>
+                                <h5>Age</h5>
                                 <p>{ptDetailsObj.age}</p>
                             </div>
                             <div className='data-item-cntnr' id='sex'>
-                                <h6>sex</h6>
+                                <h5>Legal Sex Marker</h5>
                                 <p>{ptDetailsObj.sex}</p>
                             </div>
                             <div className='data-item-cntnr' id='gender'>
-                                <h6>gender</h6>
+                                <h5>Gender Identity</h5>
                                 <p>{ptDetailsObj.gender}</p>
                             </div>
                             <div className='data-item-cntnr' id='dob'>
-                                <h6>Date of Birth</h6>
+                                <h5>Date of Birth</h5>
                                 <p>{reformatISO(ptDetailsObj.dob)}</p>
                             </div>
                             <div className='data-item-cntnr' id='religion'>
-                                <h6>Religion</h6>
+                                <h5>Religion</h5>
                                 <p>{ptDetailsObj.religion}</p>
                             </div>
                             <div className='data-item-cntnr' id='ethnicity'>
-                                <h6>Race</h6>
+                                <h5>Race</h5>
                                 <p>{ptDetailsObj.ethnicity}</p>
                             </div>
                             <div className='data-item-cntnr' id='language'>
-                                <h6>Primary Language</h6>
+                                <h5>Primary Language</h5>
                                 <p>{ptDetailsObj.language}</p>
                             </div>
                             <div className='data-item-cntnr' id='relationshipStatus'>
-                                <h6>Relationship Status</h6>
+                                <h5>Relationship Status</h5>
                                 <p>{ptDetailsObj.relationshipStatus}</p>
+                            </div>
                             </div>
                         </div>
                         <div className='pt-details-item' id='contact-info'>
-                            <h5>Contact Information</h5>
+                            <h4>Contact Information</h4>
                             <div className='data-item-cntnr' id='email'>
-                                <h6>Email Address</h6>
+                                <h5>Email Address</h5>
                                 <p>{ptDetailsObj.email}</p>
                             </div>
                             <div className='data-item-cntnr' id='phone'>
-                                <h6>Phone</h6>
+                                <h5>Phone</h5>
                                 <p>{ptDetailsObj.phone}</p>
                             </div>
                             <div className='data-item-cntnr' id='street'>
-                                <h6>Street Address</h6>
+                                <h5>Street Address</h5>
                                 <p>{ptDetailsObj.street}</p>
                             </div>
                             <div className='data-item-cntnr' id='city'>
-                                <h6>City</h6>
+                                <h5>City</h5>
                                 <p>{ptDetailsObj.city}</p>
                             </div>
                             <div className='data-item-cntnr' id='State'>
-                                <h6>State</h6>
-                                <p>{ptDetailsObj.State}</p>
+                                <h5>State</h5>
+                                <p>{ptDetailsObj.state}</p>
                             </div>
                         </div>
-                        <div className='pt-details-item' id='911 contact-info'>
-                            <h5>Emergency Contact</h5>
+                        <div className='pt-details-item' id='emer-info'>
+                            <h4>Emergency Contact</h4>
                             <div className='data-item-cntnr' id='name911'>
-                                <h6>Name</h6>
+                                <h5>Name</h5>
                                 <p>{ptDetailsObj.name911}</p>
                             </div>
                             <div className='data-item-cntnr' id='phone911'>
-                                <h6>Phone</h6>
+                                <h5>Phone</h5>
                                 <p>{ptDetailsObj.phone911}</p>
                             </div>
                             <div className='data-item-cntnr' id='street911'>
-                                <h6>Street</h6>
+                                <h5>Street</h5>
                                 <p>{ptDetailsObj.street911}</p>
                             </div>
                             <div className='data-item-cntnr' id='city911'>
-                                <h6>City</h6>
+                                <h5>City</h5>
                                 <p>{ptDetailsObj.city911}</p>
                             </div>
                             <div className='data-item-cntnr' id='state911'>
-                                <h6>City</h6>
+                                <h5>City</h5>
                                 <p>{ptDetailsObj.state911}</p>
                             </div>
                             <div className='data-item-cntnr' id='relationship911'>
-                                <h6>Relationship</h6>
+                                <h5>Relationship</h5>
                                 <p>{ptDetailsObj.relationship911}</p>
                             </div>
                         </div>
                         <div className='pt-details-item' id='pharm-details'>
-                            <h5>Preferred Pharmacy</h5>
+                            <h4>Preferred Pharmacy</h4>
                             <div className='data-item-cntnr' id='pharmName'>
-                                <h6>Name</h6>
+                                <h5>Name</h5>
                                 <p>{ptDetailsObj.pharmName}</p>
                             </div>
-                            <div className='data-item-cntnr' id='pharmPhone'>
-                                <h6>Phone</h6>
+                            {/* <div className='data-item-cntnr' id='pharmPhone'>
+                                <h5>Phone</h5>
                                 <p>{ptDetailsObj.pharmPhone}</p>
-                            </div>
+                            </div> */}
                             <div className='data-item-cntnr' id='pharmStreet'>
-                                <h6>Street</h6>
+                                <h5>Street</h5>
                                 <p>{ptDetailsObj.pharmStreet}</p>
                             </div>
                             <div className='data-item-cntnr' id='pharmCity'>
-                                <h6>City</h6>
+                                <h5>City</h5>
                                 <p>{ptDetailsObj.pharmCity}</p>
                             </div>     
                             <div className='data-item-cntnr' id='pharmState'>
-                                <h6>State</h6>
+                                <h5>State</h5>
                                 <p>{ptDetailsObj.pharmState}</p>
                             </div>                       
                         </div>

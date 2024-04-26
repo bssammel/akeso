@@ -1,0 +1,97 @@
+h1{
+    margin-bottom: 0;
+}
+
+div.pt-nav-cntnr{
+    display: flex;
+    flex-direction: row;
+    max-height: fit-content;
+    max-width: fit-content;
+}
+
+p.pt-nav-item{
+    max-height: max-content;
+    margin: 2px;
+    padding: 3px 7px 3px 2px;
+    background-color: #8fb2c6;
+    border: 2px solid #04314d;
+    /* border-top: 2px solid #04314d;
+    border-left: 2px solid #04314d; */
+    border-radius: 3px;
+}
+
+h4.nav-description{
+    margin: 0px;
+}
+
+.pt-details-cntnr{
+    margin: 10px 0px 0px 30px;
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    "basic" "contact"
+    "911" "pharm";
+    gap: 40px;
+}
+
+.pt-details-item{
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  border: 2px solid #90b0c4;
+    border-radius: 8px;
+    padding: 7px 7px 0px 7px ;
+    flex-wrap: wrap;
+    
+}
+
+.pt-details-item#basic-details{
+    grid-area: "basic";
+    max-height: fit-content;
+    margin: 0%;
+}
+div#contact-info.pt-details-item{
+    grid-area: "contact";
+    max-height: fit-content;
+    margin: 0%;
+
+}
+.pt-details-item#emer-info{
+    grid-area: "911"    
+}
+.pt-details-item#pharm-details{
+    grid-area: "pharm";
+    
+}
+
+.data-items-all{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.data-item-cntnr{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    min-width: 100px;
+    border: 1px solid #04314d;
+    border-radius: 8px;
+    padding: 0px;
+}
+
+.data-item-cntnr > h5{
+    margin: 5px;
+    padding: 0px;
+
+}
+
+.data-item-cntnr > p{
+    font-size: small;
+    margin:2px 2px 5px 10px;
+    padding: 0px;
+}

@@ -5,6 +5,7 @@ import PatientDetails from './PatientDetails';
 import ForbiddenPtView from '../ErrorPages/ForbiddenPtView';
 import PtDne from '../ErrorPages/PtDNE';
 import UnauthView from './UnauthView';
+import './PatientView.css'
 import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 
 
@@ -48,26 +49,30 @@ function PatientView() {
 
     return (
         <>
+        {/* if there is no current session */}
         { !sessionUser && (
             <UnauthView/>
         )} 
+        {/* if the patient does not exist and the current user is a provider */}
         { ptDetailsObj && ptDetailsObj.status === 404 && sessionUser.providerBool === true && (
             <PtDne/>
-        ) }        
+        ) }       
+         {/*if the current user is a provider and the pt details have not loaded yet  */}
         { !ptDetailsObj && sessionUser && sessionUser.providerBool === true && (
             <div className='unloaded'>
                 <p>Getting that patient data for you!</p>
             </div>
         )}
+        {/* if the current user is a pt and they are trying to view a pt that is not themselves */}
         {
             sessionUser && sessionUser.providerBool === false && isPtViewSelf === false && (
                 <ForbiddenPtView/>
             )
         }
+        {/* if the current user is a provider and the patient being views exists and has loaded */}
         {
             ptDetailsObj && ptDetailsObj.status !== 404 && sessionUser && ptDetailsObj && sessionUser.providerBool === true && (
                 <div className='authed'>
-                    {/* <h1>{!sessionUser.providerBool && <>Welcome </>}{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1> */}
                     <h1>{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1>
                     <div className="pt-nav-cntnr">
                         <p className="pt-nav-item" onClick={() => { setCurrentView('details') }}><h4 className="nav-description">&nbsp;&nbsp;Details</h4></p>
