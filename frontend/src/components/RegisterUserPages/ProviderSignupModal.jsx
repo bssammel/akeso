@@ -10,8 +10,8 @@ import * as sessionActions from '../../store/session';
 function ProviderSignupFormModal() {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [specialty, setSpecialty] = useState("");
+  const [title, setTitle] = useState("MD");
+  const [specialty, setSpecialty] = useState("Family Medicine");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -49,7 +49,7 @@ const runDispatches = async() => {
   };
 
   const titles = ["MD", "DO", "NP", "PA", "RN", "LPN"];
-  const specialties = ["Family Medicine", "Internal Medicine", "Pediatrics", "Endocrinology"]
+  const specialties = ["Family Medicine", "Internal Medicine", "Pediatrics", "Endocrinology", "None"]
 
   return (
     <>
@@ -58,7 +58,7 @@ const runDispatches = async() => {
       <label>
           Email
           <input
-            type="text"
+            type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -71,6 +71,7 @@ const runDispatches = async() => {
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
+            pattern='^[^0-9]+$'
             required
           />
         </label>
@@ -81,6 +82,7 @@ const runDispatches = async() => {
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
+            pattern='^[^0-9]+$'
             required
           />
         </label>
@@ -88,8 +90,10 @@ const runDispatches = async() => {
         <label>
           Phone
           <input
-            type="text"
+            type="tel"
             value={phone}
+            placeholder='Digits only, 10 total'
+            pattern='^[0-9]+$'
             onChange={(e) => setPhone(e.target.value)}
             required
           />
@@ -116,7 +120,7 @@ const runDispatches = async() => {
         </label>
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <label>
-          Title:
+          Title
           <select
           name='title' id='title-select'
           value={title}
@@ -129,7 +133,7 @@ const runDispatches = async() => {
         </label>
         {errors.title && <p>{errors.title}</p>}
         <label>
-          Specialty:
+          Specialty
           <select
           name='specialty' id='specialty-select'
           value={specialty}
@@ -141,8 +145,22 @@ const runDispatches = async() => {
           </select>
         </label>
         {errors.specialty && <p>{errors.specialty}</p>}
-        <div id='signup-submit'><button id='signup-submit' type="submit">Sign Up</button></div>
-        
+        <div id='signup-submit'>
+          <button 
+            id='signup-submit' 
+            type="submit"
+            disabled={
+              password.length < 6 ||
+              email.length < 3 ||
+              confirmPassword.length < 6 ||
+              lastName.length < 1 ||
+              firstName.length < 1 ||
+              confirmPassword !== password ||
+              phone.length !== 10 
+            }>
+              Sign Up as a Provider
+          </button>
+        </div>
       </form>
     </>
   );

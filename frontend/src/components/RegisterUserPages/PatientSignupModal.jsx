@@ -22,8 +22,8 @@ function PatientSignupFormModal() {
   const [sex, setSex] = useState("M");
   const [gender, setGender] = useState("Cisgender Man");
   const [insurance, setInsurance] = useState("");
-  const [religion, setReligion] = useState("Religion");
-  const [relationshipStatus, setRelationshipStatus] = useState("Divorced");
+  const [religion, setReligion] = useState("");
+  const [relationshipStatus, setRelationshipStatus] = useState("");
   const [language, setLanguage] = useState("English");
   const [ethnicity, setEthnicity] = useState("White");
   const [street, setStreet] = useState("");
@@ -95,8 +95,8 @@ function PatientSignupFormModal() {
 
   const sexMarkerArr = ["M", "F", "X"] 
   const genderArr = ["Cisgender Man","Cisgender Woman","Transgender Man","Transgender Woman","Nonbinary"]
-  const religionArr = ["Agnostic", "Atheist", "Hindu", "Buddhist", "Muslim", "Christian (any denomination)", "Jehovah's Witness", "Jewish"]
-  const relationshipStatusArr = ["Divorced", "Legally Separated", "Married", "Other", "Significant Other", "Single", "Widowed"]
+  const religionArr = ["Do Not Wish to Disclose", "Agnostic", "Atheist", "Hindu", "Buddhist", "Muslim", "Christian (any denomination)", "Jehovah's Witness", "Jewish"]
+  const relationshipStatusArr = ["Do Not Wish to Disclose", "Divorced", "Legally Separated", "Married", "Other", "Significant Other", "Single", "Widowed"]
   const languageArr = ["English", "Mandarin Chinese", "Spanish", "Hindi", "French", "Standard Arabic", "Bengali", "Russian", "Portuguese", "Urdu","German", "Japanese", "Other"];
   const ethnicityArr = ["White", "Black", "Asian", "Native American or Alaska Native", "Native Hawaiian or Other Pacific Islander", "Some other race", "Two or more races"];
   const relationship911Arr = ["Spouse", "Parent", "Child", "Sibling", "Grandparent", "Close Friend", "Partner", "Other Relative"];
@@ -114,9 +114,9 @@ function PatientSignupFormModal() {
         <h3>Account Details </h3>
           <div className='fields'>
             <label>
-                Email
+                Email Address
                 <input
-                  type="text"
+                  type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -129,6 +129,7 @@ function PatientSignupFormModal() {
                   type="text"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  pattern='^[^0-9]+$'
                   required
                 />
               </label>
@@ -139,6 +140,7 @@ function PatientSignupFormModal() {
                   type="text"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
+                  pattern='^[^0-9]+$'
                   required
                 />
               </label>
@@ -146,8 +148,10 @@ function PatientSignupFormModal() {
               <label>
                 Phone
                 <input
-                  type="text"
+                  type="tel"
                   value={phone}
+                  placeholder='Digits only, 10 total'
+                  pattern='^[0-9]+$'
                   onChange={(e) => setPhone(e.target.value)}
                   required
                 />
@@ -193,7 +197,7 @@ function PatientSignupFormModal() {
         </label>
         {errors.dob && <p>{errors.dob}</p>}
         <label>
-          Legal Sex Marker:
+          Legal Sex Marker
           <select
           name='sex' id='sex-marker' className='select'
           value={sex}
@@ -206,7 +210,7 @@ function PatientSignupFormModal() {
         </label>
         {errors.sex && <p>{errors.sex}</p>}
         <label>
-          Gender Identity:
+          Gender Identity
           <select
           name='gender' id='gender' className='select'
           value={gender}
@@ -224,17 +228,16 @@ function PatientSignupFormModal() {
             type="text"
             value={insurance}
             onChange={(e) => setInsurance(e.target.value)}
-            required
           />
         </label>
         {errors.insurance && <p>{errors.insurance}</p>}
         <label>
-          Religion:
+          Religion
           <select
           name='religion' id='religion' className='select'
           value={religion}
           onChange={(e) => setReligion(e.target.value)}
-          required>
+          >
             {religionArr.map((religionOpt) => (
                   <option key={religionOpt} value={religionOpt}>{religionOpt}
                   </option>))}
@@ -242,12 +245,12 @@ function PatientSignupFormModal() {
         </label>
         {errors.religion && <p>{errors.religion}</p>}
         <label>
-          Relationship Status:
+          Relationship Status
           <select
           name='relationshipStatus' id='relationshipStatus' className='select'
           value={relationshipStatus}
           onChange={(e) => setRelationshipStatus(e.target.value)}
-          required>
+          >
             {relationshipStatusArr.map((relationshipStatusOpt) => (
               <option key={relationshipStatusOpt} value={relationshipStatusOpt}>{relationshipStatusOpt}
                   </option>))}
@@ -255,12 +258,12 @@ function PatientSignupFormModal() {
         </label>
         {errors.relationshipStatus && <p>{errors.relationshipStatus}</p>}
         <label>
-          Language:
+          Language
           <select
           name='language' id='language' className='select'
           value={language}
           onChange={(e) => setLanguage(e.target.value)}
-          required>
+          >
             {languageArr.map((languageOpt) => (
               <option key={languageOpt} value={languageOpt}>{languageOpt}
                   </option>))}
@@ -268,12 +271,12 @@ function PatientSignupFormModal() {
         </label>
         {errors.language && <p>{errors.language}</p>}
         <label>
-          Race:
+          Race
           <select
           name='ethnicity' id='ethnicity' className='select'
           value={ethnicity}
           onChange={(e) => setEthnicity(e.target.value)}
-          required>
+          >
             {ethnicityArr.map((ethnicityOpt) => (
               <option key={ethnicityOpt} value={ethnicityOpt}>{ethnicityOpt}
                   </option>))}
@@ -296,7 +299,7 @@ function PatientSignupFormModal() {
         </label>
         {errors.street && <p>{errors.street}</p>}
         <label>
-          City:
+          City
           <input
             type="text"
             value={city}
@@ -306,7 +309,7 @@ function PatientSignupFormModal() {
         </label>
         {errors.city && <p>{errors.city}</p>}
         <label>
-          State:
+          State
           <input
             type="text"
             value={state}
@@ -321,7 +324,7 @@ function PatientSignupFormModal() {
         <h3>Emergency Contact </h3>
         <div className='fields'>
         <label>
-          Name:
+          Name
           <input
             type="text"
             value={name911}
@@ -331,17 +334,19 @@ function PatientSignupFormModal() {
         </label>
         {errors.name911 && <p>{errors.name911}</p>}
         <label>
-          Phone:
+          Phone
           <input
-            type="text"
+            type="tel"
             value={phone911}
+            placeholder='Digits only, 10 total'
+            pattern='^[0-9]+$'
             onChange={(e) => setPhone911(e.target.value)}
             required
           />
         </label>
         {errors.phone911 && <p>{errors.phone911}</p>}
         <label>
-          Street:
+          Street
           <input
             type="text"
             value={street911}
@@ -351,7 +356,7 @@ function PatientSignupFormModal() {
         </label>
         {errors.street911 && <p>{errors.street911}</p>}
         <label>
-          City:
+          City
           <input
             type="text"
             value={city911}
@@ -361,7 +366,7 @@ function PatientSignupFormModal() {
         </label>
         {errors.city911 && <p>{errors.city911}</p>}
         <label>
-          State:
+          State
           <input
             type="text"
             value={state911}
@@ -371,7 +376,7 @@ function PatientSignupFormModal() {
         </label>
         {errors.state911 && <p>{errors.state911}</p>}
         <label>
-          Relationship of Emergency Contact:
+          Relationship of Emergency Contact
           <select
           name='relationship911' id='relationship911' className='select'
           value={relationship911}
@@ -389,12 +394,11 @@ function PatientSignupFormModal() {
         <h3>Pharmacy Information </h3>
         <div className='fields'>
         <label>
-          Name:
+          Name
           <input
             type="text"
             value={pharmName}
             onChange={(e) => setPharmName(e.target.value)}
-            required
             />
         </label>
         {errors.pharmName && <p>{errors.pharmName}</p>}
@@ -414,7 +418,6 @@ function PatientSignupFormModal() {
             type="text"
             value={pharmCity}
             onChange={(e) => setPharmCity(e.target.value)}
-            required
             />
         </label>
         {errors.pharmCity && <p>{errors.pharmCity}</p>}
@@ -424,13 +427,28 @@ function PatientSignupFormModal() {
             type="text"
             value={pharmState}
             onChange={(e) => setPharmState(e.target.value)}
-            required
             />
         </label>
         {errors.pharmState && <p>{errors.pharmState}</p>}
             </div>
         </section>
-        <div id='signup-submit'><button id='signup-submit' type="submit">Sign Up as a Patient</button></div>
+        <div id='signup-submit'>
+          <button 
+            id='signup-submit' 
+            type="submit"
+            disabled={
+              password.length < 6 ||
+              email.length < 3 ||
+              confirmPassword.length < 6 ||
+              lastName.length < 1 ||
+              firstName.length < 1 ||
+              confirmPassword !== password ||
+              phone.length !== 10 ||
+              phone911.length !== 10
+            }>
+              Sign Up as a Patient
+          </button>
+        </div>
       </form>
     </>
   );
