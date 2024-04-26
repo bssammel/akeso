@@ -51,6 +51,11 @@ router.get(
         console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@ providerRes: ", providerRes)
         console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@")
 
+        if(!providerRes.dataValues){
+            const emptyArr= [];
+            return res.json(emptyArr)
+        }
+
         providerId = providerRes.dataValues.id;
 
         const pvdPtArr = await ProviderPatient.findAll({
