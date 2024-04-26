@@ -4,10 +4,12 @@ import {thunk} from 'redux-thunk';
 
 import sessionReducer from './session';
 import patientReducer from './patients';
+import providerReducer from './providers';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
-  patient: patientReducer
+  patient: patientReducer,
+  provider: providerReducer
 });
 
 let enhancer;

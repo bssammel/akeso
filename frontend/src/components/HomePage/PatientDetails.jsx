@@ -52,8 +52,6 @@ function PatientDetails() {
     }, [sessionUserId, patientId, dispatch])
 
 
-    console.log("hello")
-
     return (
         <>
           

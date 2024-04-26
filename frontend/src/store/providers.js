@@ -16,7 +16,7 @@ export const createProvider = (newProvider) => {
   export const loadAbbvPtsPvdr = (abbvPtsByPvdr) => {
     return {
       type: LOAD_ABBV_PTS_PVDR,
-      abbvPtsByPvdr
+      abbvPtsByPvdr,
     };
   };
 
@@ -43,7 +43,7 @@ export const getAbbvPtsByPvdr = () => async (dispatch) => {
     return res;
   } else if (res.ok){
     const abbvPtsByPvdr = await res.json();
-    dispatch(loadAbbvPtsPvdr(abbvPtsByPvdr))
+    dispatch(loadAbbvPtsPvdr(abbvPtsByPvdr));
   }
 }
 
@@ -55,8 +55,9 @@ const providerReducer = (state = {}, action) => {
       }
     case LOAD_ABBV_PTS_PVDR:{
       const newState = {...state}
-      newState.patient["providerPtArr"] = action.abbvPtsByPvdr;
-      return {...newState }
+      newState["provider"]["providerPtArr"] = action.abbvPtsByPvdr;
+      // return {...state, "providers": action.abbvPtsByPvdr }
+      return  {...newState}
     }
     default:
         return state;
