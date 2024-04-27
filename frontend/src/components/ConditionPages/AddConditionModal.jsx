@@ -18,7 +18,7 @@ function AddConditionModal() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("Controlled")
+  const [status, setStatus] = useState("Current")
 //   Current, Controlled, Resolved, Chronic, Intermittent, Worsening, Acute
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
