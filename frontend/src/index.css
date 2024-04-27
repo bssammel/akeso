@@ -40,6 +40,21 @@ button {
     cursor: pointer;
   }
 
+  :disabled{
+    display: flex;
+    align-items: center;
+    background-color: rgb(143, 178, 198) !important;
+    opacity: 0.4;
+    border: 2px solid #04314d;
+    border-radius: 8px;
+    cursor: not-allowed;
+    font-family: "Philosopher";
+    font-size: 15px;
+    margin: 3px 5px;
+    padding: 2px 4px;
+    text-decoration: none;
+  }
+
 
   ul {
     list-style-type: none;
