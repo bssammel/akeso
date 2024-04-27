@@ -61,7 +61,7 @@ const runDispatches = async() => {
   // .then(await asyncGetPts())
   // .then(await asyncClose())
   // .then(await staggeredClose())
-  .then(closeModal)
+  .then(() => closeModal)
   .catch(async (res) => {
     const data = await res.json();
     if (data?.errors) {

@@ -205,7 +205,7 @@ router.put(
 // ! Add a new provider 
 router.post(
     "/", 
-    requireAuth, 
+    // requireAuth, 
     validateProviderCreation,
     async (req, res, next) => {
         const {specialty, title } = req.body;
