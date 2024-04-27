@@ -78,7 +78,7 @@ const validateConditionCreation = [
   check('name')
     .exists({ checkFalsy: true })
     .isLength({min: 1, max:75})
-    .withMessage('Please provide a name for the condition between 1 and 75 characters in length.'),
+    .withMessage('Please provide a name for the condition between 1 and 75 characters (inclusive) in length'),
   check('description')
     .isLength({max: 1999})
     .withMessage('Condition description must be less than 2000 characters.'),
@@ -92,7 +92,7 @@ const validateTreatmentCreation = [
   check('name')
     .exists({ checkFalsy: true })
     .isLength({min: 1, max:75})
-    .withMessage('Please provide a name for the treatment between 1 and 75 characters in length.'),
+    .withMessage('Please provide a name for the treatment between 1 and 75 characters (inclusive) in length.'),
   check('dosage')
     .isLength({max: 20})
     .withMessage('Medication dosage must be 20 characters or less.'),

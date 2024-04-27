@@ -1,20 +1,18 @@
 import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { BiSolidEdit} from "react-icons/bi";
+import { MdDeleteForever } from "react-icons/md";
+
 import { getPatientUserDetails, getPatientDetails } from '../../store/patients';
+import OpenModalButton from '../OpenModalButton/OpenModalButton'
+import EditConditionModal from './EditConditionModal';
+import DeleteConditionModal from './DeleteConditonModal';
+import AddConditionModal from './AddConditionModal';
+import './ConditionsView.css'
 
-const reformatISO = function (givenString){
 
-    const givenDate = new Date(givenString)
-    const dateFormatString = givenDate.toDateString()
-    let reformattedDateString = '';
-
-    reformattedDateString = dateFormatString.slice(4,10) + "," + dateFormatString.slice(10, 15);
-
-    return reformattedDateString;
-}
-
-function PatientDetails() {
+function ConditionsView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
 
     const { patientId } = useParams();
@@ -27,29 +25,38 @@ function PatientDetails() {
         sessionUserId = sessionUser.id
     }
 
-    if(sessionUser && sessionUser.providerBool){
-        console.log("user is a provider that must be viewing a patient and the get patient by id route using params will be necessary");
-        console.log("make sure that patient id is the right param to be used inthe the patient details jsx file")
-        console.log("patientId: ", patientId)
+    let conditionArr;
+
+    if (ptDetailsObj && ptDetailsObj.Conditions){
+        conditionArr = ptDetailsObj.Conditions;
     }
 
-    const dispatch = useDispatch()
+    let numConditions;
 
-    // const [currentView, setCurrentView] = useState('details');
+    if (
+        Array.isArray(conditionArr) &&
+        conditionArr.length &&
+        sessionUser
+      ) {
+        numConditions = conditionArr.length;
+        if (numConditions > 0) numConditions = true;
+      } else {
+        numConditions = -1;
+      }
+
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const runDispatches = async () => {
             if(!patientId){
-                console.log("hitting patient view dispatch")
                 await dispatch(getPatientUserDetails(sessionUserId))
             } else{
-                console.log("hitting provider specifi dispatch")
                 await dispatch(getPatientDetails(patientId))
             }
         };
 
         runDispatches()
-    }, [sessionUserId, patientId, dispatch])
+    }, [sessionUserId, patientId, numConditions, dispatch])
 
 
     return (
@@ -62,120 +69,44 @@ function PatientDetails() {
         )}
         {
             ptDetailsObj && sessionUser && (
-                <div className='authed details'>
-                    <h3> Patient Details</h3>
-                    <div className="pt-details-cntnr">
-                        <div className='pt-details-item' id='basic-details'>
-                            <h4>At a Glance</h4>
-                            <div className='data-items-all'>
-                            <div className='data-item-cntnr' id='age'>
-                                <h5>Age</h5>
-                                <p>{ptDetailsObj.age}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='sex'>
-                                <h5>Legal Sex Marker</h5>
-                                <p>{ptDetailsObj.sex}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='gender'>
-                                <h5>Gender Identity</h5>
-                                <p>{ptDetailsObj.gender}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='dob'>
-                                <h5>Date of Birth</h5>
-                                <p>{reformatISO(ptDetailsObj.dob)}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='religion'>
-                                <h5>Religion</h5>
-                                <p>{ptDetailsObj.religion}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='ethnicity'>
-                                <h5>Race</h5>
-                                <p>{ptDetailsObj.ethnicity}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='language'>
-                                <h5>Primary Language</h5>
-                                <p>{ptDetailsObj.language}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='relationshipStatus'>
-                                <h5>Relationship Status</h5>
-                                <p>{ptDetailsObj.relationshipStatus}</p>
-                            </div>
-                            </div>
-                        </div>
-                        <div className='pt-details-item' id='contact-info'>
-                            <h4>Contact Information</h4>
-                            <div className='data-item-cntnr' id='email'>
-                                <h5>Email Address</h5>
-                                <p>{ptDetailsObj.email}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='phone'>
-                                <h5>Phone</h5>
-                                <p>{ptDetailsObj.phone}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='street'>
-                                <h5>Street Address</h5>
-                                <p>{ptDetailsObj.street}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='city'>
-                                <h5>City</h5>
-                                <p>{ptDetailsObj.city}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='State'>
-                                <h5>State</h5>
-                                <p>{ptDetailsObj.state}</p>
-                            </div>
-                        </div>
-                        <div className='pt-details-item' id='emer-info'>
-                            <h4>Emergency Contact</h4>
-                            <div className='data-item-cntnr' id='name911'>
-                                <h5>Name</h5>
-                                <p>{ptDetailsObj.name911}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='phone911'>
-                                <h5>Phone</h5>
-                                <p>{ptDetailsObj.phone911}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='street911'>
-                                <h5>Street</h5>
-                                <p>{ptDetailsObj.street911}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='city911'>
-                                <h5>City</h5>
-                                <p>{ptDetailsObj.city911}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='state911'>
-                                <h5>City</h5>
-                                <p>{ptDetailsObj.state911}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='relationship911'>
-                                <h5>Relationship</h5>
-                                <p>{ptDetailsObj.relationship911}</p>
-                            </div>
-                        </div>
-                        <div className='pt-details-item' id='pharm-details'>
-                            <h4>Preferred Pharmacy</h4>
-                            <div className='data-item-cntnr' id='pharmName'>
-                                <h5>Name</h5>
-                                <p>{ptDetailsObj.pharmName}</p>
-                            </div>
-                            {/* <div className='data-item-cntnr' id='pharmPhone'>
-                                <h5>Phone</h5>
-                                <p>{ptDetailsObj.pharmPhone}</p>
-                            </div> */}
-                            <div className='data-item-cntnr' id='pharmStreet'>
-                                <h5>Street</h5>
-                                <p>{ptDetailsObj.pharmStreet}</p>
-                            </div>
-                            <div className='data-item-cntnr' id='pharmCity'>
-                                <h5>City</h5>
-                                <p>{ptDetailsObj.pharmCity}</p>
-                            </div>     
-                            <div className='data-item-cntnr' id='pharmState'>
-                                <h5>State</h5>
-                                <p>{ptDetailsObj.pharmState}</p>
-                            </div>                       
-                        </div>
+                <div className='authed conditions'>
+                    <h2> Conditions</h2>
+                    <div className="conditions-cntnr">
+                           {conditionArr.map((conditionObj) => { return (
+                                <div className='item-container' key={conditionObj.id}>
+                                    <div className='condition-header'>
+                                        <h3>{conditionObj.name}</h3>
+                                        <ul>
+                                        <li>
+                                            <OpenModalButton
+                                            buttonText={<BiSolidEdit/>}
+                                            modalComponent={<EditConditionModal state={{ conditionId:conditionObj.id }}/>}
+                                            />
+                                        </li>
+                                        <li>
+                                            <OpenModalButton
+                                            buttonText={<MdDeleteForever/>}
+                                            modalComponent={<DeleteConditionModal  state={{ id:conditionObj.id }}/>}
+                                            />
+                                        </li>
+                                        </ul>
+                                    </div>
+                                    <div className='condition-details'>
+                                        <h4>Status: {conditionObj.status}</h4>
+                                        <h4>Notes:</h4>
+                                        <p>{conditionObj.description}</p>
+                                    </div>
+                                </div>
+                           )})}              
                     </div>
+                    <ul>
+                        <li>
+                            <OpenModalButton
+                            buttonText={"Add New Condition"}
+                            modalComponent={<AddConditionModal />}
+                            />
+                        </li>
+                    </ul>
                 </div>
             )
         }
@@ -183,4 +114,4 @@ function PatientDetails() {
     )
 }
 
-export default PatientDetails;
+export default ConditionsView;

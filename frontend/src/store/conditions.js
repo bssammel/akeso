@@ -1,9 +1,8 @@
 import { csrfFetch } from "./csrf";
 
 const CREATE_CONDITION = "conditions/createCondition";
-// const LOAD_CONDITION_DETAILS = "conditions/loadConditionDetails";
-// const LOAD_CONDITION_DETAILS_USERID = "conditions/loadConditionUserDetails"
-
+const EDIT_CONDITION = "conditions/editCondition";
+const DELETE_CONDITION = "conditions/deleteCondition";
 
 export const createCondition = (newCondition) => {
   return {
@@ -12,24 +11,23 @@ export const createCondition = (newCondition) => {
   }
 }
 
-// export const loadConditionDetails = (conditionDetails) => {
-//     return {
-//       type: LOAD_CONDITION_DETAILS,
-//       conditionDetails,
-//     };
-//   };
-
-//   export const loadConditionUserDetails = (conditionUserDetails) => {
-//     // let conditionId = conditionUserDetails.id;
-//     return {
-//       type: LOAD_CONDITION_DETAILS_USERID,
-//       conditionUserDetails,
-//     };
-//   };
+export const editCondition = (updatedCondition) => {
+  return {
+    type: EDIT_CONDITION,
+    updatedCondition,
+  };
+};
 
 
-export const addNewCondition = (newConditionData) => async (dispatch) =>{
-  const res = await csrfFetch(`/api/conditions`, {
+export const deleteCondition = (condition) => {
+  return {
+    type: DELETE_CONDITION,
+    condition,
+  };
+};
+
+export const addNewCondition = (newConditionData, patientId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/patients/conditions/${patientId}`, {
     method: "POST",
     headers:{
       "Content-Type": "application/json",
@@ -45,70 +43,57 @@ export const addNewCondition = (newConditionData) => async (dispatch) =>{
   }
 };
 
-//   export const getConditionDetails = (conditionId) => async (dispatch) => {
+export const updateCondition = (conditionDataForUpdate, conditionId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/conditions/${conditionId}/update`, {
+    method: "PUT",
+    headers:{
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(conditionDataForUpdate),
+  });
+  if (!res.ok) {
+    return res;
+  } else if (res.ok) {
+    const updatedCondition = await res.json();
+    dispatch(editCondition(conditionDataForUpdate));
+    return updatedCondition;
+  }
+};
 
-//     // console.log("####################################")
+export const deleteConditionById = (conditionId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/conditions/${conditionId}/delete`, {
+    method: "DELETE",
+  });
+  if (res.ok) {
+    const deleteConditionMsg = await res.json();
+    dispatch(deleteCondition(conditionId));
+    return deleteConditionMsg;
+  }
+  return res;
+};
 
-
-//     const res = await csrfFetch(`/api/conditions/${conditionId}`);
-
-//     // console.log("####################################")
-//     // console.log(res)
-//     if (!res.ok) {
-//       return res;
-//     } else if (res.ok){
-//         const conditionDetails = await res.json();
-//         dispatch(loadConditionDetails(conditionDetails));
-//     }
-//   }
-
-//   export const getConditionUserDetails = (userId) => async (dispatch) => {
-//     const res = await csrfFetch(`/api/users/${userId}`);
-//     // console.log(res)
-//     if (!res.ok) {
-//       return res;
-//     } else if (res.ok){
-//         const conditionUserDetails = await res.json();
-//         dispatch(loadConditionUserDetails(conditionUserDetails));
-//     }
-//   }
 
   const conditionReducer = (state = {}, action) => {
     switch (action.type){
         case CREATE_CONDITION: {
           return {...state, "newCondition" : action.newCondition}
         }
-        // case LOAD_CONDITION_DETAILS: {
-        //   const ptDetailObj = action.conditionDetails;
-        //   for (const dataKey in ptDetailObj.User) {
-        //     if (Object.hasOwnProperty.call(ptDetailObj.User, dataKey)) {
-        //       const dataValue = ptDetailObj.User[dataKey];
-        //       if(dataKey !== "id"){
-        //         ptDetailObj[dataKey] = dataValue;
-        //         delete ptDetailObj.User[dataKey];
-        //       }
-        //     }
-        //   }
-        //   delete ptDetailObj.User;
-        //   return {...state, "conditionDetails" : ptDetailObj}
-        // }
-        // case LOAD_CONDITION_DETAILS_USERID: {
-        //   const ptUserDetailObj = action.conditionUserDetails;
-        //   delete ptUserDetailObj.id;
-        //   // reformatting object so that the same component can be use regardless of how the condition details are fetched
-        //   for (const dataKey in ptUserDetailObj.Condition) {
-        //     if (Object.hasOwnProperty.call(ptUserDetailObj.Condition, dataKey)) {
-        //         const dataValue = ptUserDetailObj.Condition[dataKey];
-        //         ptUserDetailObj[dataKey] = dataValue;
-        //         delete ptUserDetailObj.Condition[dataKey];
-        //     }
-        //   }
-        //   delete ptUserDetailObj.Condition;
-        //   return {
-        //     ...state,
-        //     "conditionDetails" : ptUserDetailObj
-        //   }
-        // }
+        case EDIT_CONDITION:{
+          const newState = { ...state }
+          return {...newState }
+        }
+        case DELETE_CONDITION: {
+          const newState = { ...state }
+          let conditionArr = newState.patient.patientDetails.Conditions
+          for (let i = 0; i < conditionArr.length; i++) {
+            const condition = conditionArr[i];
+            if(condition.id === action.conditionId){
+              conditionArr.splice(i, 1);
+            }
+          }          
+          return {...state }
+        }
+        
         default:
             return state;
     }

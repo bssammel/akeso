@@ -102,7 +102,7 @@ router.get(
 
 // !Add Condition by patient ID
 router.post(
-    "/:patientId/conditions", 
+    "/conditions/:patientId", 
     requireAuth, 
     validateConditionCreation,
     async (req, res, next) => {
