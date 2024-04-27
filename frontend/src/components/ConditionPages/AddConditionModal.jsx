@@ -23,6 +23,8 @@ function AddConditionModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  // const runDispatches = async
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
@@ -30,7 +32,7 @@ function AddConditionModal() {
     return await dispatch(addNewCondition({
         name, description, status
     }, patientId))
-    .then(await dispatch(getPatientDetails(patientId)))
+    .then(() => dispatch(getPatientDetails(patientId)))
     .then(closeModal)
     .catch(async (res) => {
         const data = await res.json();
