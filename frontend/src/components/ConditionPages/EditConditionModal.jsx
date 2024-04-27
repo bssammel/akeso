@@ -6,7 +6,7 @@ import { getPatientDetails } from '../../store/patients';
 
 function EditConditionModal(props) {
   const dispatch = useDispatch();
-  const {conditionId} = props.state;
+  const {conditionId, originalName , originalStatus, originalDescription} = props.state;
 
   let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
 
@@ -17,9 +17,9 @@ function EditConditionModal(props) {
   console.log(ptDetailsObj)
   console.log(patientId)
 
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [status, setStatus] = useState("Controlled")
+  const [name, setName] = useState(originalName);
+  const [description, setDescription] = useState(originalDescription);
+  const [status, setStatus] = useState(originalStatus)
 //   Current, Controlled, Resolved, Chronic, Intermittent, Worsening, Acute
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
@@ -34,7 +34,7 @@ function EditConditionModal(props) {
     return dispatch(updateCondition({
         name, description, status
     }, conditionId))
-    .then(dispatch(getPatientDetails(patientId)))
+    .then(() => dispatch(getPatientDetails(patientId)))
     .then(closeModal)
     .catch(async (res) => {
         const data = await res.json();
@@ -62,7 +62,7 @@ function EditConditionModal(props) {
         </label>
         {errors.name && <p>{errors.name}</p>}
         <label>
-          Description
+          Notes
           <input
             type="textarea"
             value={description}

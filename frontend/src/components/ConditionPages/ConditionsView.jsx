@@ -81,7 +81,7 @@ function ConditionsView() {
                                         <li>
                                             <OpenModalButton
                                             buttonText={<BiSolidEdit/>}
-                                            modalComponent={<EditConditionModal state={{ conditionId:conditionObj.id }}/>}
+                                            modalComponent={<EditConditionModal state={{ conditionId:conditionObj.id, originalName: conditionObj.name, originalStatus: conditionObj.status, originalDescription: conditionObj.description }}/>}
                                             />
                                         </li>
                                         <li>
