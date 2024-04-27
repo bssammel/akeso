@@ -15,10 +15,14 @@ form {
 
  div#login-submit {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     padding: 3px;
+  }
+
+  button{
+    width: fit-content;
   }
 
   section{

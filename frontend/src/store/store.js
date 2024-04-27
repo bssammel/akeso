@@ -5,11 +5,13 @@ import {thunk} from 'redux-thunk';
 import sessionReducer from './session';
 import patientReducer from './patients';
 import providerReducer from './providers';
+import conditionReducer from './conditions';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   patient: patientReducer,
-  provider: providerReducer
+  provider: providerReducer,
+  condition: conditionReducer
 });
 
 let enhancer;
