@@ -49,7 +49,7 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
 
   export const getPatientDetails = (patientId) => async (dispatch) => {
 
-    console.log("####################################")
+    // console.log("####################################")
 
 
     const res = await csrfFetch(`/api/patients/${patientId}`);

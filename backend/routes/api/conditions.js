@@ -86,7 +86,7 @@ router.delete(
             return next(err)
         } else {
             await conditionToDelete.destroy();
-            return res.json({message: "Successfully delete condition"})
+            return res.json({message: "Successfully deleted condition"})
         }
 
     })
