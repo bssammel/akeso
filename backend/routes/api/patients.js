@@ -154,8 +154,8 @@ router.get(
             const err = new Error("Patient couldn't be found");
             err.message = "Patient couldn't be found!"
             err.status = 404;
-            return res.json(err)
-            // return next(err);
+            // return res.json(err)
+            return next(err);
         }
         
         //adding age
@@ -212,11 +212,6 @@ router.put(
         const filter = {where: {}}
 
         const updatedPt = await Patient.update(updatedData, filter );
-        // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        // console.log(updatedPt)
-
-        // const ageInYrs = ageCalc(updatedPt.dataValues.dob)
-        // updatedPt.dataValues.age = ageInYrs;
 
         const newPtData = await Patient.findOne({
             where: {
