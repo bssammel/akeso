@@ -61,6 +61,7 @@ export const updateCondition = (conditionDataForUpdate, conditionId) => async (d
 };
 
 export const deleteConditionById = (conditionId) => async (dispatch) => {
+  // console.log("Delete thunk running")
   const res = await csrfFetch(`/api/conditions/${conditionId}/delete`, {
     method: "DELETE",
   });

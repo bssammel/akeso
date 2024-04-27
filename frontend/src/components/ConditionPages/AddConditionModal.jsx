@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { addNewCondition } from '../../store/conditions';
+import { getPatientDetails } from '../../store/patients';
 
 function AddConditionModal() {
   const dispatch = useDispatch();
@@ -22,14 +23,16 @@ function AddConditionModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
     // const newConditionData = { name, description, status};
-    return dispatch(addNewCondition({
+    let createdCondition; 
+    createdCondition = await dispatch(addNewCondition({
         name, description, status
     }, patientId))
-    .then(closeModal)
+    .then(await dispatch(getPatientDetails(patientId)))
+    .then(closeModal())
     .catch(async (res) => {
         const data = await res.json();
         if (data?.errors) setErrors(data.errors);

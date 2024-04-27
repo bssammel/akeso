@@ -76,6 +76,7 @@ function ConditionsView() {
                                 <div className='item-container' key={conditionObj.id}>
                                     <div className='condition-header'>
                                         <h3>{conditionObj.name}</h3>
+                                        <div className='provider-actions'>
                                         <ul>
                                         <li>
                                             <OpenModalButton
@@ -86,10 +87,11 @@ function ConditionsView() {
                                         <li>
                                             <OpenModalButton
                                             buttonText={<MdDeleteForever/>}
-                                            modalComponent={<DeleteConditionModal  state={{ id:conditionObj.id }}/>}
+                                            modalComponent={<DeleteConditionModal  state={{ conditionId:conditionObj.id, patientId:patientId }}/>}
                                             />
                                         </li>
                                         </ul>
+                                        </div>
                                     </div>
                                     <div className='condition-details'>
                                         <h4>Status: {conditionObj.status}</h4>

@@ -1,20 +1,22 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { deleteConditionById } from "../../store/conditions";
+import { getPatientDetails } from "../../store/patients";
 import "./ConditionsView.css";
 
 function DeleteConditionModal(props) {
   const dispatch = useDispatch();
   // const navigate = useNavigate();
-  const { conditionId } = props.state;
+  const { conditionId, patientId } = props.state;
   const { closeModal } = useModal();
 
   const handleDelete = async (e) => {
     e.preventDefault();
     const deleteConditionMsg = await dispatch(deleteConditionById(conditionId));
 
-    if (deleteConditionMsg.message === "Successfully deleted") {
-      dispatch(deleteConditionById()).then(closeModal());
+    if (deleteConditionMsg.message === "Successfully deleted condition") {
+      console.log("line 18 in delete modal jsx")
+      dispatch(deleteConditionById()).then(dispatch(getPatientDetails(patientId))).then(closeModal);
       // .then(navigate(`/conditions/current`));
     }
   };

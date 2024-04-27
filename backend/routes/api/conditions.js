@@ -57,9 +57,9 @@ router.put(
 router.delete(
     "/:conditionId/delete", 
     requireAuth, 
-    validateConditionCreation,
     async (req, res, next) => {
         const conditionId = parseInt(req.params.conditionId)
+        console.log("Delete route running %%%%%%%%%%%%%%")
 
         const conditionToDelete = await Condition.findByPk(conditionId);
 
@@ -69,7 +69,9 @@ router.delete(
             err.status = 404;
             return next(err)
         } else {
+            console.log("Delete route ran")
             await conditionToDelete.destroy();
+            console.log("Condition deleted")
             return res.json({message: "Successfully deleted condition"})
         }
 
