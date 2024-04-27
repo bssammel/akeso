@@ -1,5 +1,6 @@
 const express = require('express');
 
+
 const { User, Patient, Provider, ProviderPatient, Treatment, Condition } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors, validatePatientCreation, validateConditionCreation } = require('../../utils/validation');
@@ -71,6 +72,7 @@ router.get(
         return res.json(pvdArr);
     }
   );
+
 
 // !CONDITIONS
 
