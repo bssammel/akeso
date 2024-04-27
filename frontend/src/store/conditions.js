@@ -84,14 +84,14 @@ export const deleteConditionById = (conditionId) => async (dispatch) => {
           return {...newState }
         }
         case DELETE_CONDITION: {
-          const newState = { ...state }
-          let conditionArr = newState.patient.patientDetails.Conditions
-          for (let i = 0; i < conditionArr.length; i++) {
-            const condition = conditionArr[i];
-            if(condition.id === action.conditionId){
-              conditionArr.splice(i, 1);
-            }
-          }          
+          // const newState = { ...state }
+          // let conditionArr = newState.patient.patientDetails.Conditions
+          // for (let i = 0; i < conditionArr.length; i++) {
+          //   const condition = conditionArr[i];
+          //   if(condition.id === action.conditionId){
+          //     conditionArr.splice(i, 1);
+          //   }
+          // }          
           return {...state }
         }
         

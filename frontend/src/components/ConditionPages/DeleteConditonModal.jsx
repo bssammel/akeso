@@ -14,9 +14,9 @@ function DeleteConditionModal(props) {
     e.preventDefault();
     const deleteConditionMsg = await dispatch(deleteConditionById(conditionId));
 
-    if (deleteConditionMsg.message === "Successfully deleted condition") {
+    if (deleteConditionMsg.message) {
       console.log("line 18 in delete modal jsx")
-      dispatch(deleteConditionById()).then(dispatch(getPatientDetails(patientId))).then(closeModal);
+      dispatch(getPatientDetails(patientId)).then(closeModal);
       // .then(navigate(`/conditions/current`));
     }
   };

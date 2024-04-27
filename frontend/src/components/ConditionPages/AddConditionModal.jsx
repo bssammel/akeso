@@ -27,12 +27,11 @@ function AddConditionModal() {
     e.preventDefault();
     setErrors({});
     // const newConditionData = { name, description, status};
-    let createdCondition; 
-    createdCondition = await dispatch(addNewCondition({
+    return await dispatch(addNewCondition({
         name, description, status
     }, patientId))
     .then(await dispatch(getPatientDetails(patientId)))
-    .then(closeModal())
+    .then(closeModal)
     .catch(async (res) => {
         const data = await res.json();
         if (data?.errors) setErrors(data.errors);
