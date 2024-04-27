@@ -135,6 +135,31 @@ router.post(
 
     })
 
+
+// TREATMENTS
+// ! Get only treatments for pt by id
+router.get(
+    '/:patientId/treatments',
+    async (req, res, next) => {
+        const treatmentArr = await Treatment.findAll({
+            where: {
+                patientId: parseInt(req.params.patientId)
+            },
+            attributes: ["id", "patientId", "providerId", "conditionId", "name", "dosage", "frequencyQuantity", "frequencyPeriod"],
+        })
+
+        if (!treatmentArr) {
+            const err = new Error("Treatments couldn't be found");
+            err.status = 404;
+            return next(err);
+        }
+        
+        return res.json(treatmentArr)
+    }
+  );
+
+  // ! PATIENTS
+
 // !Get full pt by id
 router.get(
     '/:patientId',

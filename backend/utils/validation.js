@@ -64,30 +64,46 @@ const validatePatientCreation = [
   handleValidationErrors]
 
 
-  const validateProviderCreation = [
-    check('specialty')
-      .exists({ checkFalsy: true })
-      .withMessage('Please select a specialty.'),
-    check('title')
-      .exists({ checkFalsy: true })
-      .withMessage('Please provide the most accurate title.'),
-    handleValidationErrors]
-  
+const validateProviderCreation = [
+  check('specialty')
+    .exists({ checkFalsy: true })
+    .withMessage('Please select a specialty.'),
+  check('title')
+    .exists({ checkFalsy: true })
+    .withMessage('Please provide the most accurate title.'),
+  handleValidationErrors]
 
-    const validateConditionCreation = [
-      check('name')
-        .exists({ checkFalsy: true })
-        .isLength({min: 1, max:75})
-        .withMessage('Please provide a name for the condition between 1 and 75 characters in length.'),
-      check('description')
-        .isLength({max: 1999})
-        .withMessage('Condition description must be less than 2000 characters.'),
-      check('status')
-        .exists({checkFalsy: true})
-        .isLength({min:1})
-        .withMessage('Please select the most accurate status for this condition.'),
-      handleValidationErrors]
+
+const validateConditionCreation = [
+  check('name')
+    .exists({ checkFalsy: true })
+    .isLength({min: 1, max:75})
+    .withMessage('Please provide a name for the condition between 1 and 75 characters in length.'),
+  check('description')
+    .isLength({max: 1999})
+    .withMessage('Condition description must be less than 2000 characters.'),
+  check('status')
+    .exists({checkFalsy: true})
+    .isLength({min:1})
+    .withMessage('Please select the most accurate status for this condition.'),
+  handleValidationErrors]
+
+const validateTreatmentCreation = [
+  check('name')
+    .exists({ checkFalsy: true })
+    .isLength({min: 1, max:75})
+    .withMessage('Please provide a name for the treatment between 1 and 75 characters in length.'),
+  check('dosage')
+    .isLength({max: 20})
+    .withMessage('Medication dosage must be 20 characters or less.'),
+  check('frequencyQuantity')
+    .isDecimal()
+    .withMessage('The frequency must be a decimal.'),
+  check('frequencyPeriod')
+    .isLength({max: 25})
+    .withMessage('Frequency period must be 25 characters or less.'),
+  handleValidationErrors]
 
 module.exports = {
-  handleValidationErrors, validatePatientCreation, validateProviderCreation, validateConditionCreation
+  handleValidationErrors, validatePatientCreation, validateProviderCreation, validateConditionCreation, validateTreatmentCreation
 };
