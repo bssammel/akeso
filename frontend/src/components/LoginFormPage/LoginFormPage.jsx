@@ -25,6 +25,30 @@ function LoginFormModal() {
     );
   };
 
+  const loginDemoProvider = (e) => {
+    e.preventDefault();
+    setErrors({});
+    return dispatch(sessionActions.login({ credential: 'keirankrawa@simon.site', password: 'keiranPass' }))
+    .then(closeModal)
+    .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) setErrors(data.errors);
+      }
+    );
+  }
+
+  const loginDemoPatient = (e) => {
+    e.preventDefault();
+    setErrors({});
+    return dispatch(sessionActions.login({ credential: 'simonkrawa@simon.site', password: 'simonPass' }))
+    .then(closeModal)
+    .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) setErrors(data.errors);
+      }
+    );
+  }
+
   return (
     <>
       <h1>Log In</h1>
@@ -48,7 +72,9 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <div id='login-submit'><button type="submit">Log In</button></div>
+        <div id='login-submit'><button type="submit">Log In</button>
+        <button type="button" onClick={loginDemoProvider}>Login as Demo Provider</button>
+        <button type="button" onClick={loginDemoPatient}>Login as Demo Patient</button></div>
       </form>
     </>
   );

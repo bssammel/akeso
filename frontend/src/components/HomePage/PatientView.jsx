@@ -5,6 +5,7 @@ import PatientDetails from './PatientDetails';
 import ForbiddenPtView from '../ErrorPages/ForbiddenPtView';
 import PtDne from '../ErrorPages/PtDNE';
 import UnauthView from './UnauthView';
+import ConditionsView from '../ConditionPages/ConditionsView';
 import './PatientView.css'
 import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 
@@ -38,13 +39,26 @@ function PatientView() {
         runDispatches()
     }, [sessionUser, patientId, dispatch])
 
-    let isPtViewSelf = false;
+    let isPtViewSelf;
 
     if(patientId && ptDetailsObj){
-        if(sessionUserId === ptDetailsObj.userId){
+        if(sessionUserId !== ptDetailsObj.userId && sessionUser.providerBool === false){
+            isPtViewSelf = false ;
+        }
+        if(sessionUserId === ptDetailsObj.userId || sessionUser.providerBool === true){
             isPtViewSelf = true;
         }
 
+    }
+
+    let displayPtData = false;
+
+    if(sessionUser && sessionUserId){
+        if(isPtViewSelf){
+            displayPtData = true;
+        } else if ( ptDetailsObj && ptDetailsObj.status !== 404 && sessionUser.providerBool){
+            displayPtData = true;
+        }
     }
 
     return (
@@ -71,7 +85,7 @@ function PatientView() {
         }
         {/* if the current user is a provider and the patient being views exists and has loaded */}
         {
-            ptDetailsObj && ptDetailsObj.status !== 404 && sessionUser && ptDetailsObj && sessionUser.providerBool === true && (
+            displayPtData && (
                 <div className='authed'>
                     <h1>{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1>
                     <div className="pt-nav-cntnr">
@@ -84,7 +98,7 @@ function PatientView() {
                         <PatientDetails/>
                     </div>)}
                     {currentView == 'conditions' && (<div className="content-item" id="pt-conditions">
-                        showing conditions
+                        <ConditionsView/>
                     </div>)}
                     {currentView == 'treatments' && (<div className="content-item" id="pt-treatments">
                             showing treaments

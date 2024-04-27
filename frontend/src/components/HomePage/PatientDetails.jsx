@@ -63,7 +63,7 @@ function PatientDetails() {
         {
             ptDetailsObj && sessionUser && (
                 <div className='authed details'>
-                    <h3> Patient Details</h3>
+                    <h2> Patient Details</h2>
                     <div className="pt-details-cntnr">
                         <div className='pt-details-item' id='basic-details'>
                             <h4>At a Glance</h4>
