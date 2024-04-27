@@ -57,7 +57,7 @@ const runDispatches = async() => {
         phone
       }))
   // .then(await dispatch(sessionActions.login({credential: email, password })))
-  .then(await dispatch(addNewProvider({title, specialty})))
+  .then(() =>  dispatch(addNewProvider({title, specialty})))
   // .then(await asyncGetPts())
   // .then(await asyncClose())
   // .then(await staggeredClose())
