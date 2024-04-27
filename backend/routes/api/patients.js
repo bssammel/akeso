@@ -1,6 +1,11 @@
 const express = require('express');
 
+<<<<<<< HEAD
 const { User, Patient, Provider, ProviderPatient, Treatment, Condition } = require('../../db/models');
+=======
+
+const { User, Patient, Provider, ProviderPatient } = require('../../db/models');
+>>>>>>> dev
 const { check } = require('express-validator');
 const { handleValidationErrors, validatePatientCreation } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
@@ -105,10 +110,14 @@ router.get(
             where: {
                 id: req.params.patientId
             },
+<<<<<<< HEAD
             include: [
                 {model: Condition, attributes: ["id", "name", "description", "status"]},
                 {model: User, attributes: ["firstName", "lastName", "phone", "email"]}
             ],
+=======
+            include: [{model: User}],
+>>>>>>> dev
             attributes: [
                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
             ]
@@ -116,8 +125,10 @@ router.get(
 
         if (!ptObj) {
             const err = new Error("Patient couldn't be found");
+            err.message = "Patient couldn't be found!"
             err.status = 404;
-            return next(err);
+            return res.json(err)
+            // return next(err);
         }
         
         //adding age
@@ -266,17 +277,12 @@ router.post(
             pharmCity, 
             pharmState 
         });
-        const createdPatient = {
-            id: newPatient.id,
-            userId: newPatient.userId,
-            sex: newPatient.sex, dob: newPatient.dob, gender: newPatient.gender, insurance: newPatient.insurance, religion: newPatient.religion, relationshipStatus: newPatient.relationshipStatus, language: newPatient.language, ethnicity: newPatient.ethnicity, street: newPatient.street, city: newPatient.city, state: newPatient.state, name911: newPatient.name911, phone911: newPatient.phone911, street911: newPatient.street911, relationship911: newPatient.relationship911, pharmName: newPatient.pharmName, pharmStreet: newPatient.pharmStreet, pharmCity:newPatient.pharmCity, pharmState: newPatient.pharmState,
-            age: ageCalc(newPatient.dob),
-            createdAt: newPatient.createdAt,
-            updatedAt: newPatient.updatedAt
-        };
 
-        return res.status(201).json(createdPatient)
-
+        
+        const ageInYrs = ageCalc(newPatient.dataValues.dob)
+        newPatient.dataValues.age = ageInYrs;
+    
+        return res.status(201).json(newPatient)
 
     })
 

@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { Navigate } from 'react-router-dom';
-import { useModal } from '../../context/Modal';
+// import { useNavigate } from 'react-router-dom';
+import { useModal } from '../../../context/Modal';
 
 
-import * as sessionActions from '../../store/session';
-import './SignupForm.css'
+import * as sessionActions from '../../../store/session';
+// import './SignupForm.css'
 
 function SignupFormModal() {
   const dispatch = useDispatch();
+  // const navigate = useNavigate();
   // const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -18,6 +19,7 @@ function SignupFormModal() {
   const [providerBool, setProviderBool] = useState(false)
   const [phone, setPhone] = useState("")
   const [errors, setErrors] = useState({});
+  
   const { closeModal } = useModal();
 
   // if (sessionUser) return <Navigate to="/" replace={true} />;
@@ -28,10 +30,9 @@ function SignupFormModal() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    e.stopPropagation();
     if (password === confirmPassword) {
       setErrors({});
-      console.log(`phone: ${phone}`);
-      console.log(`providerBool: ${providerBool}`)
       return dispatch(
         sessionActions.signup({
           email,
@@ -42,7 +43,10 @@ function SignupFormModal() {
           phone
         })
       )
+      // .then(navigate(`/`))
+
         .then(closeModal)
+        
         .catch(async (res) => {
           const data = await res.json();
           if (data?.errors) {
@@ -61,7 +65,7 @@ function SignupFormModal() {
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Email
+          Email&nbsp;&nbsp;
           <input
             type="text"
             value={email}
@@ -126,7 +130,6 @@ function SignupFormModal() {
             type="checkbox"
             value={providerBool}
             onChange={handleOnChange}
-            
           />
         </label>
         {errors.providerBool && <p>{errors.providerBool}</p>}

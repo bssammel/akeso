@@ -48,7 +48,7 @@ function LoginFormModal() {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        <div id='login-submit'><button type="submit">Log In</button></div>
       </form>
     </>
   );

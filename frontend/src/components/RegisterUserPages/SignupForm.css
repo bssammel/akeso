@@ -10,14 +10,22 @@ form {
     display: flex;
     flex-direction: column;
     /* align-content: flex-end; */
-    margin: 2px;
+    padding: 5px;
   }
 
- div#login-submit {
+ div#signup-submit {
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: 100%;
+    padding: 3px;
+  }
+  #signup-submit {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: fit-content;
+    font-size: larger;
     padding: 3px;
   }
 
@@ -26,8 +34,10 @@ form {
     flex-direction: column;
   }
 
+  section > h3{
+  }
+
   div.fields{
-    /* background-color: aqua; */
     display: flex;
     flex-direction: row;
   }

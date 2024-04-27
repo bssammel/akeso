@@ -1,13 +1,20 @@
+
 #modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* transform:translate(-50%,-50%);
+  top: 50%;
+  left: 50%; */
+        /* box-sizing:border-box; */
+  /* /* max-width: calc(100% - 500px); */
+  /* max-height: calc(100% - 500px); */
+}
   
   #modal-background {
     position: fixed;
@@ -21,4 +28,5 @@
   #modal-content {
     position: absolute;
     background-color: white;
+    padding: 5px 5px
   }
