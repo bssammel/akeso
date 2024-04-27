@@ -74,6 +74,20 @@ const validatePatientCreation = [
     handleValidationErrors]
   
 
+    const validateConditionCreation = [
+      check('name')
+        .exists({ checkFalsy: true })
+        .isLength({min: 1, max:75})
+        .withMessage('Please provide a name for the condition between 1 and 75 characters in length.'),
+      check('description')
+        .isLength({max: 1999})
+        .withMessage('Condition description must be less than 2000 characters.'),
+      check('status')
+        .exists({checkFalsy: true})
+        .isLength({min:1})
+        .withMessage('Please select the most accurate status for this condition.'),
+      handleValidationErrors]
+
 module.exports = {
-  handleValidationErrors, validatePatientCreation, validateProviderCreation
+  handleValidationErrors, validatePatientCreation, validateProviderCreation, validateConditionCreation
 };

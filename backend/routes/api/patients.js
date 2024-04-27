@@ -1,13 +1,8 @@
 const express = require('express');
 
-<<<<<<< HEAD
 const { User, Patient, Provider, ProviderPatient, Treatment, Condition } = require('../../db/models');
-=======
-
-const { User, Patient, Provider, ProviderPatient } = require('../../db/models');
->>>>>>> dev
 const { check } = require('express-validator');
-const { handleValidationErrors, validatePatientCreation } = require('../../utils/validation');
+const { handleValidationErrors, validatePatientCreation, validateConditionCreation } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { ageCalc } = require('../../utils/dateFuncs')
 
@@ -28,7 +23,6 @@ router.get(
             attributes: ["id"]
         })
 
-        console.log("############################################")
         console.log(patientRes)
 
         patientId = patientRes.dataValues.id;
@@ -78,6 +72,8 @@ router.get(
     }
   );
 
+// !CONDITIONS
+
 // ! Get only condition for pt by id
 router.get(
     '/:patientId/conditions',
@@ -102,7 +98,42 @@ router.get(
     }
   );
 
-// ! Get full pt by id
+// !Add Condition by patient ID
+router.post(
+    "/:patientId/conditions", 
+    requireAuth, 
+    validateConditionCreation,
+    async (req, res, next) => {
+        const { name, description, status } = req.body;
+        const { user } = req;
+        userId = user.id;
+        const provider = await Provider.findOne({
+            where: {
+                userId : userId
+            }, 
+            attributes: [
+                'id'
+            ]
+        })
+        const providerId = provider.id;
+        const patientId = parseInt(req.params.patientId)
+        const newCondition = await Condition.create({
+            patientId,
+            providerId,
+            name,
+            description,
+            status
+        });
+    
+        if(newCondition.errors){
+            return res.json(newCondition);
+        }
+
+        return res.status(201).json(newCondition)
+
+    })
+
+// !Get full pt by id
 router.get(
     '/:patientId',
     async (req, res, next) => {
@@ -110,14 +141,10 @@ router.get(
             where: {
                 id: req.params.patientId
             },
-<<<<<<< HEAD
             include: [
                 {model: Condition, attributes: ["id", "name", "description", "status"]},
-                {model: User, attributes: ["firstName", "lastName", "phone", "email"]}
+                {model: User}
             ],
-=======
-            include: [{model: User}],
->>>>>>> dev
             attributes: [
                 'id', 'userId', 'sex', 'dob', 'gender', 'insurance', 'religion','relationshipStatus','language', 'ethnicity','street', 'city','state','name911','phone911','street911','city911','state911','relationship911','pharmName','pharmStreet','pharmCity','pharmState'
             ]
@@ -141,7 +168,6 @@ router.get(
 
 
 // !  Update pt by id
-// ! Add a new patient 
 router.put(
     "/:patientId", 
     requireAuth, 

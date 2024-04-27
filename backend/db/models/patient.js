@@ -41,9 +41,6 @@ module.exports = (sequelize, DataTypes) => {
       Patient.hasMany(
         models.Condition,
         {
-<<<<<<< HEAD
-          foreignKey: 'patientId'
-=======
           foreignKey: 'patientId',
           onDelete: 'CASCADE'
         }
@@ -53,7 +50,6 @@ module.exports = (sequelize, DataTypes) => {
         {
           foreignKey: 'patientId',
           onDelete: 'CASCADE'
->>>>>>> dev
         }
       )
     }
