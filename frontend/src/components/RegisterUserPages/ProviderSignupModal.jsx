@@ -54,6 +54,8 @@ function ProviderSignupFormModal() {
     setErrors({})
     const signupRes = await runUserDispatch() 
 
+    console.log(signupRes)
+
     if(signupRes.errors){
       setErrors(signupRes.errors)
     } else if (signupRes.id){
