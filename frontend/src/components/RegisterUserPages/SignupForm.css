@@ -1,8 +1,11 @@
+
+
 form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+    width: 300px;
     /* margin: 10px 10px; */
   }
 
@@ -11,6 +14,7 @@ form {
     flex-direction: column;
     /* align-content: flex-end; */
     padding: 5px;
+    width: 250px;
   }
 
  div#signup-submit {

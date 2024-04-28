@@ -18,48 +18,78 @@ function ProviderSignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("")
+  const [formView, setFormView] = useState("user")
   const [errors, setErrors] = useState({});
   
   const { closeModal } = useModal();
 
 
-const runDispatches = async() => {
-  await dispatch(sessionActions.signup({
-    email,
-    firstName,
-    lastName,
-    password,
-    providerBool: true,
-    phone
-  }))
-  .then(await dispatch(sessionActions.login({credential: email, password })))
-  .then(await dispatch(addNewProvider({title, specialty})))
-  .then(closeModal)
-  .catch(async (res) => {
-    const data = await res.json();
-    if (data?.errors) {
-      setErrors(data.errors);
-    }});
-}
+// const runDispatches = async() => {
+//   await dispatch(sessionActions.signup({
+//     email,
+//     firstName,
+//     lastName,
+//     password,
+//     providerBool: true,
+//     phone
+//   }))
+//   .then(await dispatch(sessionActions.login({credential: email, password })))
+//   .then(await dispatch(addNewProvider({title, specialty})))
+//   .then(closeModal)
+//   .catch(async (res) => {
+//     const data = await res.json();
+//     if (data?.errors) {
+//       setErrors(data.errors);
+//     }});
+// }
 
-  const handleSubmit = (e) => {
+  const handleProviderSubmit = (e) => {
     e.preventDefault();
       setErrors({});
-      return  runDispatches()
+      return  dispatch(addNewProvider({title, specialty}))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        }});
   };
+
+  const handleUserSubmit = (e) => {
+    e.preventDefault();
+    setErrors({})
+    setFormView()
+    return dispatch(sessionActions.signup({
+      email,
+      firstName,
+      lastName,
+      password,
+      providerBool: true,
+      phone
+    })) 
+    .then(setFormView("provider"))
+    .catch(async (res) => {
+      const data = await res.json();
+      if (data?.errors) {
+        setErrors(data.errors);
+      }});
+  } 
 
   const titles = ["MD", "DO", "NP", "PA", "RN", "LPN"];
   const specialties = ["Family Medicine", "Internal Medicine", "Pediatrics", "Endocrinology", "None"]
 
   return (
     <>
-      <h1>Sign Up as Provider</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 style={{justifyContent:"center"}}>Sign Up as Provider</h1>
+      <form>
+        { formView === "user" &&
+      <div className='user-creation'>
       <label>
           Email
           <input
             type="email"
             value={email}
+            placeholder='address123@email.com'
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -70,6 +100,7 @@ const runDispatches = async() => {
           <input
             type="text"
             value={firstName}
+            placeholder='First Name'
             onChange={(e) => setFirstName(e.target.value)}
             pattern='^[^0-9]+$'
             required
@@ -81,6 +112,7 @@ const runDispatches = async() => {
           <input
             type="text"
             value={lastName}
+            placeholder='Last Name'
             onChange={(e) => setLastName(e.target.value)}
             pattern='^[^0-9]+$'
             required
@@ -92,7 +124,7 @@ const runDispatches = async() => {
           <input
             type="tel"
             value={phone}
-            placeholder='Digits only, 10 total'
+            placeholder='Digits only, 10 total. EX: 8005555555'
             pattern='^[0-9]+$'
             onChange={(e) => setPhone(e.target.value)}
             required
@@ -118,7 +150,27 @@ const runDispatches = async() => {
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {(errors.confirmPassword || confirmPassword !== password) && <p>{errors.confirmPassword}</p>}
+        <div id='signup-submit'>
+          <button 
+            id='signup-submit' 
+            type="button"
+            disabled={
+              password.length < 6 ||
+              email.length < 3 ||
+              confirmPassword.length < 6 ||
+              lastName.length < 1 ||
+              firstName.length < 1 ||
+              confirmPassword !== password ||
+              phone.length !== 10 
+            }
+            onClick={handleUserSubmit}>
+              Next
+          </button>
+        </div>
+        </div>}
+        { formView === "provider" &&      
+        <div className='provider-creation'>
         <label>
           Title
           <select
@@ -145,10 +197,10 @@ const runDispatches = async() => {
           </select>
         </label>
         {errors.specialty && <p>{errors.specialty}</p>}
-        <div id='signup-submit'>
-          <button 
-            id='signup-submit' 
-            type="submit"
+        <div id='provider-submit'>
+        <button 
+            id='provider-submit' 
+            type="button"
             disabled={
               password.length < 6 ||
               email.length < 3 ||
@@ -157,10 +209,12 @@ const runDispatches = async() => {
               firstName.length < 1 ||
               confirmPassword !== password ||
               phone.length !== 10 
-            }>
-              Sign Up as a Provider
+            }
+            onClick={handleProviderSubmit}>
+              Complete Sign Up
           </button>
-        </div>
+          </div>
+        </div>}
       </form>
     </>
   );
