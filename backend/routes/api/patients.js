@@ -329,6 +329,7 @@ router.post(
         
         const ageInYrs = ageCalc(newPatient.dataValues.dob)
         newPatient.dataValues.age = ageInYrs;
+        newPatient.dataValues.userId = userId;
     
         return res.status(201).json(newPatient)
 

@@ -9,6 +9,7 @@ import './SignupForm.css'
 
 function PatientSignupFormModal() {
   const dispatch = useDispatch();
+
   const { closeModal } = useModal();
 
   // const navigate = useNavigate();
@@ -40,57 +41,92 @@ function PatientSignupFormModal() {
   const [pharmCity, setPharmCity] = useState("");
   const [pharmState, setPharmState] = useState("");
 
+  const [formView, setFormView] = useState("user")
+
   const [errors, setErrors] = useState({});
 
-  const runDispatches = async () => {
-    
-    await dispatch(sessionActions.signup({
-      email,
-      firstName,
-      lastName,
-      password,
-      providerBool: false,
-      phone
-    }))
-    .then(await dispatch(sessionActions.login({credential: email, password })))
-    .then(
-      await dispatch(addNewPatient({
-          dob,
-          sex,
-          gender,
-          insurance,
-          religion,
-          relationshipStatus,
-          language,
-          ethnicity,
-          street,
-          city,
-          state,
-          name911,
-          phone911,
-          street911,
-          city911,
-          state911,
-          relationship911,
-          pharmName,  
-          pharmStreet,
-          pharmCity,
-          pharmState,
-      })
-    ))
-    .then(closeModal)
-    .catch(async (res) => {
-      const data = await res.json();
-      if (data?.errors) {
-        setErrors(data.errors);
-      }});
+// let ptUserId;
+
+const runPatientDispatch = async () => {
+  return await dispatch(addNewPatient({
+    dob,
+    sex,
+    gender,
+    insurance,
+    religion,
+    relationshipStatus,
+    language,
+    ethnicity,
+    street,
+    city,
+    state,
+    name911,
+    phone911,
+    street911,
+    city911,
+    state911,
+    relationship911,
+    pharmName,  
+    pharmStreet,
+    pharmCity,
+    pharmState,
+  }))
+  .then(closeModal)
+  .catch(async (res) => {
+    const data = await res.json();
+    if (data?.errors) {
+      setErrors(data.errors);
+    }});
+}
+
+const handlePatientSubmit = async (e) => {
+  e.preventDefault();
+  setErrors({});
+  const ptCreateRes = await runPatientDispatch()
+
+  if (ptCreateRes.errors){
+    setErrors(ptCreateRes.errors)
+  } else if (ptCreateRes.status === 201){
+    // return await di
+
   }
+};
   
-    const handleSubmit = (e) => {
-      e.preventDefault();
-        setErrors({});
-        return  runDispatches()
-    };
+const runUserDispatch = async () => {
+  return await dispatch(sessionActions.signup({
+    email,
+    firstName,
+    lastName,
+    password,
+    providerBool: false,
+    phone
+  })) 
+  .catch(async (res) => {
+    const data = await res.json();
+    if (data?.errors) {
+      setErrors(data.errors);
+    }
+  });    
+}
+  
+const handleUserSubmit = async (e) => {
+  e.preventDefault();
+  setErrors({})
+  const signupRes = await runUserDispatch() 
+
+  if(signupRes.errors){
+    setErrors(signupRes.errors)
+  } else if (signupRes.status === 200){
+    // ptUserId = 
+    
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
+    console.log(signupRes.json())
+
+    setFormView("patient")
+  }
+}
+
+
 
 
   const sexMarkerArr = ["M", "F", "X"] 
@@ -101,15 +137,13 @@ function PatientSignupFormModal() {
   const ethnicityArr = ["White", "Black", "Asian", "Native American or Alaska Native", "Native Hawaiian or Other Pacific Islander", "Some other race", "Two or more races"];
   const relationship911Arr = ["Spouse", "Parent", "Child", "Sibling", "Grandparent", "Close Friend", "Partner", "Other Relative"];
 
-
-
-
   const currentDate = new Date().toISOString().split("T")[0];
 
   return (
     <>
       <h1>Sign Up as a Patient</h1>
-      <form onSubmit={handleSubmit}>
+      <form className='patient-form'>
+      { formView === "user" &&
         <section id='account-details'>
         <h3>Account Details </h3>
           <div className='fields'>
@@ -121,8 +155,9 @@ function PatientSignupFormModal() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
+                {errors.email && <p>{errors.email}</p>}
               </label>
-              {errors.email && <p>{errors.email}</p>}
+              
               <label>
                 First Name
                 <input
@@ -131,9 +166,9 @@ function PatientSignupFormModal() {
                   onChange={(e) => setFirstName(e.target.value)}
                   pattern='^[^0-9]+$'
                   required
-                />
+                  />
+                  {errors.firstName && <p>{errors.firstName}</p>}
               </label>
-              {errors.firstName && <p>{errors.firstName}</p>}
               <label>
                 Last Name
                 <input
@@ -142,9 +177,9 @@ function PatientSignupFormModal() {
                   onChange={(e) => setLastName(e.target.value)}
                   pattern='^[^0-9]+$'
                   required
-                />
+                  />
+                  {errors.lastName && <p>{errors.lastName}</p>}
               </label>
-              {errors.lastName && <p>{errors.lastName}</p>}
               <label>
                 Phone
                 <input
@@ -155,8 +190,8 @@ function PatientSignupFormModal() {
                   onChange={(e) => setPhone(e.target.value)}
                   required
                 />
-              </label>
               {errors.phone && <p>{errors.phone}</p>}
+              </label>
               <label>
                 Password
                 <input
@@ -165,8 +200,8 @@ function PatientSignupFormModal() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-              </label>
               {errors.password && <p>{errors.password}</p>}
+              </label>
               <label>
                 Confirm Password
                 <input
@@ -175,10 +210,29 @@ function PatientSignupFormModal() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
-              </label>
               {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+              </label>
             </div>
-          </section>
+          <div id='signup-submit'>
+          <button 
+            id='signup-submit' 
+            type="button"
+            disabled={
+              password.length < 6 ||
+              email.length < 3 ||
+              confirmPassword.length < 6 ||
+              lastName.length < 1 ||
+              firstName.length < 1 ||
+              confirmPassword !== password ||
+              phone.length !== 10 
+            }
+            onClick={handleUserSubmit}>
+              Next
+          </button>
+        </div>
+        </section>}
+        { formView === "patient" && 
+        <div className='patient'>
           <section id='basic-details'>
         <h3>Basic Details </h3>
         <div className='fields'>
@@ -432,23 +486,18 @@ function PatientSignupFormModal() {
         {errors.pharmState && <p>{errors.pharmState}</p>}
             </div>
         </section>
-        <div id='signup-submit'>
+        <div id='patient-submit'>
           <button 
-            id='signup-submit' 
-            type="submit"
-            disabled={
-              password.length < 6 ||
-              email.length < 3 ||
-              confirmPassword.length < 6 ||
-              lastName.length < 1 ||
-              firstName.length < 1 ||
-              confirmPassword !== password ||
-              phone.length !== 10 ||
-              phone911.length !== 10
-            }>
-              Sign Up as a Patient
+            id='patient-submit' 
+            type="button"
+            // disabled={
+              
+            // }
+            onClick={handlePatientSubmit}>
+              Complete Sign Up
           </button>
         </div>
+        </div>}
       </form>
     </>
   );

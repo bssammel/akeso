@@ -70,7 +70,7 @@ function ProviderSignupFormModal() {
   return (
     <>
       <h1 style={{justifyContent:"center"}}>Sign Up as Provider</h1>
-      <form>
+      <form className='provider-form'>
         { formView === "user" &&
       <div className='user-creation'>
       <label>

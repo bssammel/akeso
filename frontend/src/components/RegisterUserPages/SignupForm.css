@@ -4,9 +4,14 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    width: 300px;
+    /* width: 300px; */
+    min-width: 300px;
+    max-width: fit-content;
     /* margin: 10px 10px; */
+  }
+
+  form.provider-form{
+    align-items: center;
   }
 
   label {
@@ -14,17 +19,21 @@ form {
     flex-direction: column;
     /* align-content: flex-end; */
     padding: 5px;
+    
+  }
+
+  div.user-creation > label{
     width: 250px;
   }
 
- div#signup-submit {
+ div#signup-submit, div#provider-submit, div#patient-submit{
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: 100%;
     padding: 3px;
   }
-  #signup-submit {
+  #signup-submit, #provider-submit, #patient-submit {
     display: flex;
     flex-direction: row;
     justify-content: center;

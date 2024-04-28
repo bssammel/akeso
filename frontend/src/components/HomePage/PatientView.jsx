@@ -13,6 +13,8 @@ import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 function PatientView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
 
+    const newPtBool = useSelector((state) => (state.patient.newPatient ? true : false))
+
     let sessionUserId;
 
     if(sessionUser) {
@@ -39,7 +41,7 @@ function PatientView() {
         };
 
         runDispatches()
-    }, [sessionUserId, patientId, dispatch])
+    }, [sessionUserId, patientId, dispatch, newPtBool])
 
     let isPtViewSelfbyId;
     let isPrvdrViewPt;
