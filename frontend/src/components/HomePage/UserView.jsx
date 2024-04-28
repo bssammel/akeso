@@ -12,21 +12,22 @@ import UnauthView from './UnauthView';
 function UserView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
     
+
     // useEffect(() => {
-    //     await dispat
+    //     await dispatchEvent()
     // })
     
     return (
         <>
-        { !sessionUser && (
+        { (!sessionUser || !sessionUser.id) && (
             <UnauthView/>
         )}
-        { sessionUser && sessionUser.providerBool && (
+        { (sessionUser && sessionUser.providerBool) && (
             <div className='authed provider'>
                 <PatientTable/>
             </div>
         )}
-        { sessionUser && !sessionUser.providerBool && (
+        { (sessionUser && !sessionUser.providerBool) && (
             <div className='authed patient'>
                 <PatientView/>
             </div>

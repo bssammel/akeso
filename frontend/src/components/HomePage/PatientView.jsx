@@ -15,7 +15,9 @@ function PatientView() {
 
     let sessionUserId;
 
-    if(sessionUser) sessionUserId = sessionUser.id;
+    if(sessionUser) {
+        sessionUserId = sessionUser.id;
+    }
 
     let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
 
@@ -37,7 +39,7 @@ function PatientView() {
         };
 
         runDispatches()
-    }, [sessionUser, patientId, dispatch])
+    }, [sessionUserId, patientId, dispatch])
 
     let isPtViewSelfbyId;
     let isPrvdrViewPt;
@@ -49,11 +51,10 @@ function PatientView() {
             isPtViewSelfbyId = false ;
             isPtViewSelfByUID = false;
         }
-        if(sessionUserId === ptDetailsObj.userId && sessionUser.providerBool === true){
+        if(sessionUserId === ptDetailsObj.userId && sessionUser.providerBool === false){
             isPtViewSelfbyId = true;
         } 
         if(sessionUser.providerBool === true) isPrvdrViewPt = true;
-
     }
 
     if(!patientId && sessionUser && sessionUserId && sessionUser.providerBool === false){
@@ -99,7 +100,7 @@ function PatientView() {
         
         {/* if the current user is a provider and the patient being views exists and has loaded */}
         {
-            displayPtData && (
+            displayPtData && ptDetailsObj && (
                 <div className='authed'>
                     <h1>{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1>
                     <div className="pt-nav-cntnr">
