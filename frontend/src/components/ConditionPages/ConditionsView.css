@@ -20,11 +20,13 @@ div.condition-header{
     justify-content: space-between ;
 }
 
-div.condition-header > ul{
+div.provider-actions > ul{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
 }
+
+di
 
 div.condition-details{
     padding-left: 5px;

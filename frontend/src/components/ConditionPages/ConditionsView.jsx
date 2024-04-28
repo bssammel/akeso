@@ -85,6 +85,7 @@ function ConditionsView() {
                                 <div className='item-container' key={conditionObj.id}>
                                     <div className='condition-header'>
                                         <h3>{conditionObj.name}</h3>
+                                        {sessionUser.providerBool && (
                                         <div className='provider-actions'>
                                         <ul>
                                         <li>
@@ -100,7 +101,7 @@ function ConditionsView() {
                                             />
                                         </li>
                                         </ul>
-                                        </div>
+                                        </div>)}
                                     </div>
                                     <div className='condition-details'>
                                         <h4>Status: {conditionObj.status}</h4>
@@ -110,14 +111,14 @@ function ConditionsView() {
                                 </div>
                            )})}              
                     </div>
-                    <ul>
+                    {sessionUser.providerBool && (<ul>
                         <li>
                             <OpenModalButton
                             buttonText={"Add New Condition"}
                             modalComponent={<AddConditionModal />}
                             />
                         </li>
-                    </ul>
+                    </ul>)}
                 </div>
             )
         }
