@@ -20,6 +20,7 @@ function DeleteConditionModal(props) {
       console.log("line 18 in delete modal jsx")
       dispatch(getPatientDetails(patientId)).then(closeModal);
       // .then(navigate(`/conditions/current`));
+      
     }
   };
 
