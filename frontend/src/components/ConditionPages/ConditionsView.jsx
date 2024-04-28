@@ -78,7 +78,10 @@ function ConditionsView() {
             ptDetailsObj && sessionUser && (
                 <div className='authed conditions'>
                     <h2> Conditions</h2>
-                    <div className="conditions-cntnr">
+                    {conditionArr.length <1 && <div className='no-conds'>
+                        <h4>No conditions are associated to this patient. Please sign in as a provider to add a condition or as a patient shedule an appointment with a provider to be evaluated.</h4>
+                        </div>}
+                    {conditionArr.length > 0 && <div className="conditions-cntnr">
                            {conditionArr.map((conditionObj) => { 
                             if(!patientIdProp) patientIdProp = conditionObj.patientId;
                             return (
@@ -110,7 +113,7 @@ function ConditionsView() {
                                     </div>
                                 </div>
                            )})}              
-                    </div>
+                    </div>}
                     {sessionUser.providerBool && (<ul>
                         <li>
                             <OpenModalButton

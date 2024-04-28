@@ -23,8 +23,8 @@ function PatientSignupFormModal() {
   const [sex, setSex] = useState("M");
   const [gender, setGender] = useState("Cisgender Man");
   const [insurance, setInsurance] = useState("");
-  const [religion, setReligion] = useState("");
-  const [relationshipStatus, setRelationshipStatus] = useState("");
+  const [religion, setReligion] = useState("Do Not Wish to Disclose");
+  const [relationshipStatus, setRelationshipStatus] = useState("Do Not Wish to Disclose");
   const [language, setLanguage] = useState("English");
   const [ethnicity, setEthnicity] = useState("White");
   const [street, setStreet] = useState("");
