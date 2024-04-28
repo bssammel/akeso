@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { ageCalc } = require('../../utils/dateFuncs')
-const { User, Patient, Provider } = require('../../db/models');
+const { User, Patient, Provider, Condition } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -95,6 +95,22 @@ router.post(
         })
         const ageInYrs = ageCalc(desiredUser.dataValues.Patient.dob)
         desiredUser.dataValues.Patient.dataValues.age = ageInYrs;
+
+        let patientId = desiredUser.dataValues.Patient.dataValues.id;
+
+        conditionArr = await Condition.findAll({
+          where:{
+            patientId: patientId
+          },
+          include: [
+            { model: Provider}
+          ],
+          attributes:["providerId", "patientId", "name", "status", "description"]
+        })
+
+        desiredUser.dataValues.Patient.dataValues.Conditions = conditionArr;
+
+
       }
       if (desiredUserBeta.providerBool){//if the user fetched is a provider
         desiredUser = await User.findOne({
