@@ -57,8 +57,11 @@ function ProviderSignupFormModal() {
 
     if(signupRes.errors){
       setErrors(signupRes)
+      console.log("signup errors")
     } else {
-      setFormView("provider")
+      console.log("sign up res success")
+      setFormView("user")
+
     }
     // await dispatch(sessionActions.signup({
     //   email,
