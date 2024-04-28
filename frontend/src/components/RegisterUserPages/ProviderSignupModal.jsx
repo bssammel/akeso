@@ -33,10 +33,7 @@ function ProviderSignupFormModal() {
         }});
   };
 
-  const handleUserSubmit = async (e) => {
-    e.preventDefault();
-    setErrors({})
-    setFormView()
+  const runUserDispatch = async () => {
     return await dispatch(sessionActions.signup({
       email,
       firstName,
@@ -45,12 +42,38 @@ function ProviderSignupFormModal() {
       providerBool: true,
       phone
     })) 
-    .then(setFormView("provider"))
-    .catch(async (res) => {
-      const data = await res.json();
-      if (data?.errors) {
-        setErrors(data.errors);
-      }});
+    // .catch(async (res) => {
+    //   const data = await res.json();
+    //   if (data?.errors) {
+    //     setErrors(data.errors);
+    //   }});    
+  }
+
+  const handleUserSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({})
+    const signupRes = await runUserDispatch() 
+
+
+    if(signupRes.errors){
+      setErrors(signupRes)
+    } else {
+      setFormView("provider")
+    }
+    // await dispatch(sessionActions.signup({
+    //   email,
+    //   firstName,
+    //   lastName,
+    //   password,
+    //   providerBool: true,
+    //   phone
+    // })) 
+    // .then(() => setFormView("provider"))
+    // .catch(async (res) => {
+    //   const data = await res.json();
+    //   if (data?.errors) {
+    //     setErrors(data.errors);
+    //   }});
   } 
 
   const titles = ["MD", "DO", "NP", "PA", "RN", "LPN"];
