@@ -61,9 +61,9 @@ router.post(
   
       await setTokenCookie(res, safeUser);
 
-      // if (safeUser.errors.email && safeUser.errors.email === "email must be unique"){
-      //   safeUser.errors.email = "User with that email already exists"
-      // }
+      if (safeUser.errors.email && safeUser.errors.email === "email must be unique"){
+        safeUser.errors.email = "User with that email already exists"
+      }
   
       return res.json({
         user: safeUser

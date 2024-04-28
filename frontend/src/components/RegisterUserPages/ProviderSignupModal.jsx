@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import './SignupForm.css'
 
@@ -9,7 +8,6 @@ import * as sessionActions from '../../store/session';
 
 function ProviderSignupFormModal() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
   const [title, setTitle] = useState("MD");
   const [specialty, setSpecialty] = useState("Family Medicine");
   const [email, setEmail] = useState("");
@@ -23,30 +21,10 @@ function ProviderSignupFormModal() {
   
   const { closeModal } = useModal();
 
-
-// const runDispatches = async() => {
-//   await dispatch(sessionActions.signup({
-//     email,
-//     firstName,
-//     lastName,
-//     password,
-//     providerBool: true,
-//     phone
-//   }))
-//   .then(await dispatch(sessionActions.login({credential: email, password })))
-//   .then(await dispatch(addNewProvider({title, specialty})))
-//   .then(closeModal)
-//   .catch(async (res) => {
-//     const data = await res.json();
-//     if (data?.errors) {
-//       setErrors(data.errors);
-//     }});
-// }
-
-  const handleProviderSubmit = (e) => {
+  const handleProviderSubmit = async (e) => {
     e.preventDefault();
       setErrors({});
-      return  dispatch(addNewProvider({title, specialty}))
+      return await dispatch(addNewProvider({title, specialty}))
       .then(closeModal)
       .catch(async (res) => {
         const data = await res.json();
@@ -55,11 +33,11 @@ function ProviderSignupFormModal() {
         }});
   };
 
-  const handleUserSubmit = (e) => {
+  const handleUserSubmit = async (e) => {
     e.preventDefault();
     setErrors({})
     setFormView()
-    return dispatch(sessionActions.signup({
+    return await dispatch(sessionActions.signup({
       email,
       firstName,
       lastName,

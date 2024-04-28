@@ -124,5 +124,5 @@ const validateTreatmentCreation = [
   handleValidationErrors]
 
 module.exports = {
-  handleValidationErrors, validatePatientCreation, validateProviderCreation, validateConditionCreation, validateTreatmentCreation
+  handleValidationErrors, validatePatientCreation, validateProviderCreation, validateConditionCreation, validateTreatmentCreation, validateUserCreation
 };

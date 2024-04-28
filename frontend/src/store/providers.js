@@ -33,7 +33,6 @@ export const addNewProvider = (newProviderData) => async (dispatch) => {
   } else if (res.ok) {
     const createdPvdr = await res.json();
     dispatch(createProvider(newProviderData));
-    // .then(dispatch(loadAbbvPtsPvdr([])))
     return createdPvdr;
   }
 }

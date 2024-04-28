@@ -1,5 +1,4 @@
 import { useSelector} from 'react-redux'
-// import { useEffect } from 'react';
 
 import PatientTable from './PatientTable';
 import PatientView from './PatientView'
