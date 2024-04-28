@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 const CREATE_PATIENT = "patients/createPatient";
 const LOAD_PATIENT_DETAILS = "patients/loadPatientDetails";
 const LOAD_PATIENT_DETAILS_USERID = "patients/loadPatientUserDetails"
+const CLEAR_STATE = "patients/clearState";
 
 
 export const createPatient = (newPatient) => {
@@ -28,6 +29,12 @@ export const loadPatientDetails = (patientDetails) => {
   };
 
 
+  const removeState = () => {
+    return{
+      type: CLEAR_STATE
+    };
+  }
+
 export const addNewPatient = (newPtData) => async (dispatch) =>{
   // console.log("hitting new addnepwt")
 
@@ -49,13 +56,8 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
 
   export const getPatientDetails = (patientId) => async (dispatch) => {
 
-    // console.log("####################################")
-
-
     const res = await csrfFetch(`/api/patients/${patientId}`);
 
-    // console.log("####################################")
-    // console.log(res)
     if (!res.ok) {
       return res;
     } else if (res.ok){
@@ -73,6 +75,10 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
         const patientUserDetails = await res.json();
         dispatch(loadPatientUserDetails(patientUserDetails));
     }
+  }
+
+  export const onLogout = () => async (dispatch) => {
+    dispatch(removeState());
   }
 
   const patientReducer = (state = {}, action) => {
@@ -111,6 +117,9 @@ export const addNewPatient = (newPtData) => async (dispatch) =>{
             ...state,
             "patientDetails" : ptUserDetailObj
           }
+        }
+        case CLEAR_STATE:{
+          return {}
         }
         default:
             return state;

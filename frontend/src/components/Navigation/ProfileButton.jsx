@@ -6,6 +6,7 @@ import { BiSolidUserDetail } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom';
 //should consider imports for doctor and patient icons, bookmarked
 import * as sessionActions from '../../store/session';
+import { onLogout } from '../../store/patients';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LoginFormModal from '../LoginFormPage/LoginFormPage';
 import ProviderSignupFormModal from '../RegisterUserPages/ProviderSignupModal';
@@ -40,6 +41,7 @@ function ProfileButton({ user }) {
 
       const runLogoutDispatches = async () => {
         await dispatch(sessionActions.logout())
+        .then(() => dispatch(onLogout()))
         .then(await navigate('/'))
       }
 

@@ -118,16 +118,10 @@ const handleUserSubmit = async (e) => {
     setErrors(signupRes.errors)
   } else if (signupRes.status === 200){
     // ptUserId = 
-    
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-    console.log(signupRes.json())
 
     setFormView("patient")
   }
 }
-
-
-
 
   const sexMarkerArr = ["M", "F", "X"] 
   const genderArr = ["Cisgender Man","Cisgender Woman","Transgender Man","Transgender Woman","Nonbinary"]
