@@ -44,6 +44,8 @@ export const addNewCondition = (newConditionData, patientId) => async (dispatch)
 };
 
 export const updateCondition = (conditionDataForUpdate, conditionId) => async (dispatch) => {
+  console.log("delete thunk")
+  console.log(conditionId)
   const res = await csrfFetch(`/api/conditions/${conditionId}/update`, {
     method: "PUT",
     headers:{

@@ -17,6 +17,10 @@ function ConditionsView() {
 
     const { patientId } = useParams();
 
+    let patientIdProp;
+
+    if(patientId) patientIdProp = patientId;
+
     let sessionUserId;
 
     let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
@@ -28,8 +32,11 @@ function ConditionsView() {
     let conditionArr;
 
     if (ptDetailsObj && ptDetailsObj.Conditions){
+        console.log("ptDetailsObj and conditions in object exist")
         conditionArr = ptDetailsObj.Conditions;
+        // console.log(conditionArr)
     }
+
 
     let numConditions;
 
@@ -72,10 +79,13 @@ function ConditionsView() {
                 <div className='authed conditions'>
                     <h2> Conditions</h2>
                     <div className="conditions-cntnr">
-                           {conditionArr.map((conditionObj) => { return (
+                           {conditionArr.map((conditionObj) => { 
+                            if(!patientIdProp) patientIdProp = conditionObj.patientId;
+                            return (
                                 <div className='item-container' key={conditionObj.id}>
                                     <div className='condition-header'>
                                         <h3>{conditionObj.name}</h3>
+                                        {sessionUser.providerBool && (
                                         <div className='provider-actions'>
                                         <ul>
                                         <li>
@@ -87,11 +97,11 @@ function ConditionsView() {
                                         <li>
                                             <OpenModalButton
                                             buttonText={<MdDeleteForever/>}
-                                            modalComponent={<DeleteConditionModal  state={{ conditionId:conditionObj.id, patientId:patientId }}/>}
+                                            modalComponent={<DeleteConditionModal  state={{ conditionId: conditionObj.id, patientId:patientIdProp }}/>}
                                             />
                                         </li>
                                         </ul>
-                                        </div>
+                                        </div>)}
                                     </div>
                                     <div className='condition-details'>
                                         <h4>Status: {conditionObj.status}</h4>
@@ -101,14 +111,14 @@ function ConditionsView() {
                                 </div>
                            )})}              
                     </div>
-                    <ul>
+                    {sessionUser.providerBool && (<ul>
                         <li>
                             <OpenModalButton
                             buttonText={"Add New Condition"}
                             modalComponent={<AddConditionModal />}
                             />
                         </li>
-                    </ul>
+                    </ul>)}
                 </div>
             )
         }

@@ -15,7 +15,9 @@ function PatientView() {
 
     let sessionUserId;
 
-    if(sessionUser) sessionUserId = sessionUser.id;
+    if(sessionUser) {
+        sessionUserId = sessionUser.id;
+    }
 
     let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
 
@@ -37,29 +39,41 @@ function PatientView() {
         };
 
         runDispatches()
-    }, [sessionUser, patientId, dispatch])
+    }, [sessionUserId, patientId, dispatch])
 
-    let isPtViewSelf;
+    let isPtViewSelfbyId;
+    let isPrvdrViewPt;
+    let isPtViewSelfByUID;
 
-    if(patientId && ptDetailsObj){
+    if(patientId && ptDetailsObj){// the page is being loaded by patients/:id
+        console.log("patientId exists")
         if(sessionUserId !== ptDetailsObj.userId && sessionUser.providerBool === false){
-            isPtViewSelf = false ;
+            isPtViewSelfbyId = false ;
+            isPtViewSelfByUID = false;
         }
-        if(sessionUserId === ptDetailsObj.userId || sessionUser.providerBool === true){
-            isPtViewSelf = true;
-        }
+        if(sessionUserId === ptDetailsObj.userId && sessionUser.providerBool === false){
+            isPtViewSelfbyId = true;
+        } 
+        if(sessionUser.providerBool === true) isPrvdrViewPt = true;
+    }
 
+    if(!patientId && sessionUser && sessionUserId && sessionUser.providerBool === false){
+         isPtViewSelfByUID = true;
     }
 
     let displayPtData = false;
 
     if(sessionUser && sessionUserId){
-        if(isPtViewSelf){
+        if(isPtViewSelfByUID || isPtViewSelfbyId){
             displayPtData = true;
-        } else if ( ptDetailsObj && ptDetailsObj.status !== 404 && sessionUser.providerBool){
+        } else if (ptDetailsObj && ptDetailsObj.status !== 404 && isPrvdrViewPt){
             displayPtData = true;
         }
     }
+
+    console.log("isPtViewSelfbyId",isPtViewSelfbyId);
+    console.log("isPrvdrViewPt",isPrvdrViewPt);
+    console.log("isPtViewSelfByUID",isPtViewSelfByUID);
 
     return (
         <>
@@ -67,25 +81,26 @@ function PatientView() {
         { !sessionUser && (
             <UnauthView/>
         )} 
+        {/* if the current user is a pt and they are trying to view a pt that is not themselves */}
+        {
+            sessionUser && sessionUser.providerBool !== true && !isPtViewSelfByUID && !isPtViewSelfbyId && (
+                <ForbiddenPtView/>
+            )
+        }
         {/* if the patient does not exist and the current user is a provider */}
         { ptDetailsObj && ptDetailsObj.status === 404 && sessionUser.providerBool === true && (
             <PtDne/>
         ) }       
          {/*if the current user is a provider and the pt details have not loaded yet  */}
-        { !ptDetailsObj && sessionUser && sessionUser.providerBool === true && (
+        { (!ptDetailsObj && (isPrvdrViewPt || isPtViewSelfByUID || isPtViewSelfbyId)) && (
             <div className='unloaded'>
                 <p>Getting that patient data for you!</p>
             </div>
         )}
-        {/* if the current user is a pt and they are trying to view a pt that is not themselves */}
-        {
-            sessionUser && sessionUser.providerBool === false && isPtViewSelf === false && (
-                <ForbiddenPtView/>
-            )
-        }
+        
         {/* if the current user is a provider and the patient being views exists and has loaded */}
         {
-            displayPtData && (
+            displayPtData && ptDetailsObj && (
                 <div className='authed'>
                     <h1>{ptDetailsObj.firstName}  {ptDetailsObj.lastName}</h1>
                     <div className="pt-nav-cntnr">
