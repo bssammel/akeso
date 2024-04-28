@@ -64,6 +64,9 @@ router.post(
       if (safeUser.errors.email && safeUser.errors.email === "email must be unique"){
         safeUser.errors.email = "User with that email already exists"
       }
+
+      console.log("safeUser")
+      console.log(safeUser)
   
       return res.json({
         user: safeUser
