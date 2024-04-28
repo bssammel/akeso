@@ -105,7 +105,7 @@ router.post(
           include: [
             { model: Provider}
           ],
-          attributes:["providerId", "patientId", "name", "status", "description"]
+          attributes:["providerId", "patientId", "name", "status", "description", "id"]
         })
 
         desiredUser.dataValues.Patient.dataValues.Conditions = conditionArr;

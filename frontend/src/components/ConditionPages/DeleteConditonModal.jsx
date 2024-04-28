@@ -10,6 +10,8 @@ function DeleteConditionModal(props) {
   const { conditionId, patientId } = props.state;
   const { closeModal } = useModal();
 
+  console.log("patientId: ", patientId)
+
   const handleDelete = async (e) => {
     e.preventDefault();
     const deleteConditionMsg = await dispatch(deleteConditionById(conditionId));
