@@ -20,6 +20,25 @@ const handleValidationErrors = (req, _res, next) => {
   next();
 };
 
+const validateUserCreation = [
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .isAlpha("en-US", {ignore: /^[a-zÀ-ÿ ,.'-]+$/i})
+    .notEmpty()
+    .withMessage('Names can only include letters, spaces, and the following characters: ,.\'-'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .isAlpha("en-US", {ignore: /^[a-zÀ-ÿ ,.'-]+$/i})
+    .notEmpty()
+    .withMessage('Names can only include letters, spaces, and the following characters: ,.\'-'),
+  check('password')
+    .isLength({min: 6})
+    .withMessage('Passwords must be at least 6 characters long.'),
+  check('phone')
+    .isLength(10)
+    .withMessage('Phone must only be numbers and exactly 10 characters long.'),
+  handleValidationErrors]
+
 const validatePatientCreation = [
   check('sex')
     .exists({ checkFalsy: true })

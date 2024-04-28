@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: [1, 255],
-        isAlpha: true
+        is: /^[a-zÀ-ÿ ,.'-]+$/i
       }
     },
     lastName: {
@@ -59,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: [1, 255],
-        isAlpha: true
+        is: /^[a-zÀ-ÿ ,.'-]+$/i
       }
     },
     imageURL: {
