@@ -56,7 +56,7 @@ function ProviderSignupFormModal() {
 
     if(signupRes.errors){
       setErrors(signupRes.errors)
-    } else {
+    } else if (signupRes.id){
       setFormView("provider")
     }
   } 
