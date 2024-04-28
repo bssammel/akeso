@@ -54,11 +54,12 @@ function ProviderSignupFormModal() {
     setErrors({})
     const signupRes = await runUserDispatch() 
 
+    console.log("signUpRes")
     console.log(signupRes)
 
     if(signupRes.errors){
       setErrors(signupRes.errors)
-    } else if (signupRes.id){
+    } else if (signupRes.status === 200){
       setFormView("provider")
     }
   } 
