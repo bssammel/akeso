@@ -42,11 +42,11 @@ function ProviderSignupFormModal() {
       providerBool: true,
       phone
     })) 
-    // .catch(async (res) => {
-    //   const data = await res.json();
-    //   if (data?.errors) {
-    //     setErrors(data.errors);
-    //   }});    
+    .catch(async (res) => {
+      const data = await res.json();
+      if (data?.errors) {
+        setErrors(data.errors);
+      }});    
   }
 
   const handleUserSubmit = async (e) => {
@@ -54,29 +54,11 @@ function ProviderSignupFormModal() {
     setErrors({})
     const signupRes = await runUserDispatch() 
 
-
     if(signupRes.errors){
-      setErrors(signupRes)
-      console.log("signup errors")
+      setErrors(signupRes.errors)
     } else {
-      console.log("sign up res success")
-      setFormView("user")
-
+      setFormView("provider")
     }
-    // await dispatch(sessionActions.signup({
-    //   email,
-    //   firstName,
-    //   lastName,
-    //   password,
-    //   providerBool: true,
-    //   phone
-    // })) 
-    // .then(() => setFormView("provider"))
-    // .catch(async (res) => {
-    //   const data = await res.json();
-    //   if (data?.errors) {
-    //     setErrors(data.errors);
-    //   }});
   } 
 
   const titles = ["MD", "DO", "NP", "PA", "RN", "LPN"];
