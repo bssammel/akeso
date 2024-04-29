@@ -6,13 +6,13 @@ import { MdDeleteForever } from "react-icons/md";
 
 import { getPatientUserDetails, getPatientDetails } from '../../store/patients';
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
-import EditConditionModal from './EditConditionModal';
-import DeleteConditionModal from './DeleteConditionModal';
-import AddConditionModal from './AddConditionModal';
-import './ConditionsView.css'
+import EditTreatmentModal from './EditTreatmentModal';
+import DeleteTreatmentModal from './DeleteTreatmentModal';
+import AddTreatmentModal from './AddTreatmentModal';
+import './TreatmentsView.css'
 
 
-function ConditionsView() {
+function TreatmentsView() {
     const sessionUser = useSelector((state) => (state.session.user ? state.session.user : null));
 
     const { patientId } = useParams();
@@ -29,26 +29,26 @@ function ConditionsView() {
         sessionUserId = sessionUser.id
     }
 
-    let conditionArr;
+    let treatmentArr;
 
-    if (ptDetailsObj && ptDetailsObj.Conditions){
-        console.log("ptDetailsObj and conditions in object exist")
-        conditionArr = ptDetailsObj.Conditions;
-        // console.log(conditionArr)
+    if (ptDetailsObj && ptDetailsObj.Treatments){
+        console.log("ptDetailsObj and treatments in object exist")
+        treatmentArr = ptDetailsObj.Treatments;
+        // console.log(treatmentArr)
     }
 
 
-    let numConditions;
+    let numTreatments;
 
     if (
-        Array.isArray(conditionArr) &&
-        conditionArr.length &&
+        Array.isArray(treatmentArr) &&
+        treatmentArr.length &&
         sessionUser
       ) {
-        numConditions = conditionArr.length;
-        if (numConditions > 0) numConditions = true;
+        numTreatments = treatmentArr.length;
+        if (numTreatments > 0) numTreatments = true;
       } else {
-        numConditions = -1;
+        numTreatments = -1;
       }
 
     const dispatch = useDispatch()
@@ -63,7 +63,7 @@ function ConditionsView() {
         };
 
         runDispatches()
-    }, [sessionUserId, patientId, numConditions, dispatch])
+    }, [sessionUserId, patientId, numTreatments, dispatch])
 
 
     return (
@@ -76,40 +76,40 @@ function ConditionsView() {
         )}
         {
             ptDetailsObj && sessionUser && (
-                <div className='authed conditions'>
-                    <h2> Conditions</h2>
-                    {conditionArr.length <1 && <div className='no-conds'>
-                        <h4>No conditions are associated to this patient. Please sign in as a provider to add a condition or as a patient shedule an appointment with a provider to be evaluated.</h4>
+                <div className='authed treatments'>
+                    <h2> Treatments</h2>
+                    {treatmentArr.length <1 && <div className='no-conds'>
+                        <h4>No treatments are associated to this patient. Please sign in as a provider to add a treatment or as a patient shedule an appointment with a provider to be evaluated.</h4>
                         </div>}
-                    {conditionArr.length > 0 && <div className="conditions-cntnr">
-                           {conditionArr.map((conditionObj) => { 
-                            if(!patientIdProp) patientIdProp = conditionObj.patientId;
+                    {treatmentArr.length > 0 && <div className="treatments-cntnr">
+                           {treatmentArr.map((treatmentObj) => { 
+                            if(!patientIdProp) patientIdProp = treatmentObj.patientId;
                             return (
-                                <div className='item-container' key={conditionObj.id}>
-                                    <div className='condition-header'>
-                                        <h3>{conditionObj.name}</h3>
+                                <div className='item-container' key={treatmentObj.id}>
+                                    <div className='treatment-header'>
+                                        <h3>{treatmentObj.name}</h3>
                                         {sessionUser.providerBool && (
                                         <div className='provider-actions'>
                                         <ul>
                                         <li>
                                             <OpenModalButton
                                             buttonText={<BiSolidEdit/>}
-                                            modalComponent={<EditConditionModal state={{ conditionId:conditionObj.id, originalName: conditionObj.name, originalStatus: conditionObj.status, originalDescription: conditionObj.description }}/>}
+                                            modalComponent={<EditTreatmentModal state={{ treatmentId:treatmentObj.id, originalName: treatmentObj.name, originalStatus: treatmentObj.status, originalDescription: treatmentObj.description }}/>}
                                             />
                                         </li>
                                         <li>
                                             <OpenModalButton
                                             buttonText={<MdDeleteForever/>}
-                                            modalComponent={<DeleteConditionModal  state={{ conditionId: conditionObj.id, patientId:patientIdProp }}/>}
+                                            modalComponent={<DeleteTreatmentModal  state={{ treatmentId: treatmentObj.id}}/>}
                                             />
                                         </li>
                                         </ul>
                                         </div>)}
                                     </div>
-                                    <div className='condition-details'>
-                                        <h4>Status: {conditionObj.status}</h4>
+                                    <div className='treatment-details'>
+                                        <h4>Status: {treatmentObj.status}</h4>
                                         <h4>Notes:</h4>
-                                        <p>{conditionObj.description}</p>
+                                        <p>{treatmentObj.description}</p>
                                     </div>
                                 </div>
                            )})}              
@@ -117,8 +117,8 @@ function ConditionsView() {
                     {sessionUser.providerBool && (<ul>
                         <li>
                             <OpenModalButton
-                            buttonText={"Add New Condition"}
-                            modalComponent={<AddConditionModal />}
+                            buttonText={"Add New Treatment"}
+                            modalComponent={<AddTreatmentModal />}
                             />
                         </li>
                     </ul>)}
@@ -129,4 +129,4 @@ function ConditionsView() {
     )
 }
 
-export default ConditionsView;
+export default TreatmentsView;

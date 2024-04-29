@@ -6,12 +6,14 @@ import sessionReducer from './session';
 import patientReducer from './patients';
 import providerReducer from './providers';
 import conditionReducer from './conditions';
+import treatmentReducer from './treatments';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   patient: patientReducer,
   provider: providerReducer,
-  condition: conditionReducer
+  condition: conditionReducer,
+  treatment: treatmentReducer
 });
 
 let enhancer;

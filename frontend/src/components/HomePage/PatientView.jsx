@@ -6,6 +6,7 @@ import ForbiddenPtView from '../ErrorPages/ForbiddenPtView';
 import PtDne from '../ErrorPages/PtDNE';
 import UnauthView from './UnauthView';
 import ConditionsView from '../ConditionPages/ConditionsView';
+import TreatmentsView from '../TreatmentPages/TreatmentsView';
 import './PatientView.css'
 import { getPatientDetails, getPatientUserDetails } from '../../store/patients';
 
@@ -118,7 +119,7 @@ function PatientView() {
                         <ConditionsView/>
                     </div>)}
                     {currentView == 'treatments' && (<div className="content-item" id="pt-treatments">
-                            showing treaments
+                            <TreatmentsView/>
                     </div>)}
                 </div>
             )
