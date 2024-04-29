@@ -13,7 +13,7 @@ router.put(
     validateTreatmentCreation,
     async (req, res, next) => {
         const treatmentId = parseInt(req.params.treatmentId)
-        const { name, dosage, frequencyQuantity, frequencyPeriod } = req.body;
+        const { name, dosage, frequencyQuantity, frequencyPeriod, conditionId } = req.body;
 
         const treatmentToUpdate = await Treatment.findByPk(treatmentId);
 
@@ -28,7 +28,8 @@ router.put(
             name,
             dosage,
             frequencyQuantity,
-            frequencyPeriod
+            frequencyPeriod, 
+            conditionId
             });
             return res.json(updatedTreatment)
         }
@@ -39,8 +40,7 @@ router.put(
 
 router.delete(
     "/:treatmentId/delete", 
-    requireAuth, 
-    validateTreatmentCreation,
+    requireAuth,
     async (req, res, next) => {
         const treatmentId = parseInt(req.params.treatmentId)
 
@@ -57,3 +57,4 @@ router.delete(
         }
 
     })
+    module.exports = router;

@@ -4,6 +4,7 @@ const usersRouter = require('./users.js');
 const patientsRouter = require('./patients.js')
 const providersRouter = require('./providers.js')
 const conditionsRouter = require('./conditions.js')
+const treatmentsRouter = require('./treatments.js')
 const { restoreUser } = require('../../utils/auth.js');
 
 // Connect restoreUser middleware to the API router
@@ -20,6 +21,8 @@ router.use('/patients', patientsRouter)
 router.use('/providers', providersRouter)
 
 router.use('/conditions', conditionsRouter )
+
+router.use('/treatments', treatmentsRouter)
 // router.post('/test', (req, res) => {
 //   res.json({ requestBody: req.body });
 // });

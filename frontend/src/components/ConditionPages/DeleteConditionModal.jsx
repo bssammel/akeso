@@ -30,6 +30,7 @@ function DeleteConditionModal(props) {
         <div id="modal-text">
           <h1>Confirm Delete</h1>
           <h3>Are you sure you want to remove this condition from this patient?</h3>
+          <h5>It will also delete any treatments associated to this condition.</h5>
         </div>
         <div className="delete-buttons">
           <button

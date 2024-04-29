@@ -1,13 +1,13 @@
 import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
-// import { BiSolidEdit} from "react-icons/bi";
-// import { MdDeleteForever } from "react-icons/md";
+import { BiSolidEdit} from "react-icons/bi";
+import { MdDeleteForever } from "react-icons/md";
 
 import { getPatientUserDetails, getPatientDetails } from '../../store/patients';
 import OpenModalButton from '../OpenModalButton/OpenModalButton'
-// import EditTreatmentModal from './EditTreatmentModal';
-// import DeleteTreatmentModal from './DeleteTreatmentModal';
+import EditTreatmentModal from './EditTreatmentModal';
+import DeleteTreatmentModal from './DeleteTreatmentModal';
 import AddTreatmentModal from './AddTreatmentModal';
 import './TreatmentsView.css'
 
@@ -34,19 +34,19 @@ function TreatmentsView() {
     // let conditionNameArr; 
 
     if (ptDetailsObj && ptDetailsObj.Treatments && ptDetailsObj.Conditions){
-        console.log("ptDetailsObj and treatments in object exist")
+        // console.log("ptDetailsObj and treatments in object exist")
         conditionArr = ptDetailsObj.Conditions;
         // conditionNameArr = conditionArr.map((conditionObj) => conditionObj.name)
         treatmentArr = ptDetailsObj.Treatments;
         treatmentArr.map((treatmentObj) => {
-            console.log("treatmentObj", treatmentObj)
+            // console.log("treatmentObj", treatmentObj)
             const condIdForTmnt = treatmentObj.conditionId;
-            console.log("condIdForTmnt", condIdForTmnt)
+            // console.log("condIdForTmnt", condIdForTmnt)
              treatmentObj.conditionName = conditionArr.map((conditionObj)=> {
-                console.log("conditionObj.name",conditionObj.name)
-                console.log("conditionObj.id", conditionObj.id)
+                // console.log("conditionObj.name",conditionObj.name)
+                // console.log("conditionObj.id", conditionObj.id)
                 if(condIdForTmnt === conditionObj.id){
-                    console.log(conditionObj.name)
+                    // console.log(conditionObj.name)
                     return conditionObj.name;
                 }
             })
@@ -56,6 +56,7 @@ function TreatmentsView() {
     }
 
 
+
     let numTreatments;
 
     if (
@@ -63,8 +64,16 @@ function TreatmentsView() {
         treatmentArr.length &&
         sessionUser
       ) {
-        numTreatments = treatmentArr.length;
-        if (numTreatments > 0) numTreatments = true;
+            numTreatments = treatmentArr.length;
+            treatmentArr.sort((a,b) => {
+                if(a.name < b.name){
+                    return -1;
+                } else if (a.name > b.name){
+                    return 1;
+                }
+                return 0;
+            })
+            if (numTreatments > 0) numTreatments = true;
       } else {
         numTreatments = -1;
       }
@@ -113,18 +122,18 @@ function TreatmentsView() {
                                         {sessionUser.providerBool && (
                                         <div className='provider-actions'>
                                         <ul>
-                                        {/* <li>
+                                        <li>
                                             <OpenModalButton
                                             buttonText={<BiSolidEdit/>}
-                                            modalComponent={<EditTreatmentModal state={{ treatmentId:treatmentObj.id, originalName: treatmentObj.name, originalStatus: treatmentObj.status, originalDescription: treatmentObj.description }}/>}
+                                            modalComponent={<EditTreatmentModal state={{ treatmentId:treatmentObj.id, originalName: treatmentObj.name, originalDosage: treatmentObj.dosage, originalFrequencyQuantity: treatmentObj.frequencyQuantity, originalFrequencyPeriod: treatmentObj.frequencyPeriod, conditionArr }}/>}
                                             />
                                         </li>
                                         <li>
                                             <OpenModalButton
                                             buttonText={<MdDeleteForever/>}
-                                            modalComponent={<DeleteTreatmentModal  state={{ treatmentId: treatmentObj.id}}/>}
+                                            modalComponent={<DeleteTreatmentModal  state={{ treatmentId: treatmentObj.id, patientId:patientIdProp}}/>}
                                             />
-                                        </li> */}
+                                        </li>
                                         </ul>
                                         </div>)}
                                     </div>
@@ -149,6 +158,7 @@ function TreatmentsView() {
                             />
                         </li>
                     </ul>)}
+                    {!sessionUser.providerBool && (<h4>As a patient, you are unable to add, edit, or delete treatments yourself. Discuss any treatment plans with your provider by scheduling an appointment.</h4>)}
                 </div>
             )
         }

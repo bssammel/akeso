@@ -80,7 +80,7 @@ function AddTreatmentModal(props) {
         <label>
           Primarily Treats
           <select
-          name='dosageUnit' id='dosageUnit' className='select'
+          name='condition' id='condition' className='select'
           value={conditionIdForTtmnt}
           onChange={(e) => setConditionIdForTtmnt(e.target.value)}
           required
