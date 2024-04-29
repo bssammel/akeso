@@ -34,25 +34,17 @@ function TreatmentsView() {
     // let conditionNameArr; 
 
     if (ptDetailsObj && ptDetailsObj.Treatments && ptDetailsObj.Conditions){
-        // console.log("ptDetailsObj and treatments in object exist")
         conditionArr = ptDetailsObj.Conditions;
-        // conditionNameArr = conditionArr.map((conditionObj) => conditionObj.name)
         treatmentArr = ptDetailsObj.Treatments;
         treatmentArr.map((treatmentObj) => {
-            // console.log("treatmentObj", treatmentObj)
             const condIdForTmnt = treatmentObj.conditionId;
-            // console.log("condIdForTmnt", condIdForTmnt)
              treatmentObj.conditionName = conditionArr.map((conditionObj)=> {
-                // console.log("conditionObj.name",conditionObj.name)
-                // console.log("conditionObj.id", conditionObj.id)
                 if(condIdForTmnt === conditionObj.id){
-                    // console.log(conditionObj.name)
                     return conditionObj.name;
                 }
             })
 
         })
-        // console.log(treatmentArr)
     }
 
 

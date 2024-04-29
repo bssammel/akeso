@@ -50,7 +50,6 @@ export const getAbbvPtsByPvdr = () => async (dispatch) => {
 const providerReducer = (state = {}, action) => {
   switch (action.type){
     case CREATE_PROVIDER: {
-        console.log("future debugging: do we need to rename the state here and include the user fetch? thanks bye")
         return {...state, "newProvider" : action.newProvider, "providerPtArr":null}
       }
     case LOAD_ABBV_PTS_PVDR:{

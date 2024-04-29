@@ -144,8 +144,6 @@ router.post(
         })
       }
 
-      // console.log('desiredUser')
-      // console.log(desiredUser)
       return res.json(desiredUser); 
     }
   );

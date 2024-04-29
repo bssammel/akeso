@@ -44,8 +44,6 @@ export const addNewTreatment = (newTreatmentData, conditionId) => async (dispatc
 };
 
 export const updateTreatment = (treatmentDataForUpdate, treatmentId) => async (dispatch) => {
-  console.log("delete thunk")
-  console.log(treatmentId)
   const res = await csrfFetch(`/api/treatments/${treatmentId}/update`, {
     method: "PUT",
     headers:{
@@ -63,7 +61,6 @@ export const updateTreatment = (treatmentDataForUpdate, treatmentId) => async (d
 };
 
 export const deleteTreatmentById = (treatmentId) => async (dispatch) => {
-  // console.log("Delete thunk running")
   const res = await csrfFetch(`/api/treatments/${treatmentId}/delete`, {
     method: "DELETE",
   });

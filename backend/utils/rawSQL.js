@@ -13,9 +13,7 @@ const patientTableName = process.env.PATIENT_TABLE_NAME
         //     type: QueryTypes.INSERT,
         // });
 
-        // console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-        // console.log(newPatient)
-        // console.log(newPatient[0])
+
         // const newPtId = newPatient[0];
         
         // const ptObj = await Patient.findOne({

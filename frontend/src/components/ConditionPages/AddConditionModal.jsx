@@ -13,8 +13,6 @@ function AddConditionModal() {
 
 
   if(ptDetailsObj) patientId = parseInt(ptDetailsObj.id)
-  console.log(ptDetailsObj)
-  console.log(patientId)
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

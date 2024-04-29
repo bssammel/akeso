@@ -32,9 +32,7 @@ function ConditionsView() {
     let conditionArr;
 
     if (ptDetailsObj && ptDetailsObj.Conditions){
-        console.log("ptDetailsObj and conditions in object exist")
         conditionArr = ptDetailsObj.Conditions;
-        // console.log(conditionArr)
     }
 
 

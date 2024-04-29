@@ -10,7 +10,6 @@ function DeleteTreatmentModal(props) {
   const { treatmentId, patientId } = props.state;
   const { closeModal } = useModal();
 
-  console.log("patientId: ", patientId)
 
   const handleDelete = async (e) => {
     e.preventDefault();

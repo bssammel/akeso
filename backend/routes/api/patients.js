@@ -16,15 +16,12 @@ router.get(
     async (req, res) => {
         const {user} = req;
         const userId = user.id;
-        console.log("userId", userId)
         const where = {};
         where.userId = userId;
         const patientRes = await Patient.findOne({
             where,
             attributes: ["id"]
         })
-
-        console.log(patientRes)
 
         patientId = patientRes.dataValues.id;
 
@@ -66,8 +63,6 @@ router.get(
             pvdArr.push(pvdObj)
             
         }
-
-        console.log(pvdArr)
 
         return res.json(pvdArr);
     }
@@ -282,7 +277,6 @@ router.get(
       });
 
       returnArr.forEach(ptObj => {
-        console.log(ptObj.dataValues)
         if(ptObj.dataValues.Patient){
             const ageInYrs = ageCalc(ptObj.dataValues.Patient.dob)
             ptObj.dataValues.Patient.dataValues.age = ageInYrs;

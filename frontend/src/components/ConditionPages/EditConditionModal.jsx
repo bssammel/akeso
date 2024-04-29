@@ -14,8 +14,7 @@ function EditConditionModal(props) {
 
 
   if(ptDetailsObj) patientId = parseInt(ptDetailsObj.id)
-  console.log(ptDetailsObj)
-  console.log(patientId)
+
 
   const [name, setName] = useState(originalName);
   const [description, setDescription] = useState(originalDescription);

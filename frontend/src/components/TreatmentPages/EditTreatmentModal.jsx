@@ -17,13 +17,11 @@ function EditTreatmentModal(props) {
 
 
   if(ptDetailsObj) patientId = parseInt(ptDetailsObj.id)
-//   console.log(ptDetailsObj)
-//   console.log(patientId)
+
 
   const [name, setName] = useState(originalName);
 const [conditionIdForTtmnt, setConditionIdForTtmnt] = useState(null)
-console.log("conditionArr")
-console.log(conditionArr)
+
 
   const [dosage, setDosage] = useState(originalDosage);
     const [frequencyQuantity, setFrequencyQuantity] = useState(originalFrequencyQuantity);
@@ -77,8 +75,7 @@ console.log(conditionArr)
             <select
             name='condition' id='condition' className='select'
             value={conditionIdForTtmnt}
-            onChange={(e) => {setConditionIdForTtmnt(e.target.value)
-            console.log("condition treated on change")}
+            onChange={(e) => {setConditionIdForTtmnt(e.target.value)}
             }
             required
             > 

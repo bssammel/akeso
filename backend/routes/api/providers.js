@@ -93,8 +93,6 @@ router.get(
             
         }
 
-        console.log(ptArr)
-
         return res.json(ptArr);
     }
   );

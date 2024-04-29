@@ -37,7 +37,6 @@ function PatientTable() {
                 )}
                 {hasPts && (
                     <div className='patient-table'>
-                        {/* {console.log(ptArr.length)} */}
                         <p>To view to a specific patient&apos;s details, click that row.</p>
                         <table>
                             <thead>

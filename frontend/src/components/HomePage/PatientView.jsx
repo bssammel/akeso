@@ -26,8 +26,6 @@ function PatientView() {
 
     const { patientId } = useParams();
 
-    console.log(ptDetailsObj)
-
     const dispatch = useDispatch()
 
     const [currentView, setCurrentView] = useState('details');
@@ -49,7 +47,6 @@ function PatientView() {
     let isPtViewSelfByUID;
 
     if(patientId && ptDetailsObj){// the page is being loaded by patients/:id
-        console.log("patientId exists")
         if(sessionUserId !== ptDetailsObj.userId && sessionUser.providerBool === false){
             isPtViewSelfbyId = false ;
             isPtViewSelfByUID = false;
@@ -74,9 +71,7 @@ function PatientView() {
         }
     }
 
-    console.log("isPtViewSelfbyId",isPtViewSelfbyId);
-    console.log("isPrvdrViewPt",isPrvdrViewPt);
-    console.log("isPtViewSelfByUID",isPtViewSelfByUID);
+
 
     return (
         <>

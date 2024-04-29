@@ -27,11 +27,7 @@ function PatientDetails() {
         sessionUserId = sessionUser.id
     }
 
-    if(sessionUser && sessionUser.providerBool){
-        console.log("user is a provider that must be viewing a patient and the get patient by id route using params will be necessary");
-        console.log("make sure that patient id is the right param to be used inthe the patient details jsx file")
-        console.log("patientId: ", patientId)
-    }
+
 
     const dispatch = useDispatch()
 
@@ -40,10 +36,8 @@ function PatientDetails() {
     useEffect(() => {
         const runDispatches = async () => {
             if(!patientId){
-                console.log("hitting patient view dispatch")
                 await dispatch(getPatientUserDetails(sessionUserId))
             } else{
-                console.log("hitting provider specifi dispatch")
                 await dispatch(getPatientDetails(patientId))
             }
         };
