@@ -18,7 +18,9 @@ form {
     display: flex;
     flex-direction: column;
     /* align-content: flex-end; */
+    max-width: 200px;
     padding: 5px;
+    overflow: wrap;
     
   }
 
@@ -68,6 +70,7 @@ form {
 
   input{
     margin: 2px;
+    max-width: 200px;
   }
 
   .select{

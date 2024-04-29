@@ -58,7 +58,7 @@ function AddTreatmentModal(props) {
       <h1>Add Treatment</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Treatment Name (required)
+          Treatment Name
           <input
             type="text"
             value={name}

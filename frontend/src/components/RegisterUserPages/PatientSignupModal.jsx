@@ -147,9 +147,10 @@ const handleUserSubmit = async (e) => {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder='abc123@email.com'
                   required
                 />
-                {errors.email && <p>{errors.email}</p>}
+                {errors.email && <p className='error'>{errors.email}</p>}
               </label>
               
               <label>
@@ -177,9 +178,9 @@ const handleUserSubmit = async (e) => {
               <label>
                 Phone
                 <input
-                  type="tel"
+                  type="number"
                   value={phone}
-                  placeholder='Digits only, 10 total'
+                  placeholder='Digits only, 10 total. EX: 8005555555'
                   pattern='^[0-9]+$'
                   onChange={(e) => setPhone(e.target.value)}
                   required
@@ -194,7 +195,7 @@ const handleUserSubmit = async (e) => {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
-              {errors.password && <p>{errors.password}</p>}
+              {(password.length > 0 && password.length < 6) && <p className='error'>Password must be at least 6 characters.</p>}
               </label>
               <label>
                 Confirm Password
@@ -204,7 +205,7 @@ const handleUserSubmit = async (e) => {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                 />
-              {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+              {(errors.confirmPassword || confirmPassword !== password) && <p className='error'>Passwords do not match.</p>}
               </label>
             </div>
           <div id='signup-submit'>
@@ -232,7 +233,7 @@ const handleUserSubmit = async (e) => {
         <div className='fields'>
 
       <label>
-          Date of Birth
+          Date of Birth * 
           <input
             type="date"
             name= "dob"
@@ -245,7 +246,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.dob && <p>{errors.dob}</p>}
         <label>
-          Legal Sex Marker
+          Legal Sex Marker *
           <select
           name='sex' id='sex-marker' className='select'
           value={sex}
@@ -258,7 +259,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.sex && <p>{errors.sex}</p>}
         <label>
-          Gender Identity
+          Gender Identity *
           <select
           name='gender' id='gender' className='select'
           value={gender}
@@ -337,7 +338,7 @@ const handleUserSubmit = async (e) => {
         <h3>Contact Information </h3>
           <div className='fields'>
         <label>
-          Street
+          Street *
           <input
             type="text"
             value={street}
@@ -347,7 +348,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.street && <p>{errors.street}</p>}
         <label>
-          City
+          City *
           <input
             type="text"
             value={city}
@@ -357,7 +358,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.city && <p>{errors.city}</p>}
         <label>
-          State
+          State *
           <input
             type="text"
             value={state}
@@ -372,7 +373,7 @@ const handleUserSubmit = async (e) => {
         <h3>Emergency Contact </h3>
         <div className='fields'>
         <label>
-          Name
+          Name *
           <input
             type="text"
             value={name911}
@@ -382,7 +383,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.name911 && <p>{errors.name911}</p>}
         <label>
-          Phone
+          Phone *
           <input
             type="tel"
             value={phone911}
@@ -394,7 +395,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.phone911 && <p>{errors.phone911}</p>}
         <label>
-          Street
+          Street *
           <input
             type="text"
             value={street911}
@@ -404,7 +405,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.street911 && <p>{errors.street911}</p>}
         <label>
-          City
+          City *
           <input
             type="text"
             value={city911}
@@ -414,7 +415,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.city911 && <p>{errors.city911}</p>}
         <label>
-          State
+          State *
           <input
             type="text"
             value={state911}
@@ -424,7 +425,7 @@ const handleUserSubmit = async (e) => {
         </label>
         {errors.state911 && <p>{errors.state911}</p>}
         <label>
-          Relationship of Emergency Contact
+          Relationship of Emergency Contact *
           <select
           name='relationship911' id='relationship911' className='select'
           value={relationship911}
@@ -456,7 +457,6 @@ const handleUserSubmit = async (e) => {
             type="text"
             value={pharmStreet}
             onChange={(e) => setPharmStreet(e.target.value)}
-            required
             />
         </label>
         {errors.pharmStreet && <p>{errors.pharmStreet}</p>}
