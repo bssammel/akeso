@@ -185,7 +185,7 @@ const handleUserSubmit = async (e) => {
                   onChange={(e) => setPhone(e.target.value)}
                   required
                 />
-              {errors.phone && <p>{errors.phone}</p>}
+              {phone.length < 10 && phone.length > 1 &&<p>Phone number must be 10 digits long</p>}
               </label>
               <label>
                 Password
@@ -377,6 +377,7 @@ const handleUserSubmit = async (e) => {
           <input
             type="text"
             value={name911}
+            placeholder='Full Name'
             onChange={(e) => setName911(e.target.value)}
             required
           />
@@ -387,13 +388,13 @@ const handleUserSubmit = async (e) => {
           <input
             type="tel"
             value={phone911}
-            placeholder='Digits only, 10 total'
+            placeholder='Digits only, 10 total. EX: 8005555555'
             pattern='^[0-9]+$'
             onChange={(e) => setPhone911(e.target.value)}
             required
           />
         </label>
-        {errors.phone911 && <p>{errors.phone911}</p>}
+        {phone.length < 10 && phone.length > 1 &&<p>Phone number must be 10 digits long</p>}
         <label>
           Street *
           <input

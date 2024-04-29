@@ -118,7 +118,7 @@ function ProviderSignupFormModal() {
             required
           />
         </label>
-        {errors.phone && <p>{errors.phone}</p>}
+        {phone.length < 10 && phone.length > 1 &&<p>Phone number must be 10 digits long</p>}
         <label>
           Password
           <input
@@ -128,7 +128,7 @@ function ProviderSignupFormModal() {
             required
           />
         </label>
-        {(errors.password ||0  < password.length < 6) && <p className='error'>Password must be at least 6 characters.</p>}
+        {(password.length > 0 && password.length < 6) && <p className='error'>Password must be at least 6 characters.</p>}
         <label>
           Confirm Password
           <input
