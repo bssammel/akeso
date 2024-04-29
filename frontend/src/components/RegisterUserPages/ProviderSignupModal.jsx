@@ -110,7 +110,7 @@ function ProviderSignupFormModal() {
         <label>
           Phone
           <input
-            type="tel"
+            type="number"
             value={phone}
             placeholder='Digits only, 10 total. EX: 8005555555'
             pattern='^[0-9]+$'
@@ -118,7 +118,7 @@ function ProviderSignupFormModal() {
             required
           />
         </label>
-        {errors.phone && <p>{errors.phone}</p>}
+        {phone.length < 10 && phone.length > 1 &&<p className='error'>Phone number must be 10 digits long</p>}
         <label>
           Password
           <input
@@ -128,7 +128,7 @@ function ProviderSignupFormModal() {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {(password.length > 0 && password.length < 6) && <p className='error'>Password must be at least 6 characters.</p>}
         <label>
           Confirm Password
           <input
@@ -138,7 +138,7 @@ function ProviderSignupFormModal() {
             required
           />
         </label>
-        {(errors.confirmPassword || confirmPassword !== password) && <p>{errors.confirmPassword}</p>}
+        {(errors.confirmPassword || confirmPassword !== password) && <p className='error'>Passwords do not match.</p>}
         <div id='signup-submit'>
           <button 
             id='signup-submit' 

@@ -65,3 +65,10 @@ button {
   button#yes-delete:hover{
     background-color: #A45045;
   }
+
+
+  p.error{
+    color: #6d0927;
+    border: 1px dashed #6d0927;
+    border-radius: 5px;
+  }
