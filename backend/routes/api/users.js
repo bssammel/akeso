@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { ageCalc } = require('../../utils/dateFuncs')
-const { User, Patient, Provider, Condition } = require('../../db/models');
+const { User, Patient, Provider, Condition, Treatment } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -119,6 +119,18 @@ router.post(
         })
 
         desiredUser.dataValues.Patient.dataValues.Conditions = conditionArr;
+
+        treatmentArr = await Treatment.findAll({
+          where:{
+            patientId: patientId
+          },
+          include: [
+            { model: Provider}
+          ],
+          attributes:["providerId", "patientId", "id", "name", "dosage", "frequencyQuantity", "frequencyPeriod"]
+        })
+
+        desiredUser.dataValues.Patient.dataValues.Treatments = treatmentArr;
 
 
       }
