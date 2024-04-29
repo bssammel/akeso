@@ -131,8 +131,12 @@ function TreatmentsView() {
                                     <div className='treatment-details'>
                                         {treatmentObj.conditionName && (<h5 id='treatment-for'>- Primarily treats {treatmentObj.conditionName}</h5>)}
                                         {treatmentObj.frequencyPeriod && treatmentObj.frequencyQuantity && (<div id='treatment-plan'>
-                                        <h5>&nbsp;-&nbsp;</h5>{treatmentObj.dosage !== "Not Applicable" && <h5>{treatmentObj.dosage},&nbsp;</h5>}<h5>{treatmentObj.frequencyQuantity} times per {treatmentObj.frequencyPeriod}</h5>
+                                        <h5>&nbsp;-&nbsp;</h5>{treatmentObj.dosage !== "Not Applicable" && treatmentObj.dosage && <h5>{treatmentObj.dosage},&nbsp;</h5>}<h5>{treatmentObj.frequencyQuantity} time</h5>{treatmentObj.frequencyQuantity && treatmentObj.frequencyQuantity !== 1 && (<h5>s</h5>)} {treatmentObj.frequencyPeriod && treatmentObj.frequencyPeriod !== "as needed" && (<h5>&nbsp;per</h5>)}<h5>&nbsp;{treatmentObj.frequencyPeriod}</h5>
                                         </div>)}
+                                        {treatmentObj.frequencyPeriod === 'as needed' && !treatmentObj.frequencyQuantity && !treatmentObj.dosage &&(<div id='treatment-plan'>
+                                        <h5>&nbsp;-&nbsp;As needed</h5>
+                                        </div>)}
+
                                     </div>
                                 </div>
                            )})}              

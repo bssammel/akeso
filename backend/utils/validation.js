@@ -115,9 +115,9 @@ const validateTreatmentCreation = [
   check('dosage')
     .isLength({max: 20})
     .withMessage('Medication dosage must be 20 characters or less.'),
-  check('frequencyQuantity')
-    .isDecimal()
-    .withMessage('The frequency must be a decimal.'),
+  // check('frequencyQuantity')
+  //   .isDecimal()
+  //   .withMessage('The frequency must be a decimal.'),
   check('frequencyPeriod')
     .isLength({max: 25})
     .withMessage('Frequency period must be 25 characters or less.'),
