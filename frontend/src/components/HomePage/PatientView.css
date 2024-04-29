@@ -20,6 +20,11 @@ p.pt-nav-item{
     border-radius: 3px;
 }
 
+p.pt-nav-item:hover{
+    cursor: pointer;
+}
+
+
 h4.nav-description{
     margin: 0px;
 }
