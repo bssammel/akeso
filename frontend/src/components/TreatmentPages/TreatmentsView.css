@@ -92,4 +92,8 @@ div.submit, div.delete-buttons {
     justify-content: center;
     width: 100%;
     padding: 3px;
+    min-width: fit-content;
   }
+ form{
+    min-width: 350px !important;
+ }

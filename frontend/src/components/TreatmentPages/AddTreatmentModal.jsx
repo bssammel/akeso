@@ -3,6 +3,7 @@ import { useDispatch, useSelector} from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { addNewTreatment } from '../../store/treatments';
 import { getPatientDetails } from '../../store/patients';
+import "./TreatmentsView.css"
 
 function AddTreatmentModal(props) {
   const dispatch = useDispatch();
