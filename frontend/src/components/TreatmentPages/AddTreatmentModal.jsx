@@ -4,35 +4,41 @@ import { useModal } from '../../context/Modal';
 import { addNewTreatment } from '../../store/treatments';
 import { getPatientDetails } from '../../store/patients';
 
-function AddTreatmentModal() {
+function AddTreatmentModal(props) {
   const dispatch = useDispatch();
+  const { conditionArr } = props.state;
 
   let ptDetailsObj = useSelector((state) => state.patient.patientDetails ? state.patient.patientDetails : null)
 
   let patientId = useSelector((state) => state.patient.patientDetails.id ? state.patient.patientDetails.id : 0)
 
-
-
   if(ptDetailsObj) patientId = parseInt(ptDetailsObj.id)
-//   console.log(ptDetailsObj)
-//   console.log(patientId)
+
 
   const [name, setName] = useState("");
-  const [dosage, setDosage] = useState("");
-  const [frequencyQuantity, setFrequencyQuantity] = useState(null)
-  const [frequencyPeriod, setFrequencyPeriod] = useState("day")
+//   const [showDosage, setShowDosage] = useState(false);
+  const [conditionIdForTtmnt, setConditionIdForTtmnt] = useState(null)
+  const [dosageNum, setDosageNum] = useState(null);
+  const [dosageUnit, setDosageUnit] = useState(null);
+  const [frequencyQuantity, setFrequencyQuantity] = useState(null);
+  const [frequencyPeriod, setFrequencyPeriod] = useState(null);
 //   hour day, week, month, year
 // long term other option
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  let dosage;
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    // const newConditionData = { name, description, status};
+    if(dosageNum && dosageUnit) dosage = dosageNum + " " + dosageUnit;
+
+    const conditionId = conditionIdForTtmnt;
+
     return await dispatch(addNewTreatment({
         name, dosage, frequencyQuantity, frequencyPeriod
-    }, patientId))
+    }, conditionId))
     .then(() => dispatch(getPatientDetails(patientId)))
     .then(closeModal)
     .catch(async (res) => {
@@ -42,14 +48,17 @@ function AddTreatmentModal() {
     );
   };
 
-  const statusArr = ["Current", "Controlled", "Resolved", "Chronic", "Intermittent", "Worsening", "Acute"]
+  const frequencyPeriodArr = ["--", "hour", "day", "week", "month", "year", "as needed"]
+  const dosageUnits = ["--","mg", "mcg", "IU", "g", "mL"]
+//   const conditionIdArr = conditionArr.map((conditionObj) => conditionObj.id)
+//   const conditionNameArr = conditionArr.map((conditionObj) => conditionObj.name)
 
   return (
     <>
-      <h1>Add Condition</h1>
+      <h1>Add Treatment</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Condition Name
+          Treatment Name (required)
           <input
             type="text"
             value={name}
@@ -60,34 +69,76 @@ function AddTreatmentModal() {
           />
         </label>
         {errors.name && <p>{errors.name}</p>}
-        <label>
-          Description
+        {/* <label>
+          Treatment has dosage
           <input
-            type="textarea"
-            value={description}
-            maxLength="1999"
-            onChange={(e) => setDescription(e.target.value)}
-            required
+            type="checkbox"
+            value={showDosage}
+            onChange={setShowDosage(!showDosage)}
           />
-        </label>
-        {errors.description && <p>{errors.description}</p>}
+        </label> */}
         <label>
-          Status
-        <select
-          name='status' id='status' className='select'
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
-          required>
-            {statusArr.map((status) => (
-                  <option key={status} value={status}>{status}
+          Primarily Treats
+          <select
+          name='dosageUnit' id='dosageUnit' className='select'
+          value={conditionIdForTtmnt}
+          onChange={(e) => setConditionIdForTtmnt(e.target.value)}
+          required
+          > 
+          <option value="">Please select the closest condition</option>
+            {conditionArr.map((conditionObj) => (
+                  <option key={conditionObj.id} value={conditionObj.id}>{conditionObj.name}
                   </option>))}
           </select>
-          </label>
-          {errors.status && <p>{errors.status}</p>}
-        <div className='submit'><button type="submit">Add Condition</button></div>
+        </label>
+        <label id="dosage">
+          Dosage
+          <div id="dosage-fields">
+          <input id='dosage-num'
+            type="number"
+            value={dosageNum}
+            onChange={(e) => setDosageNum(e.target.value)}
+          />
+          {errors.dosageNum && <p>{errors.dosageNum}</p>}
+          <select
+          name='dosageUnit' id='dosageUnit' className='select'
+          value={dosageUnit}
+          onChange={(e) => setDosageUnit(e.target.value)}
+          >
+            {dosageUnits.map((dosageUnit) => (
+                  <option key={dosageUnit} value={dosageUnit}>{dosageUnit}
+                  </option>))}
+          </select>
+          {errors.dosageUnit && <p>{errors.dosageUnit}</p>}
+          </div>
+        </label>
+        <label>
+          Frequency
+          <div id='frequency-fields'>
+          <input
+            type="number"
+            value={frequencyQuantity}
+            onChange={(e) => setFrequencyQuantity(e.target.value)}
+          />
+          <p>times per</p>
+          {/* {errors.frequencyQuantity && <p>{errors.frequencyQuantity}</p>} */}
+          <select
+          name='frequencyPeriod' id='frequencyPeriod' className='select'
+          value={frequencyPeriod}
+          onChange={(e) => setFrequencyPeriod(e.target.value)}
+          >
+            {frequencyPeriodArr.map((frequencyPeriod) => (
+                  <option key={frequencyPeriod} value={frequencyPeriod}>{frequencyPeriod}
+                  </option>))}
+          </select>
+          {errors.dosageUnit && <p>{errors.dosageUnit}</p>}
+          </div>
+        </label>
+          
+        <div className='submit'><button type="submit">Add Treatment</button></div>
         </form>
     </>
   );
 }
 
-export default AddConditionModal;
+export default AddTreatmentModal;

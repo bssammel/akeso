@@ -127,7 +127,7 @@ router.post(
           include: [
             { model: Provider}
           ],
-          attributes:["providerId", "patientId", "id", "name", "dosage", "frequencyQuantity", "frequencyPeriod"]
+          attributes:["providerId", "patientId", "id", "name", "dosage", "frequencyQuantity", "frequencyPeriod","conditionId"]
         })
 
         desiredUser.dataValues.Patient.dataValues.Treatments = treatmentArr;
