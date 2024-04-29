@@ -118,7 +118,7 @@ function ProviderSignupFormModal() {
             required
           />
         </label>
-        {phone.length < 10 && phone.length > 1 &&<p>Phone number must be 10 digits long</p>}
+        {phone.length < 10 && phone.length > 1 &&<p className='error'>Phone number must be 10 digits long</p>}
         <label>
           Password
           <input

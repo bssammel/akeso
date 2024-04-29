@@ -185,7 +185,7 @@ const handleUserSubmit = async (e) => {
                   onChange={(e) => setPhone(e.target.value)}
                   required
                 />
-              {phone.length < 10 && phone.length > 1 &&<p>Phone number must be 10 digits long</p>}
+              {phone.length < 10 && phone.length > 1 &&<p className='error'>Phone number must be 10 digits long</p>}
               </label>
               <label>
                 Password
@@ -394,7 +394,7 @@ const handleUserSubmit = async (e) => {
             required
           />
         </label>
-        {phone.length < 10 && phone.length > 1 &&<p>Phone number must be 10 digits long</p>}
+        {phone.length < 10 && phone.length > 1 &&<p className='error'>Phone number must be 10 digits long</p>}
         <label>
           Street *
           <input
