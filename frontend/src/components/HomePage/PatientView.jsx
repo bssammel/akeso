@@ -66,10 +66,13 @@ function PatientView() {
     if(sessionUser && sessionUserId){
         if(isPtViewSelfByUID || isPtViewSelfbyId){
             displayPtData = true;
+            if (currentView != 'treatments') setCurrentView('treatments')
         } else if (ptDetailsObj && ptDetailsObj.status !== 404 && isPrvdrViewPt){
             displayPtData = true;
         }
     }
+
+
 
 
 

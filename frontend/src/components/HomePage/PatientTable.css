@@ -14,3 +14,7 @@ table {
     border: 2px solid #04314d;
     cursor: pointer;
     }
+
+    td, th{
+        font-size: large;
+    }

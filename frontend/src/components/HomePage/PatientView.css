@@ -1,5 +1,9 @@
 h1{
     margin-bottom: 8px ;
+    font-size: 35px;
+}
+h2{
+    font-size: 26;
 }
 
 div.pt-nav-cntnr{
@@ -13,6 +17,7 @@ p.pt-nav-item{
     max-height: max-content;
     margin: 2px;
     padding: 3px 7px 3px 2px;
+    color: #04314d !important;
     background-color: #8fb2c6;
     border: 2px solid #04314d;
     /* border-top: 2px solid #04314d;
@@ -27,10 +32,12 @@ p.pt-nav-item:hover{
 
 h4.nav-description{
     margin: 0px;
+    font-size: 20px;
+    color: #04314d !important;
 }
 
 .pt-details-cntnr{
-    margin: 10px 0px 0px 30px;
+    margin: 10px 0px 0px 100px;
     width: fit-content;
     height: fit-content;
     display: grid;
@@ -39,7 +46,8 @@ h4.nav-description{
     grid-template-areas: 
     "basic" "contact"
     "911" "pharm";
-    gap: 40px;
+    gap: 100px;
+    
 }
 
 .pt-details-item{
@@ -95,8 +103,24 @@ div#contact-info.pt-details-item{
 
 }
 
-.data-item-cntnr > p{
+.condition-details > p{
+    /* font-size: small; */
+    font-size: 20px !important;
+
+}
+
+.condition-details > h4{
+    /* font-size: small; */
+    font-size: 22px !important;
+
+}
+h3{
+    font-size: 24px;
+}
+
+
+/* .data-item-cntnr > p,{
     font-size: small;
     margin:2px 2px 5px 10px;
     padding: 0px;
-}
+} */
