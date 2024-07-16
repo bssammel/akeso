@@ -1,5 +1,12 @@
 'use strict';
+
 /** @type {import('sequelize-cli').Migration} */
+
+let options = {};
+if (process.env.NODE_ENV === 'production') {
+  options.schema = process.env.SCHEMA; 
+}
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Appointments', {
@@ -9,20 +16,30 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      patientId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {model: 'Patients', key: "id"},
+        onDelete: "CASCADE"
+      },
+      providerId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {model: 'Providers', key: "id"},
+        onDelete: "CASCADE"
+      },
       apptType: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull:false
       },
       chiefComplaint: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       startTime: {
         type: Sequelize.DATE
       },
       endTime: {
         type: Sequelize.DATE
-      },
-      newPatient: {
-        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
@@ -35,6 +52,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Appointments');
+    options.tableName="Appointments";
+    await queryInterface.dropTable(options);
   }
 };
