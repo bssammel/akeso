@@ -33,7 +33,8 @@ module.exports = {
         allowNull:false
       },
       chiefComplaint: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(255),
+        allowNull: false
       },
       startTime: {
         type: Sequelize.DATE
