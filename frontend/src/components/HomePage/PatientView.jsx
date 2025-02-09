@@ -46,7 +46,7 @@ function PatientView() {
     let isPrvdrViewPt;
     let isPtViewSelfByUID;
 
-    if(patientId && ptDetailsObj){// the page is being loaded by patients/:id
+    if(patientId && ptDetailsObj && sessionUser){// the page is being loaded by patients/:id
         if(sessionUserId !== ptDetailsObj.userId && sessionUser.providerBool === false){
             isPtViewSelfbyId = false ;
             isPtViewSelfByUID = false;
@@ -66,10 +66,13 @@ function PatientView() {
     if(sessionUser && sessionUserId){
         if(isPtViewSelfByUID || isPtViewSelfbyId){
             displayPtData = true;
+            if (currentView != 'treatments') setCurrentView('treatments')
         } else if (ptDetailsObj && ptDetailsObj.status !== 404 && isPrvdrViewPt){
             displayPtData = true;
         }
     }
+
+
 
 
 
@@ -85,6 +88,10 @@ function PatientView() {
                 <ForbiddenPtView/>
             )
         }
+        {/* if the patient does not exist and the current user is a provider */}
+        { !ptDetailsObj && sessionUser.providerBool === true && (
+            <PtDne/>
+        ) } 
         {/* if the patient does not exist and the current user is a provider */}
         { ptDetailsObj && ptDetailsObj.status === 404 && sessionUser.providerBool === true && (
             <PtDne/>

@@ -1,0 +1,41 @@
+div#footer {
+    background-color: #04314d;
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    margin: 0 !important;
+    justify-content: space-around;
+
+    /* man I suck at css, find docs in charlotte terminal */
+
+    
+
+}
+
+div.footer-column#socials {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+div.footer-column#stack {
+    display: flex;
+    flex-direction: row;
+    
+}
+
+p, a, h4{
+    color: #8fb2c6 !important;
+    text-decoration: none;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+
+div.footer-column#stack > a {
+    display: flex;
+    flex-direction: row;
+
+}

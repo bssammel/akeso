@@ -2,6 +2,8 @@ import { useDispatch, useSelector} from 'react-redux'
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { getPatientUserDetails, getPatientDetails } from '../../store/patients';
+import './PatientDetails.css'
+
 
 const reformatISO = function (givenString){
 
@@ -138,7 +140,7 @@ function PatientDetails() {
                                 <p>{ptDetailsObj.city911}</p>
                             </div>
                             <div className='data-item-cntnr' id='state911'>
-                                <h5>City</h5>
+                                <h5>State</h5>
                                 <p>{ptDetailsObj.state911}</p>
                             </div>
                             <div className='data-item-cntnr' id='relationship911'>
