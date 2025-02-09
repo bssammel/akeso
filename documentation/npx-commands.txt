@@ -1,3 +1,6 @@
+full rebuild:
+npm run rebuild
+
 User Model
 npx sequelize model:generate --name User --attributes email:string,phone:string,firstName:string,lastName:string,imageURL:string,providerBool:boolean,hashedPassword:string
 npx dotenv sequelize db:migrate
