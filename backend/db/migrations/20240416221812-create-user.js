@@ -38,6 +38,9 @@ module.exports = {
       providerBool: {
         type: Sequelize.BOOLEAN
       },
+      userTypeRefId: {
+        type: Sequelize.INTEGER
+      },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,
         allowNull: false

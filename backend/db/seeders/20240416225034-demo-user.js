@@ -21,6 +21,7 @@ module.exports = {
         lastName: 'Krawa',
         imageURL:'https://i.imgur.com/Dapg8Ng.jpeg',
         providerBool:false,
+        userTypeRefId: 1,
         hashedPassword: bcrypt.hashSync('simonPass')
       },
       {
@@ -30,6 +31,7 @@ module.exports = {
         lastName: 'Krawa',
         imageURL:'https://i.pinimg.com/564x/14/43/55/144355d7b36c5f646435423798281ce9.jpg',
         providerBool:true,
+        userTypeRefId: 1,
         hashedPassword: bcrypt.hashSync('keiranPass')
       },
       {
@@ -38,6 +40,7 @@ module.exports = {
         firstName: 'Kimberly',
         lastName: 'Kozlowski',
         providerBool:true,
+        userTypeRefId: 2,
         hashedPassword: bcrypt.hashSync('kimPass')
       },
       {
@@ -46,6 +49,7 @@ module.exports = {
         firstName: 'Sean',
         lastName: 'Kozlowski',
         providerBool:false,
+        userTypeRefId: 2,
         hashedPassword: bcrypt.hashSync('seanPass')
       },
       {
@@ -54,6 +58,7 @@ module.exports = {
         firstName: 'Monarch',
         lastName: 'Lewis',
         providerBool:false,
+        userTypeRefId: 3,
         hashedPassword: bcrypt.hashSync('archiePass')
       },
       {
@@ -62,6 +67,7 @@ module.exports = {
         firstName: 'Lucas',
         lastName: 'Byrne',
         providerBool:false,
+        userTypeRefId: 4,
         hashedPassword: bcrypt.hashSync('lucasPass')
       },
       {
@@ -70,6 +76,7 @@ module.exports = {
         firstName: 'Demo',
         lastName: 'Provider',
         providerBool:true,
+        userTypeRefId: 3,
         hashedPassword: bcrypt.hashSync('providerPass')
       },
       {
@@ -78,6 +85,7 @@ module.exports = {
         firstName: 'Demo',
         lastName: 'Patient',
         providerBool:false,
+        userTypeRefId: 5,
         hashedPassword: bcrypt.hashSync('providerPass')
       },
      ],{ validate: true });

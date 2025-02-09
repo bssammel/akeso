@@ -69,6 +69,9 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.BOOLEAN,
       allowNull:false
     },
+    userTypeRefId:{ 
+      type:DataTypes.INTEGER,
+    },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
       allowNull: false,
