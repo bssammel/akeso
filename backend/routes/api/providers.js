@@ -1,12 +1,16 @@
 const express = require('express');
+const app = express();
 
 const { User, Patient, Provider, ProviderPatient } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors, validateProviderCreation } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { ageCalc } = require('../../utils/dateFuncs')
+// const userRoutes = require('./users')
 
 const router = express.Router();
+
+// app.use("/users", userRoutes)
 
 // ! Get all providers
 router.get(
@@ -214,6 +218,8 @@ router.post(
             createdAt: newProvider.createdAt,
             updatedAt: newProvider.updatedAt
         };
+
+        
 
         return res.status(201).json(createdProvider)
 
